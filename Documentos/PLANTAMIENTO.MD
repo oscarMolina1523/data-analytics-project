@@ -62,11 +62,11 @@ Actualmente, los datos de **rutinas, métricas físicas y participación social*
 | `metricas_fisicas` | Evolución corporal y bienestar. | Peso, Horas de sueño, Nivel energía. |
 | `comunidad` | Interacción en retos y foros. | Mensajes, Retos completados, Likes. |
 
-### 3.2 Proceso ETL
+### 3.2 Proceso ETL (Extracción, Transformación, Carga)
 
 ```mermaid
 graph LR
-    A[Sistemas Transaccionales<br/>(Fitness App)] --> B[Transformación<br/>Limpieza de Métricas]
-    B --> C[Carga<br/>Almacén Analítico]
-    C --> D[Análisis Predictivo<br/>Adherencia del Usuario]
-    D --> E[Tableros de Control<br/>Power BI / Tableau]
+    A["Sistemas Transaccionales (Fitness App)"] --> B["Transformación: Limpieza de Métricas"]
+    B --> C["Carga: Almacén Analítico"]
+    C --> D["Análisis Predictivo: Adherencia"]
+    D --> E["Tableros de Control: Power BI / Tableau"]
