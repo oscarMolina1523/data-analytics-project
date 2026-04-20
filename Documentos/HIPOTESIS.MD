@@ -4,7 +4,7 @@
 **Código:** CPAD010  
 **Carrera:** Ingeniería en Sistemas de Información  
 **Semestre:** Noveno | **Año:** Quinto  
-**Caso de Estudio:** Aplicación de Fitness y Salud
+**Caso de Estudio:** Aplicación para el análisis basado en datos Fitness y Salud
 
 ## Tabla Resumen de Hipótesis
 
