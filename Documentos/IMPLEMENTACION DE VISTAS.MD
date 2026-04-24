@@ -158,6 +158,7 @@ FROM Fact_Interaccion_Social f
 INNER JOIN Dim_Usuario u ON f.Id_Usuario = u.Id_Usuario
 INNER JOIN Dim_Tiempo t ON f.Id_Fecha_Registro = t.Id_Tiempo;
 GO
+```
 
 ##  Referencias Bibliográficas (Arquitectura de Datos)
 
