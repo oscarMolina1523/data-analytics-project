@@ -64,13 +64,13 @@ Actualmente, los datos de **rutinas, métricas físicas y participación social*
 
 ### 3.2 Proceso ETL (Extracción, Transformación, Carga)
 
-```mermaid
 graph LR
     A["Sistemas Transaccionales (Fitness App)"] --> B["Transformación: Limpieza de Métricas"]
     B --> C["Carga: Almacén Analítico"]
     C --> D["Análisis Predictivo: Adherencia"]
     D --> E["Tableros de Control: Power BI / Tableau"]
 
+<<<<<<< HEAD
 ---
 
 ### 3.3 Bibliografias 
@@ -79,3 +79,10 @@ graph LR
 * **Kimball, R., & Ross, M. (2013).** *The Data Warehouse Toolkit: The Definitive Guide to Dimensional Modeling*. John Wiley & Sons. (Referencia estándar para el diseño de tablas Fact y Dim utilizadas en las vistas).
 * **Inmon, W. H. (2005).** *Building the Data Warehouse*. John Wiley & Sons. (Fundamentos de integración de datos transaccionales para análisis).
 * **Microsoft Corporation.** *SQL Server Index Design Guide*. (Documentación técnica para la creación de índices no agrupados en vistas analíticas).
+=======
+ ### Referencias Bibliográficas (Planteamiento)
+
+* **Davenport, T. H., & Harris, J. G. (2017).** *Competing on Analytics: The New Science of Winning*. Harvard Business Review Press. (Justificación del uso de datos para ventaja competitiva).
+* **Marr, B. (2017).** *Data Strategy: How to Profit from a World of Big Data, Analytics and the Internet of Things*. Kogan Page Publishers. (Estrategia de recolección de datos en dispositivos IoT/Apps).
+* **World Health Organization (WHO). (2020).** *Guidelines on physical activity and sedentary behaviour*. (Contexto sobre la importancia de la métrica de actividad física en la salud global).
+>>>>>>> ef874d296bcb2945a4d46a6e1803d4469560a391
