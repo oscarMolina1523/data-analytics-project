@@ -6,15 +6,17 @@
 **Semestre:** Noveno | **Año:** Quinto  
 **Caso de Estudio:** Aplicación para el análisis basado en datos Fitness y Salud
 
+---
+
 ## Tabla Resumen de Hipótesis
 
 | IDENTIFICACIÓN | Hipótesis | Clave de variables | Enfoque Analítico | Tema CPAD010 |
 | :--- | :--- | :--- | :--- | :--- |
 | **H1** | Mayor frecuencia de entrenamiento correlaciona con mejor condición física final. | `frecuencia_semanal`, `metrica_fisica_evol`, `tipo_actividad` | Correlación de Pearson / ANOVA | Tema 4: Modelado de datos |
-| **H2** | La participación en retos se asocia con un incremento en la adherencia al programa. | `participacion_retos`, `dias_actividad_mes`, `status_adherencia` | Regresión logística / Chi-cuadrado | Tema 4: Modelado predictivo |
+| **H2** | El cumplimiento de metas en "Retos Gamificados" predice la probabilidad de renovación de suscripción. | `score_gamificacion`, `puntos_reto`, `renewal_flag` | Regresión Logística / Scoring | Tema 4: Modelado predictivo |
 | **H3** | La inactividad prolongada en el periodo N predice el abandono en el periodo N+1. | `dias_inactividad`, `churn_flag`, `lag_temporal` | Análisis de Supervivencia / Regresión | Tema 2: Estrategias analíticas |
 | **H4** | El tipo de suscripción Premium reduce la probabilidad de inconsistencia en rutinas. | `tipo_suscripcion`, `cumplimiento_pct`, `variacion_metrica` | Prueba de proporciones / Odds Ratio | Tema 4: Modelado de datos |
-| **H5** | La interacción social modera positivamente la relación entre motivación y continuidad. | `interaccion_social`, `motivacion_inicial`, `retencion_user` | Análisis de moderación / Interacción | Tema 5: Visualización |
+| **H5** | La densidad de interacción social (Likes/Comentarios) actúa como factor protector ante la fatiga del entrenamiento. | `densidad_interaccion`, `volumen_carga`, `percepcion_esfuerzo` | Análisis de Covarianza (ANCOVA) | Tema 5: Visualización |
 
 ---
 
@@ -22,71 +24,81 @@
 
 ### H1: Frecuencia de Entrenamiento → Mejora de Condición Física
 
-**Enunciado de la Hipótesis** Los usuarios que registran una frecuencia de entrenamiento constante (≥3 sesiones/semana) presentan estadísticamente mejores resultados en su evolución física final, medida a través de métricas corporales (Peso/IMC/Masa Muscular).
+**Enunciado de la Hipótesis:** Los usuarios que registran una frecuencia de entrenamiento constante (≥3 sesiones/semana) presentan estadísticamente mejores resultados en su evolución física final, medida a través de métricas corporales (Peso/IMC/Masa Muscular).
 
-**Variables Involucradas** | Tipo de Variable | Nombre | Tipo de Dato | Descripción |
+**Variables Involucradas**
+| Tipo de Variable | Nombre | Tipo de Dato | Descripción |
 | :--- | :--- | :--- | :--- |
 | **Independiente** | `frecuencia_semanal` | `INT` | Cantidad de sesiones completadas por semana (continua). |
 | **Dependiente** | `evolucion_fisica_valor` | `DECIMAL(5,2)` | Diferencia porcentual entre métrica inicial y final. |
 | **Control** | `tipo_actividad` | `ENUM` | Filtrar por 'Fuerza' o 'Cardio' para aislar el efecto. |
-| **Estratificación** | `rango_edad` | `Categórica` | Grupos: 18-30, 31-45, 46+ años. |
 
-**Razonamiento Analítico para la Fórmula H1** * **Fundamento Teórico:** La teoría del entrenamiento deportivo establece que la supercompensación fisiológica depende directamente de la regularidad del estímulo. Sin una frecuencia mínima, el cuerpo no consolida adaptaciones físicas duraderas.  
-* **Observación Empírica Preliminar:** En la exploración de datos, usuarios con >12 sesiones mensuales mostraron un 75% de cumplimiento de metas físicas vs. 30% en usuarios esporádicos.  
-* **Relevancia Empresarial (Tema 1 CPAD010):** Validar H1 permite a la organización ajustar los algoritmos de recomendación para incentivar la frecuencia mínima necesaria, mejorando la satisfacción del cliente y su percepción de éxito.
+---
+
+### H2: Gamificación (Retos) → Renovación de Suscripción
+
+**Enunciado de la Hipótesis:** Existe una relación predictiva entre el nivel de éxito en retos de la comunidad y la intención de renovación; los usuarios que completan al menos el 70% de los retos mensuales tienen un 50% más de probabilidad de renovar su suscripción.
+
+**Variables Involucradas**
+| Tipo de Variable | Nombre | Tipo de Dato | Descripción |
+| :--- | :--- | :--- | :--- |
+| **Predictora** | `pct_cumplimiento_retos` | `DECIMAL` | Porcentaje de objetivos de retos alcanzados en el mes. |
+| **Dependiente** | `renewal_flag` | `BOOLEAN` | 1 = Renueva suscripción, 0 = No renueva. |
+| **Control** | `antiguedad_user` | `INT` | Meses desde el registro inicial en la plataforma. |
 
 ---
 
 ### H3: Inactividad como Predictor de Abandono (Churn)
 
-**Enunciado de la Hipótesis** La acumulación de días de inactividad en el período *t* funciona como una señal temprana que predice un estado de abandono definitivo (Churn) en el período *t+1*, con un desfase temporal de 15 días.
+**Enunciado de la Hipótesis:** La acumulación de días de inactividad en el período *t* funciona como una señal temprana que predice un estado de abandono definitivo (Churn) en el período *t+1*, con un desfase temporal de 15 días.
 
-**Variables Involucradas** | Tipo de Variable | Nombre | Tipo de Dato | Descripción |
+**Variables Involucradas**
+| Tipo de Variable | Nombre | Tipo de Dato | Descripción |
 | :--- | :--- | :--- | :--- |
-| **Predictora** | `dias_inactividad` | `INT` | Días consecutivos sin registros de entrenamiento en la plataforma. |
+| **Predictora** | `dias_inactividad` | `INT` | Días consecutivos sin registros de entrenamiento. |
 | **Respuesta** | `churn_flag` | `BOOLEAN` | 1 = Usuario inactivo/baja, 0 = Activo. |
-| **Temporal** | `lag_periodo` | `INT` | Desfase de diseño para la predicción temporal de 15 días. |
-| **Control** | `tipo_suscripcion` | `ENUM` | Controlar si el pago anual mitiga el efecto de la inactividad. |
-
-**Razonamiento Analítico para la Fórmula H3** * **Fundamento Teórico:** Los modelos de comportamiento en salud indican que el abandono de una rutina es precedido por un aumento en la resistencia al esfuerzo, manifestado inicialmente como ausentismo o inactividad digital.  
-* **Observación Empírica Preliminar:** El 80% de los usuarios que se dieron de baja tuvieron un periodo de inactividad previa de al menos 14 días continuos sin interacción.  
-* **Relevancia Empresarial (Tema 2 CPAD010):** Permite implementar estrategias analíticas predictivas (Alertas Tempranas) para intervenir con notificaciones o incentivos antes de que el usuario abandone la suscripción.
+| **Temporal** | `lag_periodo` | `INT` | Desfase de diseño para la predicción de 15 días. |
 
 ---
 
-### H5: Interacción Social como Moderador de Continuidad
+### H4: Suscripción Premium → Reducción de Inconsistencia
 
-**Enunciado de la Hipótesis** La interacción social en la comunidad modera positivamente la relación entre la motivación inicial y la continuidad del programa; de modo que usuarios con baja motivación inicial que interactúan socialmente tienen mayor probabilidad de evolución positiva que los usuarios solitarios.
+**Enunciado de la Hipótesis:** Los usuarios con suscripción de pago (Premium) presentan un índice de variación en sus rutinas significativamente menor que los usuarios gratuitos, validando que el costo de oportunidad del servicio fomenta el cumplimiento.
 
-**Variables Involucradas** | Tipo de Variable | Nombre | Tipo de Dato | Descripción |
+**Variables Involucradas**
+| Tipo de Variable | Nombre | Tipo de Dato | Descripción |
 | :--- | :--- | :--- | :--- |
-| **Independiente** | `motivacion_score` | `INT (1-5)` | Nivel de motivación declarado al inicio del periodo. |
-| **Moderadora** | `interaccion_social` | `BOOLEAN` | 1 si el usuario participó en foros o retos grupales en el periodo. |
-| **Dependiente** | `retencion_user` | `BOOLEAN` | Permanencia activa al finalizar el periodo de estudio. |
-| **Interacción** | `motivacion * social` | `Producto` | Variable creada para probar el efecto moderador (Interaction term). |
+| **Explicativa** | `tipo_suscripcion` | `ENUM` | Categoría de cuenta (Free / Premium). |
+| **Resultado** | `cumplimiento_pct` | `DECIMAL` | Porcentaje de sesiones programadas vs. completadas. |
+| **Control** | `objetivo_salud` | `ENUM` | Objetivo del usuario (Bajar peso, ganar músculo, etc.). |
+
+---
+
+### H5: Interacción Social como Factor Protector de Continuidad
+
+**Enunciado de la Hipótesis:** La densidad de interacción social recibida (feedback de la comunidad) modera el impacto negativo de la carga física intensa en la percepción del esfuerzo, actuando como un amortiguador ante la fatiga.
+
+**Variables Involucradas**
+| Tipo de Variable | Nombre | Tipo de Dato | Descripción |
+| :--- | :--- | :--- | :--- |
+| **Independiente** | `volumen_carga_semanal` | `INT` | Total de Kg levantados o Km recorridos en la semana. |
+| **Moderadora** | `densidad_interaccion` | `FLOAT` | Promedio de interacciones sociales recibidas por post. |
+| **Dependiente** | `score_percepcion_esfuerzo` | `INT (1-10)` | Escala de Borg (esfuerzo percibido reportado). |
 
 ---
 
 ## Estrategia de Validación (Conceptual)
-
-1.  **Análisis Descriptivo:** Tablas de frecuencia de entrenamiento y distribución de tipos de suscripción.  
-2.  **Análisis Inferencial:** * **Regresión Logística:** Para estimar la probabilidad de Churn (H3) y Adherencia (H2).  
-    * **Prueba t de Student:** Para comparar medias de consistencia entre usuarios Premium y Básicos (H4).  
-3.  **Criterios de Aceptación:** * **p-valor < 0.05** para significancia estadística en todos los modelos.  
-    * **AUC-ROC > 0.70** para el modelo predictivo de abandono.
+1. **Análisis Descriptivo:** Frecuencias de entrenamiento y cumplimiento de retos.
+2. **Análisis Inferencial:** Regresión Logística (H2, H3), ANOVA (H1) y ANCOVA (H5).
+3. **Criterios de Aceptación:** p-valor < 0.05.
 
 ## Alineación con Valores CPAD010
+* **Ética Profesional:** Rigor metodológico y privacidad de datos.
+* **Responsabilidad Social:** Fomento de estilos de vida saludables.
 
-* **Ética Profesional:** Interpretación de datos con rigor metodológico, asegurando la privacidad de las métricas de salud del usuario.  
-* **Responsabilidad Social e Institucional:** Utilizar la analítica para fomentar estilos de vida saludables y combatir el sedentarismo.  
-* **Equidad:** Analizar los patrones de adherencia sin sesgos por condición física inicial o nivel socioeconómico.
-<<<<<<< HEAD
+---
 
-##  Referencias Bibliográficas (Fundamento de Hipótesis)
-
-* **Bandura, A. (1997).** *Self-Efficacy: The Exercise of Control*. W.H. Freeman. (Sustento para **H5**: La influencia social y la motivación en el comportamiento humano).
-* **Baati, M., et al. (2022).** *Predicting User Churn in Fitness Applications using Machine Learning*. Journal of Sports Analytics. (Sustento para **H3**: Modelado predictivo de abandono en entornos digitales).
-* **Caspersen, C. J., Powell, K. E., & Christenson, G. M. (1985).** *Physical activity, exercise, and physical fitness: definitions and distinctions for health-related research*. Public Health Reports. (Sustento para **H1**: Relación entre frecuencia de ejercicio y mejora de condición física).
-* **Ryan, R. M., & Deci, E. L. (2017).** *Self-Determination Theory: Basic Psychological Needs in Motivation, Development, and Wellness*. Guilford Publications. (Sustento para **H2** y **H4**: Adherencia basada en incentivos y tipos de usuario).
-=======
->>>>>>> 48d756d1261088200b605ed63864d187495e55d5
+## Referencias Bibliográficas
+* **Bandura, A. (1997).** *Self-Efficacy: The Exercise of Control*. (H5).
+* **Baati, M., et al. (2022).** *Predicting User Churn*. (H3).
+* **Ryan, R. M., & Deci, E. L. (2017).** *Self-Determination Theory*. (H2, H4).
