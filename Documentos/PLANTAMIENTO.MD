@@ -64,12 +64,13 @@ Actualmente, los datos de **rutinas, métricas físicas y participación social*
 
 ### 3.2 Proceso ETL (Extracción, Transformación, Carga)
 
+```mermaid
 graph LR
     A["Sistemas Transaccionales (Fitness App)"] --> B["Transformación: Limpieza de Métricas"]
     B --> C["Carga: Almacén Analítico"]
     C --> D["Análisis Predictivo: Adherencia"]
     D --> E["Tableros de Control: Power BI / Tableau"]
-
+```
 
 ---
 ### 3.3 Bibliografias 
