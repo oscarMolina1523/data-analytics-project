@@ -70,3 +70,9 @@ graph LR
     B --> C["Carga: Almacén Analítico"]
     C --> D["Análisis Predictivo: Adherencia"]
     D --> E["Tableros de Control: Power BI / Tableau"]
+
+    ##  Referencias Bibliográficas (Planteamiento)
+
+* **Davenport, T. H., & Harris, J. G. (2017).** *Competing on Analytics: The New Science of Winning*. Harvard Business Review Press. (Justificación del uso de datos para ventaja competitiva).
+* **Marr, B. (2017).** *Data Strategy: How to Profit from a World of Big Data, Analytics and the Internet of Things*. Kogan Page Publishers. (Estrategia de recolección de datos en dispositivos IoT/Apps).
+* **World Health Organization (WHO). (2020).** *Guidelines on physical activity and sedentary behaviour*. (Contexto sobre la importancia de la métrica de actividad física en la salud global).

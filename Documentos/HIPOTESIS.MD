@@ -80,3 +80,10 @@
 * **Ética Profesional:** Interpretación de datos con rigor metodológico, asegurando la privacidad de las métricas de salud del usuario.  
 * **Responsabilidad Social e Institucional:** Utilizar la analítica para fomentar estilos de vida saludables y combatir el sedentarismo.  
 * **Equidad:** Analizar los patrones de adherencia sin sesgos por condición física inicial o nivel socioeconómico.
+
+##  Referencias Bibliográficas (Fundamento de Hipótesis)
+
+* **Bandura, A. (1997).** *Self-Efficacy: The Exercise of Control*. W.H. Freeman. (Sustento para **H5**: La influencia social y la motivación en el comportamiento humano).
+* **Baati, M., et al. (2022).** *Predicting User Churn in Fitness Applications using Machine Learning*. Journal of Sports Analytics. (Sustento para **H3**: Modelado predictivo de abandono en entornos digitales).
+* **Caspersen, C. J., Powell, K. E., & Christenson, G. M. (1985).** *Physical activity, exercise, and physical fitness: definitions and distinctions for health-related research*. Public Health Reports. (Sustento para **H1**: Relación entre frecuencia de ejercicio y mejora de condición física).
+* **Ryan, R. M., & Deci, E. L. (2017).** *Self-Determination Theory: Basic Psychological Needs in Motivation, Development, and Wellness*. Guilford Publications. (Sustento para **H2** y **H4**: Adherencia basada en incentivos y tipos de usuario).

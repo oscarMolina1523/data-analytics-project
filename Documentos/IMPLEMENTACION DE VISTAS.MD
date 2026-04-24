@@ -158,3 +158,9 @@ FROM Fact_Interaccion_Social f
 INNER JOIN Dim_Usuario u ON f.Id_Usuario = u.Id_Usuario
 INNER JOIN Dim_Tiempo t ON f.Id_Fecha_Registro = t.Id_Tiempo;
 GO
+
+##  Referencias Bibliográficas (Arquitectura de Datos)
+
+* **Kimball, R., & Ross, M. (2013).** *The Data Warehouse Toolkit: The Definitive Guide to Dimensional Modeling*. John Wiley & Sons. (Referencia estándar para el diseño de tablas Fact y Dim utilizadas en las vistas).
+* **Inmon, W. H. (2005).** *Building the Data Warehouse*. John Wiley & Sons. (Fundamentos de integración de datos transaccionales para análisis).
+* **Microsoft Corporation.** *SQL Server Index Design Guide*. (Documentación técnica para la creación de índices no agrupados en vistas analíticas).
