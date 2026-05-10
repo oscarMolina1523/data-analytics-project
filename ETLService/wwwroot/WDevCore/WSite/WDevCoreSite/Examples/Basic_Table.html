@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/site.css">
+    <script type="module" src="../../Template/Layout.js"> </script>
+    <script type="module">
+        import { ComponentsManager, WRender } from "../../../../WDevCore/WModules/WComponentsTools.js";
+        import { WAppNavigator } from "../../../../WDevCore/WComponents/WAppNavigator.js";
+        import { WTableComponent } from "../../../../WDevCore/WComponents/WTableComponent.js";
+        import { data, ModelObject } from "./data.js";
+        const tab = WRender.Create({ className: "tab" })
+        const navigator = new WAppNavigator({
+            Inicialize: true,
+            NavStyle: "tab",
+            Elements: [{
+                id: "Tab-dasboard", name: "Tabla basica", action: async (ev) => {
+                    return new WTableComponent({
+                        Dataset: data,
+                        ModelObject: new ModelObject(),
+                    });
+                }
+            }, {
+                id: "Tab-Generales", name: "Tabla con modelo",
+                action: async (ev) => {
+                    return new WTableComponent({
+                        Dataset: data,
+                        ModelObject: new ModelObject()
+                    });
+                }
+            }, {
+                id: "Tab-Options", name: "Tabla con modelo y opciones customizadas",
+                action: async (ev) => {
+                    return new WTableComponent({
+                        Dataset: data,
+                        ModelObject: new ModelObject(),
+                        Options: {
+                            Search: false,
+                            Show: false,
+                            Edit: false,
+                            Filter: true,
+                            MultiSelect: true,
+                            Delete: true
+                        }
+                    });
+                }
+            }, {
+                id: "Tab-Options2", name: "Tabla con opciones y acciones customizadas",
+                action: async (ev) => {
+                    return new WTableComponent({
+                        Dataset: data,
+                        ModelObject: new ModelObject(),
+                        Options: {
+                            Add: true, AddAction: (targetObject) => { alert("se agrego:" + JSON.stringify(targetObject)) },
+                            Edit: true, EditAction: (targetObject) => { alert("se edito:" + JSON.stringify(targetObject)) },
+                            MultiSelect: true, SelectAction: (targetObject) => { alert("se selecciono:" + JSON.stringify(targetObject)) },
+                            Delete: true, DeleteAction: (targetObject) => { alert("se elimino:" + JSON.stringify(targetObject)) }
+                        }
+                    });
+                }
+            }]
+        })
+        const DOMManager = new ComponentsManager({ MainContainer: tab, SPAManage: true, WNavigator: navigator });
+        layout.content.append(navigator)
+        layout.content.append(tab)
+    </script>
+</head>
+
+<body>
+    <w-layout id="layout">
+        <div class="doc-container">
+            <h1>WTableComponent — Documentación</h1>
+            <div class="comandos">
+                <a href="#Examples">Ejemplos</a>
+            </div>
+            <hr>
+            <p>
+                <code>WTableComponent</code> es un componente reutilizable para renderizar tablas dinámicas con soporte
+                para búsqueda, filtros, paginación, edición, selección múltiple y acciones personalizadas.
+            </p>
+
+            <h2>Instanciación básica</h2>
+            <p>Requiere al menos dos propiedades:</p>
+            <ul>
+                <li><code>Dataset</code>: arreglo de objetos (datos a mostrar)</li>
+                <li><code>ModelObject</code>: instancia que define las columnas y comportamiento (ver más abajo)</li>
+            </ul>
+
+            <pre><code class="language-javascript">const table = new WTableComponent({
+  Dataset: data,
+  ModelObject: new ModelObject()
+});</code></pre>
+
+            <h2>ModelObject</h2>
+            <p>
+                El <code>ModelObject</code> define cómo se mapean los datos a columnas. Debe implementar (mínimo):
+            </p>
+
+            <pre><code class="language-javascript">// Ejemplo simplificado
+class ModelObject {
+    /**@type {ModelProperty}*/ product = { type: 'draw' };
+    /**@type {ModelProperty}*/ category = {
+        type: 'wselect',
+        ModelObject:
+            { category: { type: "text", primary: true }, desc: { type: "text" } },
+        Dataset: data.map(d => ({ category: d.category, desc: d.category }))
+    };
+    /**@type {ModelProperty}*/ year = { type: 'select' };
+    /**@type {ModelProperty}*/ mes = { type: 'select' };
+    /**@type {ModelProperty}*/ quarter = { type: 'text' };
+    /**@type {ModelProperty}*/ units_sold = { type: 'money', hiddenInTable: true };
+    /**@type {ModelProperty}*/ unit_price = { type: 'money', hiddenInTable: true };
+    /**@type {ModelProperty}*/ total_sale = { type: 'money', hiddenInTable: true };
+} </code></pre>
+
+            <h2>Opciones de personalización (<code>Options</code>)</h2>
+            <p>Puedes activar/desactivar funcionalidades y sobrescribir comportamientos:</p>
+
+            <table border="1" cellpadding="6" style="border-collapse: collapse; margin: 1rem 0;">
+                <thead>
+                    <tr>
+                        <th>Opción</th>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Search</code></td>
+                        <td>boolean</td>
+                        <td>Habilita/deshabilita barra de búsqueda</td>
+                    </tr>
+                    <tr>
+                        <td><code>Filter</code></td>
+                        <td>boolean</td>
+                        <td>Habilita filtros por columna</td>
+                    </tr>
+                    <tr>
+                        <td><code>Show</code></td>
+                        <td>boolean</td>
+                        <td>Permite ver detalles de un registro</td>
+                    </tr>
+                    <tr>
+                        <td><code>Edit</code></td>
+                        <td>boolean</td>
+                        <td>Habilita edición en línea o modal</td>
+                    </tr>
+                    <tr>
+                        <td><code>Delete</code></td>
+                        <td>boolean</td>
+                        <td>Muestra botón de eliminar</td>
+                    </tr>
+                    <tr>
+                        <td><code>Add</code></td>
+                        <td>boolean</td>
+                        <td>Habilita botón para agregar nuevo registro</td>
+                    </tr>
+                    <tr>
+                        <td><code>MultiSelect</code></td>
+                        <td>boolean</td>
+                        <td>Permite seleccionar múltiples filas</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Acciones personalizadas</h3>
+            <p>Para las opciones con efecto (Add, Edit, Delete, Select), puedes definir callbacks:</p>
+
+            <pre><code class="language-javascript">new WTableComponent({
+  Dataset: data,
+  ModelObject: new ModelObject(),
+  Options: {
+    Add: true,
+    AddAction: (newItem) => {
+      console.log('Agregado:', newItem);
+      // API call, update state, etc.
+    },
+
+    Edit: true,
+    EditAction: (updatedItem) => {
+      console.log('Editado:', updatedItem);
+    },
+
+    Delete: true,
+    DeleteAction: (itemToDelete) => {
+      if (confirm(\`¿Eliminar \${itemToDelete.name}?\`)) {
+        // Eliminar del backend
+      }
+    },
+
+    MultiSelect: true,
+    SelectAction: (selectedItems) => {
+      console.log('Seleccionados:', selectedItems);
+      // Ej: exportar, procesar lote
+    }
+  }
+});</code></pre>
+
+            <h2>Buenas prácticas</h2>
+            <ul>
+                <li>Usa <code>ModelObject</code> para abstraer lógica de presentación (fechas, monedas, íconos)</li>
+                <li>Combina <code>MultiSelect</code> + <code>DeleteAction</code> para borrado masivo</li>
+                <li>Desactiva <code>Search</code> y <code>Filter</code> en datasets pequeños para reducir complejidad
+                    visual</li>
+            </ul>
+
+            <h2>Ejemplo completo (como en las tabs)</h2>
+            <pre><code class="language-javascript">// Tabla con modelo + opciones avanzadas
+new WTableComponent({
+  Dataset: data,
+  ModelObject: new ModelObject(),
+  Options: {
+    Search: false,
+    Show: false,
+    Edit: false,
+    Filter: true,
+    MultiSelect: true,
+    Delete: true
+  }
+});
+
+// Tabla con acciones personalizadas
+new WTableComponent({
+  Dataset: data,
+  ModelObject: new ModelObject(),
+  Options: {
+    Add: true,
+    AddAction: (obj) => alert("Se agregó: " + JSON.stringify(obj)),
+    
+    Edit: true,
+    EditAction: (obj) => alert("Se editó: " + JSON.stringify(obj)),
+    
+    MultiSelect: true,
+    SelectAction: (objs) => alert("Seleccionados: " + JSON.stringify(objs)),
+    
+    Delete: true,
+    DeleteAction: (obj) => alert("Se eliminó: " + JSON.stringify(obj))
+  }
+});</code></pre>
+<hr>
+
+            <h1 id="Examples">Ejemplos</h1>
+
+        </div>
+    </w-layout>
+</body>
+
+</html>

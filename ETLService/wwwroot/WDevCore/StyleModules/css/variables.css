@@ -1,0 +1,32 @@
+:root {
+	--primary-color: rgba(255, 255, 255, 100%);
+	--secundary-color: rgb(244 244 244);
+	--tertiary-color: rgb(240, 240, 240);
+	--fourth-color: rgb(224, 224, 224);
+	--fifty-color: rgb(214, 214, 214);
+	--sexty-color: rgb(184, 183, 183);
+
+	--font: "Open Sans", sans-serif;
+	--font-primary-color: #222222;
+	--font-secundary-color: rgb(11, 89, 153);
+	--font-tertiary-color: rgb(255, 255, 255);
+	--font-fourth-color: #444444;
+	
+}
+@media (prefers-color-scheme: dark) {
+	/*:root {
+		--primary-color: #1f2224;
+		--secundary-color: rgb(31, 34, 36);
+		--tertiary-color: rgb(40, 44, 47);
+		--fourth-color: rgb(51, 53, 59);
+		--fifty-color: rgba(70, 70, 70, 0.9);
+		--sexty-color: rgba(184, 183, 183, 0.9);
+
+		--font: "Open Sans", sans-serif;
+		--font-primary-color: #ffffff;
+		--font-secundary-color: rgb(186, 187, 187);
+		--font-tertiary-color: rgb(0, 83, 207);
+		--font-fourth-color: #d3d3d3;
+	}*/
+}
+

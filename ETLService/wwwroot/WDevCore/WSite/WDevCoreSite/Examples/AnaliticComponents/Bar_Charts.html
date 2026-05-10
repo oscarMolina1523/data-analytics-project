@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../css/site.css">
+    <script type="module" src="../../../Template/Layout.js"> </script>
+    <script type="module">
+        import { ColumChart } from "../../../../../WDevCore/WComponents/WChartJSComponents.js";
+        import { data } from "../data.js";
+        /**TRIPLE AGRUPACIóN*/
+        window.onload = () => {
+            layout.content.append(
+                new ColumChart({
+                    Title: "CHART 1 - Triple agrupación",
+                    Dataset: data,
+                    AttNameEval: "homeTown",
+                    EvalValue: "value", // suma el valor del value para obtener la sumatoria completa del array
+                    groupParams: ["year", "trimestre", "mes"],
+                })
+            )
+            layout.content.append(
+                new ColumChart({
+                    Title: "CHART 2 - Doble Agrupación",
+                    Dataset: data,
+                    AttNameEval: "homeTown",
+                    groupParams: ["year", "trimestre"],
+                })
+            )
+            layout.content.append(
+                new ColumChart({
+                    Title: "CHART 3 - Mono Agrupación",
+                    Dataset: data,
+                    AttNameEval: "homeTown",
+                    groupParams: ["year"],
+                })
+            )
+            layout.content.append(
+                new ColumChart({
+                    Title: "CHART 4 - Mono Agrupación",
+                    Dataset: data,
+                    AttNameEval: "secretBase",
+                    percentCalc: true,
+                    groupParams: ["year"],
+                })
+            )
+            layout.content.append(
+                new ColumChart({
+                    Title: "CHART 5 - Stakef Agrupación",
+                    Dataset: data,
+                    AttNameEval: "secretBase",
+                    percentCalc: true,
+                    TypeChart: "STACKED",
+                    groupParams: ["year", "trimestre"],
+                })
+            )
+
+            layout.content.append(
+                new ColumChart({
+                    Title: "CHART 1 - Mono Agrupación",
+                    TypeChart: "Line",
+                    Dataset: data,
+                    AttNameEval: "homeTown",
+                    groupParams: ["year", "mes"],
+                })
+            )
+            layout.content.append(
+                new ColumChart({
+                    Title: "CHART 1 - Mono Agrupación",
+                    TypeChart: "Line",
+                    Dataset: data,
+                    AttNameEval: "homeTown",
+                    groupParams: ["year", "trimestre", "mes"],
+                })
+            )
+            layout.content.append(
+                new ColumChart({
+                    Title: "CHART 1 - Triple agrupación",
+                    Dataset: data,
+                    AttNameEval: "homeTown",
+                    // EvalValue: "value", // suma el valor del value para obtener la sumatoria completa del array
+                    groupParams: ["year", "trimestre", "mes"],
+                })
+            )
+        }
+    </script>
+</head>
+
+<body>
+    <w-layout id="layout"></w-layout>
+</body>
+
+</html>

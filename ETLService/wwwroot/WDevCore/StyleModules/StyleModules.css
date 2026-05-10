@@ -1,0 +1,233 @@
+/*tabla estilo card*/
+.CardStyleComponent,
+ .CardStyleComponent thead, 
+ .CardStyleComponent tbody,
+  .CardStyleComponent tfoot{
+    display: block;   
+    text-align: center;
+}
+.CardStyleComponent tr{
+    display: inline-block;
+    width: 40%;
+    margin: 5px;
+    border: 1px solid #888888;
+    border-radius: 0.2cm;
+    overflow: hidden;
+    padding: 10px;
+    max-width: 300px;
+    height: 300px; 
+    position: relative;
+}
+.CardStyleComponent tr td{
+    width: calc(100% - 10px);
+    display: block;
+    margin: 5px;
+}
+.CardStyleComponent tr td label{
+    font-weight: bold;
+}
+.CardStyleComponent tr td[name=img]{
+   float: none;
+   display: block;
+   margin: auto;  
+   width: 90%;
+   border: #3c7ffc solid 2px;
+   border-radius: 0.2cm;
+   overflow: hidden;
+}
+.CardStyleComponent tr td img{    
+    height: auto;
+    width: 50%;
+ }
+.toptions input[type=text]{
+     width: calc(75% - 10px);
+     margin: 0px;
+     padding: 5px;
+     display: inline-block;
+     border: #aaaaaa solid 1px;
+ }
+.toptions input[type=button]{
+    width: calc(25% - 10px);
+    margin: 0px;
+    padding: 5px;
+    border: #3c7ffc solid 2px;
+    display: inline-block;
+}
+.CardStyleComponent .TdOptions{
+    display: block;
+    width: calc(100% - 0px);
+    text-align: center;
+    clear: left;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    border-top: #808080 solid 1px;
+    margin-top: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 10px;
+}
+
+@media(max-width: 1000px){  
+    .CardStyleComponent tr{     
+        width: calc(100% - 20px);  
+        margin-left: 0px;
+        margin-right: 0px; 
+        max-width: 90%; 
+        max-width: 300px; 
+        /* display: block;  */
+    }
+}
+
+/*TABLE*/
+.TblForm{
+    width: calc(100% - 20px); 
+    display: block;
+    padding: 10px;
+    border: #808080 solid 1px;
+    border-radius: 0.2cm;
+}
+.TblForm label{
+    font-weight: bold;
+}
+/* BOTONES */
+
+.BtnAlert, .BtnPrimary, 
+.BtnSuccess, .BtnSecundary, .Btn
+ {
+    font-weight: bold;
+    border:none;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+    min-width: 100px;   
+    cursor: pointer;
+    background-color: #09f;
+    color: var(--primary-color);
+    border-right: rgb(3, 106, 175) 5px solid;
+}
+.Btn[type=checkbox]{
+    height: 20px;   
+    min-width: 20px;
+    margin: 5px;   
+}
+.BtnPrimary {
+    color: var(--primary-color);
+    background-color:#007bff;
+    border-right: rgb(3, 106, 175) 5px solid;
+}
+.BtnAlert {
+    color: var(--primary-color);
+    background-color: #dc3545;
+    border-right: #7e1b25 5px solid;
+}
+.BtnSuccess {
+    color: var(--primary-color);
+    background-color: #28a745;
+    border-right: #165c26 5px solid;
+}
+.BtnSecundary {
+    color: var(--primary-color);
+    background-color: #17a2b8;
+    border-right: #0f5964 5px solid;
+}
+
+
+
+/*MODAL STYLES*/
+
+.ModalContent {
+    opacity: 0;
+    /* pointer-events: none; */
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    width: 100%;
+    position: fixed !important;
+    top: 0px !important;
+    left: 0px !important;
+    bottom: 0px !important;
+    transition: all linear 1s;
+    box-shadow: 0 0px 1px 0px #000;
+    z-index: 200 !important;
+    overflow-y: auto; overflow-y: overlay;
+    padding-bottom: 50px;   
+}
+
+.ContainerForm {
+    display: block;
+    overflow: hidden;
+    margin: auto;
+    margin-top: 50px;
+    background-color: var(--primary-color);
+    width: 70%;
+    max-height: 800px;
+    overflow-y: auto; overflow-y: overlay;
+    padding: 20px;
+    min-height: 200px;
+    border-radius: 5px;
+    position: relative;
+}
+.GroupForm{
+    width: 100%;
+    margin: 10px;
+    overflow: hidden;
+}
+.GroupForm .divForm{
+    float: left;
+    width: calc(50% - 10px);   
+    margin: 5px;
+    overflow: hidden;
+    max-width: 200px;
+}
+.HeaderForm{
+    width: 100%;
+    border-bottom: #808080 1px solid; 
+    height: 50px;
+}
+.GroupForm .divControl {
+    float: left;
+    width: calc(50% - 10px);   
+    margin: 5px;
+    overflow: hidden;
+}
+.GroupForm .divControl input {   
+    display: block;
+    width: calc(100% - 10px);
+    border: none;
+    border-bottom: 2px solid #3c7ffc;
+    padding: 5px;
+}
+.ImageDetail{
+    width: 98%;    
+    border: 2px solid #3c7ffc;
+    overflow: hidden;
+    border-radius: 0.2cm ;
+}
+@media(max-width: 1000px){  
+    .ModalContent {  padding-bottom: 0px;  }
+    .ContainerForm { 
+        width: calc(100% - 40px);
+        height:  calc(100% - 40px);
+        margin-top: 0px;
+        border-radius: 0px;
+        max-height: 2000px;        
+    }
+    .GroupForm .divControl {
+        width: calc(100% - 10px);   
+    }
+}
+
+/*ACORDEONNNN*/
+
+.GroupFormAcordeon {
+    width: 98% !important;
+    height: 0px;
+    display: block;
+    float: none;
+    margin: 0px 1%;
+    overflow: auto;
+    max-width:100%  !important;
+    transition: all 1s ease 0s;    
+}
+
+

@@ -1,0 +1,6 @@
+[submodule "AppCore"]
+	path = AppCore
+	url = https://github.com/Wilber1987/AppCore.git
+[submodule "ETLService/wwwroot/WDevCore"]
+	path = ETLService/wwwroot/WDevCore
+	url = https://github.com/Wilber1987/WDevCore

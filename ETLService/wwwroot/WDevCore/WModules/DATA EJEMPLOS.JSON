@@ -1,0 +1,519 @@
+//groupdata
+{
+    "Sucursal A": {
+        "Laptop": [
+            {
+                "Producto": "Laptop",
+                "Sucursal": "Sucursal A",
+                "Fecha": "2024-02-01",
+                "SubTotal": 1200,
+                "Descuento": 20,
+                "Iva": 192,
+                "Total": 1104
+            },
+            {
+                "Producto": "Laptop",
+                "Sucursal": "Sucursal A",
+                "Fecha": "2024-02-11",
+                "SubTotal": 1300,
+                "Descuento": 20,
+                "Iva": 208,
+                "Total": 1192
+            }
+        ],
+        "Tablet": [
+            {
+                "Producto": "Tablet",
+                "Sucursal": "Sucursal A",
+                "Fecha": "2024-02-03",
+                "SubTotal": 500,
+                "Descuento": 20,
+                "Iva": 80,
+                "Total": 468
+            },
+            {
+                "Producto": "Tablet",
+                "Sucursal": "Sucursal A",
+                "Fecha": "2024-02-13",
+                "SubTotal": 510,
+                "Descuento": 20,
+                "Iva": 82,
+                "Total": 478
+            }
+        ],
+        "Teclado": [
+            {
+                "Producto": "Teclado",
+                "Sucursal": "Sucursal A",
+                "Fecha": "2024-02-05",
+                "SubTotal": 50,
+                "Descuento": 10,
+                "Iva": 8,
+                "Total": 58
+            },
+            {
+                "Producto": "Teclado",
+                "Sucursal": "Sucursal A",
+                "Fecha": "2024-02-15",
+                "SubTotal": 60,
+                "Descuento": 10,
+                "Iva": 10,
+                "Total": 70
+            }
+        ],
+        "Smartphone": [
+            {
+                "Producto": "Smartphone",
+                "Sucursal": "Sucursal A",
+                "Fecha": "2024-02-07",
+                "SubTotal": 750,
+                "Descuento": 10,
+                "Iva": 120,
+                "Total": 870
+            },
+            {
+                "Producto": "Smartphone",
+                "Sucursal": "Sucursal A",
+                "Fecha": "2024-02-17",
+                "SubTotal": 830,
+                "Descuento": 10,
+                "Iva": 133,
+                "Total": 963
+            }
+        ],
+        "Monitor": [
+            {
+                "Producto": "Monitor",
+                "Sucursal": "Sucursal A",
+                "Fecha": "2024-02-09",
+                "SubTotal": 290,
+                "Descuento": 10,
+                "Iva": 46,
+                "Total": 336
+            },
+            {
+                "Producto": "Monitor",
+                "Sucursal": "Sucursal A",
+                "Fecha": "2024-02-19",
+                "SubTotal": 320,
+                "Descuento": 10,
+                "Iva": 51,
+                "Total": 371
+            }
+        ]
+    },
+    "Sucursal B": {
+        "Smartphone": [
+            {
+                "Producto": "Smartphone",
+                "Sucursal": "Sucursal B",
+                "Fecha": "2024-02-02",
+                "SubTotal": 800,
+                "Descuento": 10,
+                "Iva": 128,
+                "Total": 928
+            },
+            {
+                "Producto": "Smartphone",
+                "Sucursal": "Sucursal B",
+                "Fecha": "2024-02-12",
+                "SubTotal": 820,
+                "Descuento": 10,
+                "Iva": 131,
+                "Total": 951
+            }
+        ],
+        "Monitor": [
+            {
+                "Producto": "Monitor",
+                "Sucursal": "Sucursal B",
+                "Fecha": "2024-02-04",
+                "SubTotal": 300,
+                "Descuento": 10,
+                "Iva": 48,
+                "Total": 348
+            },
+            {
+                "Producto": "Monitor",
+                "Sucursal": "Sucursal B",
+                "Fecha": "2024-02-14",
+                "SubTotal": 310,
+                "Descuento": 10,
+                "Iva": 50,
+                "Total": 360
+            }
+        ],
+        "Laptop": [
+            {
+                "Producto": "Laptop",
+                "Sucursal": "Sucursal B",
+                "Fecha": "2024-02-06",
+                "SubTotal": 1250,
+                "Descuento": 20,
+                "Iva": 200,
+                "Total": 1150
+            },
+            {
+                "Producto": "Laptop",
+                "Sucursal": "Sucursal B",
+                "Fecha": "2024-02-16",
+                "SubTotal": 1350,
+                "Descuento": 20,
+                "Iva": 216,
+                "Total": 1220
+            }
+        ],
+        "Tablet": [
+            {
+                "Producto": "Tablet",
+                "Sucursal": "Sucursal B",
+                "Fecha": "2024-02-08",
+                "SubTotal": 480,
+                "Descuento": 20,
+                "Iva": 77,
+                "Total": 450
+            },
+            {
+                "Producto": "Tablet",
+                "Sucursal": "Sucursal B",
+                "Fecha": "2024-02-18",
+                "SubTotal": 520,
+                "Descuento": 20,
+                "Iva": 83,
+                "Total": 487
+            }
+        ],
+        "Teclado": [
+            {
+                "Producto": "Teclado",
+                "Sucursal": "Sucursal B",
+                "Fecha": "2024-02-10",
+                "SubTotal": 55,
+                "Descuento": 10,
+                "Iva": 9,
+                "Total": 64
+            },
+            {
+                "Producto": "Teclado",
+                "Sucursal": "Sucursal B",
+                "Fecha": "2024-02-20",
+                "SubTotal": 65,
+                "Descuento": 10,
+                "Iva": 11,
+                "Total": 76
+            }
+        ]
+    }
+}
+
+//sumary
+{
+    "Sucursal A > Laptop": {
+        "SubTotal": {
+            "sum": 2500,
+            "count": 2,
+            "avg": 10
+        },
+        "Descuento": {
+            "sum": 40,
+            "count": 2,
+            "avg": 10
+        },
+        "Iva": {
+            "sum": 400,
+            "count": 2,
+            "avg": 10
+        },
+        "Total": {
+            "sum": 2296,
+            "count": 2,
+            "avg": 10
+        }
+    },
+    "Sucursal A > Tablet": {
+        "SubTotal": {
+            "sum": 1010,
+            "count": 2,
+            "avg": 10
+        },
+        "Descuento": {
+            "sum": 40,
+            "count": 2,
+            "avg": 10
+        },
+        "Iva": {
+            "sum": 162,
+            "count": 2,
+            "avg": 10
+        },
+        "Total": {
+            "sum": 946,
+            "count": 2,
+            "avg": 10
+        }
+    },
+    "Sucursal A > Teclado": {
+        "SubTotal": {
+            "sum": 110,
+            "count": 2,
+            "avg": 10
+        },
+        "Descuento": {
+            "sum": 20,
+            "count": 2,
+            "avg": 10
+        },
+        "Iva": {
+            "sum": 18,
+            "count": 2,
+            "avg": 10
+        },
+        "Total": {
+            "sum": 128,
+            "count": 2,
+            "avg": 10
+        }
+    },
+    "Sucursal A > Smartphone": {
+        "SubTotal": {
+            "sum": 1580,
+            "count": 2,
+            "avg": 10
+        },
+        "Descuento": {
+            "sum": 20,
+            "count": 2,
+            "avg": 10
+        },
+        "Iva": {
+            "sum": 253,
+            "count": 2,
+            "avg": 10
+        },
+        "Total": {
+            "sum": 1833,
+            "count": 2,
+            "avg": 10
+        }
+    },
+    "Sucursal A > Monitor": {
+        "SubTotal": {
+            "sum": 610,
+            "count": 2,
+            "avg": 10
+        },
+        "Descuento": {
+            "sum": 20,
+            "count": 2,
+            "avg": 10
+        },
+        "Iva": {
+            "sum": 97,
+            "count": 2,
+            "avg": 10
+        },
+        "Total": {
+            "sum": 707,
+            "count": 2,
+            "avg": 10
+        }
+    },
+    "Sucursal A": {
+        "SubTotal": {
+            "sum": 5810,
+            "count": 10,
+            "avg": 50
+        },
+        "Descuento": {
+            "sum": 140,
+            "count": 10,
+            "avg": 50
+        },
+        "Iva": {
+            "sum": 930,
+            "count": 10,
+            "avg": 50
+        },
+        "Total": {
+            "sum": 5910,
+            "count": 10,
+            "avg": 50
+        }
+    },
+    "Sucursal B > Smartphone": {
+        "SubTotal": {
+            "sum": 1620,
+            "count": 2,
+            "avg": 10
+        },
+        "Descuento": {
+            "sum": 20,
+            "count": 2,
+            "avg": 10
+        },
+        "Iva": {
+            "sum": 259,
+            "count": 2,
+            "avg": 10
+        },
+        "Total": {
+            "sum": 1879,
+            "count": 2,
+            "avg": 10
+        }
+    },
+    "Sucursal B > Monitor": {
+        "SubTotal": {
+            "sum": 610,
+            "count": 2,
+            "avg": 10
+        },
+        "Descuento": {
+            "sum": 20,
+            "count": 2,
+            "avg": 10
+        },
+        "Iva": {
+            "sum": 98,
+            "count": 2,
+            "avg": 10
+        },
+        "Total": {
+            "sum": 708,
+            "count": 2,
+            "avg": 10
+        }
+    },
+    "Sucursal B > Laptop": {
+        "SubTotal": {
+            "sum": 2600,
+            "count": 2,
+            "avg": 10
+        },
+        "Descuento": {
+            "sum": 40,
+            "count": 2,
+            "avg": 10
+        },
+        "Iva": {
+            "sum": 416,
+            "count": 2,
+            "avg": 10
+        },
+        "Total": {
+            "sum": 2370,
+            "count": 2,
+            "avg": 10
+        }
+    },
+    "Sucursal B > Tablet": {
+        "SubTotal": {
+            "sum": 1000,
+            "count": 2,
+            "avg": 10
+        },
+        "Descuento": {
+            "sum": 40,
+            "count": 2,
+            "avg": 10
+        },
+        "Iva": {
+            "sum": 160,
+            "count": 2,
+            "avg": 10
+        },
+        "Total": {
+            "sum": 937,
+            "count": 2,
+            "avg": 10
+        }
+    },
+    "Sucursal B > Teclado": {
+        "SubTotal": {
+            "sum": 120,
+            "count": 2,
+            "avg": 10
+        },
+        "Descuento": {
+            "sum": 20,
+            "count": 2,
+            "avg": 10
+        },
+        "Iva": {
+            "sum": 20,
+            "count": 2,
+            "avg": 10
+        },
+        "Total": {
+            "sum": 140,
+            "count": 2,
+            "avg": 10
+        }
+    },
+    "Sucursal B": {
+        "SubTotal": {
+            "sum": 5950,
+            "count": 10,
+            "avg": 50
+        },
+        "Descuento": {
+            "sum": 140,
+            "count": 10,
+            "avg": 50
+        },
+        "Iva": {
+            "sum": 953,
+            "count": 10,
+            "avg": 50
+        },
+        "Total": {
+            "sum": 6034,
+            "count": 10,
+            "avg": 50
+        }
+    },
+    "": {
+        "SubTotal": {
+            "sum": 11760,
+            "count": 20,
+            "avg": 100
+        },
+        "Descuento": {
+            "sum": 280,
+            "count": 20,
+            "avg": 100
+        },
+        "Iva": {
+            "sum": 1883,
+            "count": 20,
+            "avg": 100
+        },
+        "Total": {
+            "sum": 11944,
+            "count": 20,
+            "avg": 100
+        }
+    },
+    "General Summary": {
+        "SubTotal": {
+            "sum": 11760,
+            "count": 20,
+            "avg": 100
+        },
+        "Descuento": {
+            "sum": 280,
+            "count": 20,
+            "avg": 100
+        },
+        "Iva": {
+            "sum": 1883,
+            "count": 20,
+            "avg": 100
+        },
+        "Total": {
+            "sum": 11944,
+            "count": 20,
+            "avg": 100
+        }
+    }
+}

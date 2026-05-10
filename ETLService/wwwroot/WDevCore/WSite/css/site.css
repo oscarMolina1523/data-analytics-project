@@ -1,0 +1,262 @@
+@import url(banner-bacground.css);
+@import url(mosaic.css);
+@import url(footer.css);
+@import url(../../StyleModules/css/variables.css);
+@import url(../../StyleModules/css/form.css);
+@import url(carrucel.css);
+
+* {
+    margin: 0;
+    font-family: "Raleway", sans-serif;
+}
+
+
+h2 {
+    margin: 20px 0px;
+}
+
+.main-content {
+    color: #cfcece;
+    padding: 30PX 10%;
+    flex: 1 1 80%;
+    height: 85%;
+}
+
+.site-header {
+    height: 100vh;
+    width: calc(100% - 600px);
+    padding-left: 300px;
+    padding-right: 300px;
+
+}
+
+.background-section {
+    overflow-x: hidden;
+    background-image: url(../Media/ImageComponents/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.site-header .logo {
+    width: 400px;
+    min-width: 400px !important;
+    height: 400px;
+    left: 300px;
+}
+
+.banner-data {
+    position: absolute;
+    width: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #cfcece;
+    z-index: 2;
+
+}
+
+
+
+.services-section {
+    background-image: url(../Media/ImageComponents/background2.jpg);
+}
+
+.services-container {
+    background: rgb;
+    color: #c4c4c4;
+    font-family: "Raleway", sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.45;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 80vh;
+    margin-top: 7vh;
+
+    .descripcion {
+        flex: 1;
+        border: #8b8b8b 1px solid;
+        padding: 30px;
+        box-sizing: border-box;
+        height: 100%;
+    }
+
+    .portfolio {
+        border: #8b8b8b 1px solid;
+        flex: 2;
+        padding: 30px;
+    }
+
+}
+
+
+.proyects-container {
+
+    gap: 30px;
+}
+
+.proyect-card {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 0 5px 0px #8b8b8b;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+
+    .description {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        text-align: justify;
+
+        .options {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+    }
+
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.proyect-card .proyect-logo {
+    width: 80%;
+    align-self: center;
+    border-radius: 20PX;
+}
+
+.main-footer {
+    background-color: #323b40;
+    color: var(--primary-color);
+    width: 100%;
+    padding: 30px 0px;
+}
+
+.footer-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0px;
+}
+
+.footer-data label {
+    cursor: pointer;
+}
+
+.main-nav {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    left: 300px;
+    gap: 20px;
+    z-index: 1;
+}
+
+.main-nav a {
+    color: var(--primary-color);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.main-nav a:hover {
+    color: #cfcece;
+}
+
+.proyect-section {
+    background-image: url(../Media/ImageComponents/background3.jpg);
+}
+
+@media (max-width: 600px) {
+    .site-header {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .background-section {
+        height: fit-content;
+    }
+
+    .banner-data {
+        position: relative;
+        width: 100%;
+
+        transform: translateY(0%);
+    }
+
+    .container {
+        display: none;
+    }
+
+    .services-container {
+        flex-direction: column;
+        height: auto;
+
+        .portfolio {
+            border: #8b8b8b 1px solid;
+            flex: 1;
+            padding: 10px;
+            min-height: 800px;
+        }
+    }
+
+    .grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-group(*) {
+    animation-duration: 0.5s;
+}
+
+::view-transition-old(root) {
+    animation: view-transition-new-out 0.5s forwards;
+}
+
+::view-transition-new(root) {
+    animation: view-transition-new-in 0.5s forwards;
+}
+
+@keyframes view-transition-new-out {
+    from {
+        opacity: 1;
+        scale: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        scale: 0;
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes view-transition-new-in {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

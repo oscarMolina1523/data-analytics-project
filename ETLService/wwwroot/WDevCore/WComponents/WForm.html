@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: white;
+      /* Ensure the iframe has a white background */
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module">
+
+    //@ts-check
+    import { WRender } from '../WModules/WComponentsTools.js';
+    import { WOrtograficValidation } from '../WModules/WOrtograficValidation.js';
+
+    class Tbl_Profiles_Model_ModelComponent {
+      /**
+       * @param {Partial<Tbl_Profiles_Model_ModelComponent>} [props]
+       */
+      constructor(props) {
+        Object.assign(this, props);
+      }
+    /**@type {ModelProperty}*/ Foto = { type: 'img', require: false, hiddenFilter: true };
+    /**@type {ModelProperty}*/ Id_Perfil = { type: 'number', primary: true, hiddenFilter: true };
+    /**@type {ModelProperty}*/ Nombres = { type: 'text' };
+    /**@type {ModelProperty}*/ Apellidos = { type: 'text' };
+    /**@type {ModelProperty}*/ FechaNac = { type: 'date', label: "fecha de nacimiento", hiddenFilter: true };
+    /**@type {ModelProperty}*/ Sexo = { type: "Select", Dataset: ["Masculino", "Femenino"], hiddenFilter: true };
+    /**@type {ModelProperty}*/ DNI = { type: 'text' };
+
+    /**@type {ModelProperty}*/ Correo_institucional = { type: 'text', label: "correo", disabled: true, hidden: true };
+    /**@type {ModelProperty}*/ Estado = { type: "Select", Dataset: ["ACTIVO", "INACTIVO"] };
+
+    /** campos de investigaciones */
+    //**@type {ModelProperty}*/ Tbl_Grupos_Profiles = { type: 'masterdetail', require: false , ModelObject: ()=> new Tbl_Grupos_Profiles_ModelComponent() };
+    /**@type {ModelProperty}*/ ORCID = { type: 'text', require: false, hiddenFilter: true };
+
+    }
+
+    export { Tbl_Profiles_Model_ModelComponent };
+
+
+    export class Tbl_Profiles_Model {
+      /** @param {Partial<Tbl_Profiles_Model>} [props] */
+      constructor(props) {
+        /** @type {number|null} */
+        this.Id_Perfil = null;
+
+        /** @type {string|null} */
+        this.Nombres = null;
+
+        /** @type {string|null} */
+        this.Apellidos = null;
+
+        /** @type {Date|null} */
+        this.FechaNac = null;
+
+        /** @type {number|null} */
+        this.IdUser = null;
+
+        /** @type {string|null} */
+        this.Sexo = null;
+
+        /** @type {string|null} */
+        this.Foto = null;
+
+        /** @type {string|null} */
+        this.DNI = null;
+
+        /** @type {string|null} */
+        this.Correo_institucional = null;
+
+        /** @type {string|null} */
+        this.Estado = null;
+
+        // -------- PROPIEDADES EXTRA DE LA SUBCLASE --------
+
+        /** @type {number|null} */
+        this.Id_Pais_Origen = null;
+
+        /** @type {number|null} */
+        this.Id_Institucion = null;
+
+        /** @type {string|null} */
+        this.Indice_H = null;
+
+        /** @type {string|null} */
+        this.ORCID = null;
+
+        // -------- RELACIONES --------
+
+        /** @type {Object|null} */
+        this.Security_Users = null;
+
+        /** @type {Object|null} */
+        this.Cat_Paises = null;
+
+        /** @type {Array<Object>|null} */
+        this.Tbl_Case = null;
+
+        /** @type {Array<Object>|null} */
+        this.Tbl_Agenda = null;
+
+
+        /** @type {Array<Object>|null} */
+        this.Tbl_Grupos_Profiles = null;
+
+        /** @type {Array<Object>|null} */
+        this.Tbl_Participantes = null;
+        Object.assign(this, props);
+      }
+
+    }
+
+    const profile = {
+      "Id_Pais_Origen": null,
+      "Id_Institucion": null,
+      "Indice_H": null,
+      "ORCID": null,
+      "Security_Users": null,
+      "Cat_Paises": null,
+      "Tbl_Case": null,
+      "Tbl_Agenda": null,
+      "Tbl_Dependencias_Usuarios": [
+        {
+          "Id_Perfil": 1,
+          "Id_Dependencia": 1,
+          "Id_Cargo": null,
+          "Tbl_Profile": {
+            "Id_Pais_Origen": null,
+            "Id_Institucion": null,
+            "Indice_H": null,
+            "ORCID": "",
+            "Security_Users": null,
+            "Cat_Paises": null,
+            "Tbl_Case": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 1,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 2,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 3,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 4,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios_Profile": [
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 6,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 13,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 14,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": null,
+            "Tbl_Grupos_Profiles": [
+              {
+                "Id_Grupo": 8,
+                "Id_Perfil": 1,
+                "Fecha_Incorporacion": "2025-01-14T00:00:00",
+                "Estado": "ACTIVO",
+                "Tbl_Grupo": null,
+                "Tbl_Profile": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Cat_Dependencias": null,
+            "Tbl_Participantes": null,
+            "Id_Perfil": 1,
+            "Nombres": "WDev",
+            "Apellidos": "Core Solutions",
+            "FechaNac": "1900-01-01T00:00:00",
+            "IdUser": 1,
+            "Sexo": "Masculino",
+            "Foto": "\\media\\img\\5ec13569-c61c-412f-9cfa-e3094fb44d72.png",
+            "DNI": "1112dfg",
+            "Correo_institucional": "admin@admin.net",
+            "Estado": "ACTIVO",
+            "filterData": [],
+            "orderData": null
+          },
+          "Cat_Dependencias": {
+            "Id_Dependencia": 1,
+            "Descripcion": "SSMP",
+            "Username": null,
+            "Password": null,
+            "Host": null,
+            "Id_Dependencia_Padre": null,
+            "Id_Institucion": null,
+            "AutenticationType": null,
+            "HostService": null,
+            "TENAT": null,
+            "CLIENT": null,
+            "OBJECTID": null,
+            "CLIENT_SECRET": null,
+            "SMTPHOST": null,
+            "DefaultDependency": true,
+            "Cat_Dependencia": null,
+            "Cat_Dependencias_Hijas": null,
+            "Tbl_Agenda": [
+              {
+                "IdAgenda": 241,
+                "Id_Perfil": null,
+                "Id_Dependencia": 1,
+                "Dia": "Viernes",
+                "Hora_Inicial": "08:00",
+                "Hora_Final": "17:00",
+                "Fecha_Caducidad": "2024-06-07T00:00:00",
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "IdAgenda": 240,
+                "Id_Perfil": null,
+                "Id_Dependencia": 1,
+                "Dia": "Jueves",
+                "Hora_Inicial": "08:00",
+                "Hora_Final": "17:00",
+                "Fecha_Caducidad": "2024-06-07T00:00:00",
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "IdAgenda": 239,
+                "Id_Perfil": null,
+                "Id_Dependencia": 1,
+                "Dia": "Miércoles",
+                "Hora_Inicial": "08:00",
+                "Hora_Final": "17:00",
+                "Fecha_Caducidad": "2024-06-07T00:00:00",
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "IdAgenda": 238,
+                "Id_Perfil": null,
+                "Id_Dependencia": 1,
+                "Dia": "Martes",
+                "Hora_Inicial": "08:00",
+                "Hora_Final": "17:00",
+                "Fecha_Caducidad": "2024-06-07T00:00:00",
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "IdAgenda": 237,
+                "Id_Perfil": null,
+                "Id_Dependencia": 1,
+                "Dia": "Lunes",
+                "Hora_Inicial": "08:00",
+                "Hora_Final": "17:00",
+                "Fecha_Caducidad": "2024-06-07T00:00:00",
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 1,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": [
+              {
+                "Id_Servicio": 1,
+                "Nombre_Servicio": "Servicio de seguimiento",
+                "Descripcion_Servicio": "seguimiento",
+                "Id_Tipo_Servicio": 1,
+                "Visibilidad": "publica",
+                "Estado": "Activo",
+                "Fecha_Inicio": "2021-01-12T00:00:00",
+                "Id_Dependencia": 1,
+                "Fecha_Finalizacion": "2021-12-12T00:00:00",
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "filterData": [],
+            "orderData": null
+          },
+          "Cat_Cargos_Dependencias": null,
+          "filterData": [],
+          "orderData": null
+        },
+        {
+          "Id_Perfil": 1,
+          "Id_Dependencia": 2,
+          "Id_Cargo": null,
+          "Tbl_Profile": {
+            "Id_Pais_Origen": null,
+            "Id_Institucion": null,
+            "Indice_H": null,
+            "ORCID": "",
+            "Security_Users": null,
+            "Cat_Paises": null,
+            "Tbl_Case": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 1,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 2,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 3,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 4,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios_Profile": [
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 6,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 13,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 14,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": null,
+            "Tbl_Grupos_Profiles": [
+              {
+                "Id_Grupo": 8,
+                "Id_Perfil": 1,
+                "Fecha_Incorporacion": "2025-01-14T00:00:00",
+                "Estado": "ACTIVO",
+                "Tbl_Grupo": null,
+                "Tbl_Profile": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Cat_Dependencias": null,
+            "Tbl_Participantes": null,
+            "Id_Perfil": 1,
+            "Nombres": "WDev",
+            "Apellidos": "Core Solutions",
+            "FechaNac": "1900-01-01T00:00:00",
+            "IdUser": 1,
+            "Sexo": "Masculino",
+            "Foto": "\\media\\img\\5ec13569-c61c-412f-9cfa-e3094fb44d72.png",
+            "DNI": "1112dfg",
+            "Correo_institucional": "admin@admin.net",
+            "Estado": "ACTIVO",
+            "filterData": [],
+            "orderData": null
+          },
+          "Cat_Dependencias": {
+            "Id_Dependencia": 2,
+            "Descripcion": "DEFAULT",
+            "Username": null,
+            "Password": null,
+            "Host": null,
+            "Id_Dependencia_Padre": null,
+            "Id_Institucion": null,
+            "AutenticationType": null,
+            "HostService": null,
+            "TENAT": null,
+            "CLIENT": null,
+            "OBJECTID": null,
+            "CLIENT_SECRET": null,
+            "SMTPHOST": null,
+            "DefaultDependency": null,
+            "Cat_Dependencia": null,
+            "Cat_Dependencias_Hijas": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1189,
+                "Id_Dependencia": 2,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 2,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": [
+              {
+                "Id_Servicio": 14,
+                "Nombre_Servicio": "DESADUANAJE",
+                "Descripcion_Servicio": "DESADUANAJE",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": "Activo",
+                "Fecha_Inicio": "2021-01-12T00:00:00",
+                "Id_Dependencia": 2,
+                "Fecha_Finalizacion": "2021-12-12T00:00:00",
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Servicio": 6,
+                "Nombre_Servicio": "SOLICITUD_DE_ASISTENCIA",
+                "Descripcion_Servicio": "SOLICITUD_DE_ASISTENCIA",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 2,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Servicio": 5,
+                "Nombre_Servicio": "EVENTOS",
+                "Descripcion_Servicio": "EVENTOS",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 2,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Servicio": 4,
+                "Nombre_Servicio": "CONSULTA_DE_CONTACTO",
+                "Descripcion_Servicio": "CONSULTA_DE_CONTACTO",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 2,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Servicio": 3,
+                "Nombre_Servicio": "CONSULTA_DE_HORARIOS",
+                "Descripcion_Servicio": "CONSULTA_DE_HORARIOS",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 2,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Servicio": 2,
+                "Nombre_Servicio": "ASISTENCIA_GENERAL",
+                "Descripcion_Servicio": "ASISTENCIA_GENERAL",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 2,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "filterData": [],
+            "orderData": null
+          },
+          "Cat_Cargos_Dependencias": null,
+          "filterData": [],
+          "orderData": null
+        },
+        {
+          "Id_Perfil": 1,
+          "Id_Dependencia": 3,
+          "Id_Cargo": null,
+          "Tbl_Profile": {
+            "Id_Pais_Origen": null,
+            "Id_Institucion": null,
+            "Indice_H": null,
+            "ORCID": "",
+            "Security_Users": null,
+            "Cat_Paises": null,
+            "Tbl_Case": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 1,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 2,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 3,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 4,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios_Profile": [
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 6,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 13,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 14,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": null,
+            "Tbl_Grupos_Profiles": [
+              {
+                "Id_Grupo": 8,
+                "Id_Perfil": 1,
+                "Fecha_Incorporacion": "2025-01-14T00:00:00",
+                "Estado": "ACTIVO",
+                "Tbl_Grupo": null,
+                "Tbl_Profile": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Cat_Dependencias": null,
+            "Tbl_Participantes": null,
+            "Id_Perfil": 1,
+            "Nombres": "WDev",
+            "Apellidos": "Core Solutions",
+            "FechaNac": "1900-01-01T00:00:00",
+            "IdUser": 1,
+            "Sexo": "Masculino",
+            "Foto": "\\media\\img\\5ec13569-c61c-412f-9cfa-e3094fb44d72.png",
+            "DNI": "1112dfg",
+            "Correo_institucional": "admin@admin.net",
+            "Estado": "ACTIVO",
+            "filterData": [],
+            "orderData": null
+          },
+          "Cat_Dependencias": {
+            "Id_Dependencia": 3,
+            "Descripcion": "CONSULTAS_SEGUIMIENTOS",
+            "Username": null,
+            "Password": null,
+            "Host": null,
+            "Id_Dependencia_Padre": null,
+            "Id_Institucion": null,
+            "AutenticationType": null,
+            "HostService": null,
+            "TENAT": null,
+            "CLIENT": null,
+            "OBJECTID": null,
+            "CLIENT_SECRET": null,
+            "SMTPHOST": null,
+            "DefaultDependency": null,
+            "Cat_Dependencia": null,
+            "Cat_Dependencias_Hijas": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 3,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": [
+              {
+                "Id_Servicio": 9,
+                "Nombre_Servicio": "INFORMACION_SOBRE_DOCUMENTOS",
+                "Descripcion_Servicio": "INFORMACION_SOBRE_DOCUMENTOS",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 3,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Servicio": 8,
+                "Nombre_Servicio": "INFORMACION_ENTREGAS_SEGUIMIENTOS",
+                "Descripcion_Servicio": "INFORMACION_ENTREGAS_SEGUIMIENTOS",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 3,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Servicio": 7,
+                "Nombre_Servicio": "RASTREO_Y_SEGUIMIENTOS",
+                "Descripcion_Servicio": "RASTREO_Y_SEGUIMIENTOS",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 3,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "filterData": [],
+            "orderData": null
+          },
+          "Cat_Cargos_Dependencias": null,
+          "filterData": [],
+          "orderData": null
+        },
+        {
+          "Id_Perfil": 1,
+          "Id_Dependencia": 4,
+          "Id_Cargo": null,
+          "Tbl_Profile": {
+            "Id_Pais_Origen": null,
+            "Id_Institucion": null,
+            "Indice_H": null,
+            "ORCID": "",
+            "Security_Users": null,
+            "Cat_Paises": null,
+            "Tbl_Case": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 1,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 2,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 3,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 4,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios_Profile": [
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 6,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 13,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 14,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": null,
+            "Tbl_Grupos_Profiles": [
+              {
+                "Id_Grupo": 8,
+                "Id_Perfil": 1,
+                "Fecha_Incorporacion": "2025-01-14T00:00:00",
+                "Estado": "ACTIVO",
+                "Tbl_Grupo": null,
+                "Tbl_Profile": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Cat_Dependencias": null,
+            "Tbl_Participantes": null,
+            "Id_Perfil": 1,
+            "Nombres": "WDev",
+            "Apellidos": "Core Solutions",
+            "FechaNac": "1900-01-01T00:00:00",
+            "IdUser": 1,
+            "Sexo": "Masculino",
+            "Foto": "\\media\\img\\5ec13569-c61c-412f-9cfa-e3094fb44d72.png",
+            "DNI": "1112dfg",
+            "Correo_institucional": "admin@admin.net",
+            "Estado": "ACTIVO",
+            "filterData": [],
+            "orderData": null
+          },
+          "Cat_Dependencias": {
+            "Id_Dependencia": 4,
+            "Descripcion": "DEPARTAMENTO_DE_QUEJAS",
+            "Username": null,
+            "Password": null,
+            "Host": null,
+            "Id_Dependencia_Padre": null,
+            "Id_Institucion": null,
+            "AutenticationType": null,
+            "HostService": null,
+            "TENAT": null,
+            "CLIENT": null,
+            "OBJECTID": null,
+            "CLIENT_SECRET": null,
+            "SMTPHOST": null,
+            "DefaultDependency": null,
+            "Cat_Dependencia": null,
+            "Cat_Dependencias_Hijas": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 4,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": [
+              {
+                "Id_Servicio": 13,
+                "Nombre_Servicio": "QUEJAS_GENERALES",
+                "Descripcion_Servicio": "QUEJAS_GENERALES",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 4,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Servicio": 12,
+                "Nombre_Servicio": "QUEJAS_POR_ESTAFA",
+                "Descripcion_Servicio": "QUEJAS_POR_ESTAFA",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 4,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Servicio": 11,
+                "Nombre_Servicio": "QUEJAS_POR_IMPORTES",
+                "Descripcion_Servicio": "QUEJAS_POR_IMPORTES",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 4,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Servicio": 10,
+                "Nombre_Servicio": "QUEJAS_POR_RETRASOS",
+                "Descripcion_Servicio": "QUEJAS_POR_RETRASOS",
+                "Id_Tipo_Servicio": null,
+                "Visibilidad": null,
+                "Estado": null,
+                "Fecha_Inicio": null,
+                "Id_Dependencia": 4,
+                "Fecha_Finalizacion": null,
+                "Cat_Tipo_Servicio": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "filterData": [],
+            "orderData": null
+          },
+          "Cat_Cargos_Dependencias": null,
+          "filterData": [],
+          "orderData": null
+        }
+      ],
+      "Tbl_Servicios_Profile": [
+        {
+          "Id_Perfil": 1,
+          "Id_Servicio": 6,
+          "Tbl_Profile": {
+            "Id_Pais_Origen": null,
+            "Id_Institucion": null,
+            "Indice_H": null,
+            "ORCID": "",
+            "Security_Users": null,
+            "Cat_Paises": null,
+            "Tbl_Case": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 1,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 2,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 3,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 4,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios_Profile": [
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 6,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 13,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 14,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": null,
+            "Tbl_Grupos_Profiles": [
+              {
+                "Id_Grupo": 8,
+                "Id_Perfil": 1,
+                "Fecha_Incorporacion": "2025-01-14T00:00:00",
+                "Estado": "ACTIVO",
+                "Tbl_Grupo": null,
+                "Tbl_Profile": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Cat_Dependencias": null,
+            "Tbl_Participantes": null,
+            "Id_Perfil": 1,
+            "Nombres": "WDev",
+            "Apellidos": "Core Solutions",
+            "FechaNac": "1900-01-01T00:00:00",
+            "IdUser": 1,
+            "Sexo": "Masculino",
+            "Foto": "\\media\\img\\5ec13569-c61c-412f-9cfa-e3094fb44d72.png",
+            "DNI": "1112dfg",
+            "Correo_institucional": "admin@admin.net",
+            "Estado": "ACTIVO",
+            "filterData": [],
+            "orderData": null
+          },
+          "Tbl_Servicios": {
+            "Id_Servicio": 6,
+            "Nombre_Servicio": "SOLICITUD_DE_ASISTENCIA",
+            "Descripcion_Servicio": "SOLICITUD_DE_ASISTENCIA",
+            "Id_Tipo_Servicio": null,
+            "Visibilidad": null,
+            "Estado": null,
+            "Fecha_Inicio": null,
+            "Id_Dependencia": 2,
+            "Fecha_Finalizacion": null,
+            "Cat_Tipo_Servicio": null,
+            "filterData": [],
+            "orderData": null
+          },
+          "filterData": [],
+          "orderData": null
+        },
+        {
+          "Id_Perfil": 1,
+          "Id_Servicio": 13,
+          "Tbl_Profile": {
+            "Id_Pais_Origen": null,
+            "Id_Institucion": null,
+            "Indice_H": null,
+            "ORCID": "",
+            "Security_Users": null,
+            "Cat_Paises": null,
+            "Tbl_Case": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 1,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 2,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 3,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 4,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios_Profile": [
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 6,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 13,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 14,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": null,
+            "Tbl_Grupos_Profiles": [
+              {
+                "Id_Grupo": 8,
+                "Id_Perfil": 1,
+                "Fecha_Incorporacion": "2025-01-14T00:00:00",
+                "Estado": "ACTIVO",
+                "Tbl_Grupo": null,
+                "Tbl_Profile": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Cat_Dependencias": null,
+            "Tbl_Participantes": null,
+            "Id_Perfil": 1,
+            "Nombres": "WDev",
+            "Apellidos": "Core Solutions",
+            "FechaNac": "1900-01-01T00:00:00",
+            "IdUser": 1,
+            "Sexo": "Masculino",
+            "Foto": "\\media\\img\\5ec13569-c61c-412f-9cfa-e3094fb44d72.png",
+            "DNI": "1112dfg",
+            "Correo_institucional": "admin@admin.net",
+            "Estado": "ACTIVO",
+            "filterData": [],
+            "orderData": null
+          },
+          "Tbl_Servicios": {
+            "Id_Servicio": 13,
+            "Nombre_Servicio": "QUEJAS_GENERALES",
+            "Descripcion_Servicio": "QUEJAS_GENERALES",
+            "Id_Tipo_Servicio": null,
+            "Visibilidad": null,
+            "Estado": null,
+            "Fecha_Inicio": null,
+            "Id_Dependencia": 4,
+            "Fecha_Finalizacion": null,
+            "Cat_Tipo_Servicio": null,
+            "filterData": [],
+            "orderData": null
+          },
+          "filterData": [],
+          "orderData": null
+        },
+        {
+          "Id_Perfil": 1,
+          "Id_Servicio": 14,
+          "Tbl_Profile": {
+            "Id_Pais_Origen": null,
+            "Id_Institucion": null,
+            "Indice_H": null,
+            "ORCID": "",
+            "Security_Users": null,
+            "Cat_Paises": null,
+            "Tbl_Case": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 1,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 2,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 3,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 4,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios_Profile": [
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 6,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 13,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 14,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": null,
+            "Tbl_Grupos_Profiles": [
+              {
+                "Id_Grupo": 8,
+                "Id_Perfil": 1,
+                "Fecha_Incorporacion": "2025-01-14T00:00:00",
+                "Estado": "ACTIVO",
+                "Tbl_Grupo": null,
+                "Tbl_Profile": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Cat_Dependencias": null,
+            "Tbl_Participantes": null,
+            "Id_Perfil": 1,
+            "Nombres": "WDev",
+            "Apellidos": "Core Solutions",
+            "FechaNac": "1900-01-01T00:00:00",
+            "IdUser": 1,
+            "Sexo": "Masculino",
+            "Foto": "\\media\\img\\5ec13569-c61c-412f-9cfa-e3094fb44d72.png",
+            "DNI": "1112dfg",
+            "Correo_institucional": "admin@admin.net",
+            "Estado": "ACTIVO",
+            "filterData": [],
+            "orderData": null
+          },
+          "Tbl_Servicios": {
+            "Id_Servicio": 14,
+            "Nombre_Servicio": "DESADUANAJE",
+            "Descripcion_Servicio": "DESADUANAJE",
+            "Id_Tipo_Servicio": null,
+            "Visibilidad": null,
+            "Estado": "Activo",
+            "Fecha_Inicio": "2021-01-12T00:00:00",
+            "Id_Dependencia": 2,
+            "Fecha_Finalizacion": "2021-12-12T00:00:00",
+            "Cat_Tipo_Servicio": null,
+            "filterData": [],
+            "orderData": null
+          },
+          "filterData": [],
+          "orderData": null
+        }
+      ],
+      "Tbl_Servicios": null,
+      "Tbl_Grupos_Profiles": [
+        {
+          "Id_Grupo": 8,
+          "Id_Perfil": 1,
+          "Fecha_Incorporacion": "2025-01-14T00:00:00",
+          "Estado": "ACTIVO",
+          "Tbl_Grupo": {
+            "Id_Grupo": 8,
+            "Nombre": "GRUPO DE PRUEBAS SSMP",
+            "Id_Perfil_Crea": null,
+            "Id_TipoGrupo": null,
+            "Fecha_Creacion": null,
+            "Estado": null,
+            "Descripcion": "<p class=\"MsoNormal\" style=\"mso-pagination:none;margin-top:9.0pt;margin-bottom:\n0pt\"><span lang=\"es-419\" style=\"font-size:12.0pt;font-family:Roboto;mso-default-font-family:\nRoboto;mso-ascii-font-family:Roboto;mso-latin-font-family:Roboto;mso-greek-font-family:\nRoboto;mso-cyrillic-font-family:Roboto;mso-armenian-font-family:Roboto;\nmso-hebrew-font-family:Roboto;mso-eudc-font-family:Roboto;mso-currency-font-family:\nRoboto;mso-latinext-font-family:Roboto;color:black;mso-style-textfill-type:\nsolid;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100%;\nfont-weight:bold;language:es-419;mso-ansi-language:es-419;mso-ligatures:none\">SSMP: Sistema Automatizado para el Seguimiento y Monitoreo de Proyectos<o:p></o:p></span></p>\n\n<p class=\"MsoNormal\" style=\"mso-pagination:none;margin-top:9.0pt;margin-bottom:\n0pt\"><br></p>\n\n<p class=\"MsoNormal\" style=\"mso-pagination:none;margin-top:9.0pt;margin-bottom:\n0pt\"><span lang=\"es-419\" style=\"font-size:12.0pt;font-family:Roboto;mso-default-font-family:\nRoboto;mso-ascii-font-family:Roboto;mso-latin-font-family:Roboto;mso-greek-font-family:\nRoboto;mso-cyrillic-font-family:Roboto;mso-armenian-font-family:Roboto;\nmso-hebrew-font-family:Roboto;mso-eudc-font-family:Roboto;mso-currency-font-family:\nRoboto;mso-latinext-font-family:Roboto;color:black;mso-style-textfill-type:\nsolid;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100%;\nlanguage:es-419;mso-ansi-language:es-419;mso-ligatures:none\">El&nbsp;</span><span lang=\"es-419\" style=\"font-size:12.0pt;font-family:Roboto;mso-default-font-family:\nRoboto;mso-ascii-font-family:Roboto;mso-latin-font-family:Roboto;mso-greek-font-family:\nRoboto;mso-cyrillic-font-family:Roboto;mso-armenian-font-family:Roboto;\nmso-hebrew-font-family:Roboto;mso-eudc-font-family:Roboto;mso-currency-font-family:\nRoboto;mso-latinext-font-family:Roboto;color:black;mso-style-textfill-type:\nsolid;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100%;\nlanguage:es-419;mso-ansi-language:es-419;mso-ligatures:none\"><span style=\"font-weight: 700;\">SSMP&nbsp;</span>es una solución integral diseñada para simplificar la gestión de proyectos y optimizar su ejecución. Con una interfaz intuitiva y herramientas automatizadas, este software ofrece un enfoque eficiente para coordinar y supervisar proyectos de principio a fin.<o:p></o:p></span></p>\n\n<p class=\"MsoNormal\" style=\"mso-pagination:none;margin-top:9.0pt;margin-bottom:\n0pt\"><span lang=\"es-419\" style=\"font-size:12.0pt;font-family:Roboto;mso-default-font-family:\nRoboto;mso-ascii-font-family:Roboto;mso-latin-font-family:Roboto;mso-greek-font-family:\nRoboto;mso-cyrillic-font-family:Roboto;mso-armenian-font-family:Roboto;\nmso-hebrew-font-family:Roboto;mso-eudc-font-family:Roboto;mso-currency-font-family:\nRoboto;mso-latinext-font-family:Roboto;color:black;mso-style-textfill-type:\nsolid;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100%;\nfont-weight:bold;language:es-419;mso-ansi-language:es-419;mso-ligatures:none\">Características clave:</span><span style=\"color: black; font-family: Roboto; font-size: 12pt;\">&nbsp;</span></p>\n\n<p class=\"MsoNormal\" style=\"mso-pagination:none;margin-left:28.3pt;margin-bottom:\n0pt;mso-level-number-format:bullet;mso-level-text:·;mso-level-size:10.0pt;\nmso-level-font-family:Symbol\"><span style=\"direction:ltr;unicode-bidi:embed;\nfont-family:Symbol;font-size:10.0pt;color:black\">·</span><span style=\"width:13.5pt\">&nbsp;</span><span lang=\"es-419\" style=\"font-size:12.0pt;\nfont-family:Roboto;mso-default-font-family:Roboto;mso-ascii-font-family:Roboto;\nmso-latin-font-family:Roboto;mso-greek-font-family:Roboto;mso-cyrillic-font-family:\nRoboto;mso-armenian-font-family:Roboto;mso-hebrew-font-family:Roboto;\nmso-eudc-font-family:Roboto;mso-currency-font-family:Roboto;mso-latinext-font-family:\nRoboto;color:black;mso-style-textfill-type:solid;mso-style-textfill-fill-color:\nblack;mso-style-textfill-fill-alpha:100%;font-weight:bold;language:es-419;\nmso-ansi-language:es-419;mso-ligatures:none\">Control de Proyectos:</span><span lang=\"es-419\" style=\"font-size:12.0pt;font-family:Roboto;mso-default-font-family:\nRoboto;mso-ascii-font-family:Roboto;mso-latin-font-family:Roboto;mso-greek-font-family:\nRoboto;mso-cyrillic-font-family:Roboto;mso-armenian-font-family:Roboto;\nmso-hebrew-font-family:Roboto;mso-eudc-font-family:Roboto;mso-currency-font-family:\nRoboto;mso-latinext-font-family:Roboto;color:black;mso-style-textfill-type:\nsolid;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100%;\nlanguage:es-419;mso-ansi-language:es-419;mso-ligatures:none\">&nbsp;<span style=\"font-weight: 700;\">SSMP&nbsp;</span>permite crear y administrar proyectos, asignar tareas y definir hitos y plazos. Los equipos pueden colaborar en tiempo real, lo que facilita la comunicación y la toma de decisiones.</span><span style=\"color: black; font-family: Roboto; font-size: 12pt;\">&nbsp;</span></p>\n\n<p class=\"MsoNormal\" style=\"mso-pagination:none;margin-left:28.3pt;margin-bottom:\n0pt;mso-level-number-format:bullet;mso-level-text:·;mso-level-size:10.0pt;\nmso-level-font-family:Symbol\"><span style=\"direction:ltr;unicode-bidi:embed;\nfont-family:Symbol;font-size:10.0pt;color:black\">·</span><span style=\"width:13.5pt\">&nbsp;</span><span lang=\"es-419\" style=\"font-size:12.0pt;\nfont-family:Roboto;mso-default-font-family:Roboto;mso-ascii-font-family:Roboto;\nmso-latin-font-family:Roboto;mso-greek-font-family:Roboto;mso-cyrillic-font-family:\nRoboto;mso-armenian-font-family:Roboto;mso-hebrew-font-family:Roboto;\nmso-eudc-font-family:Roboto;mso-currency-font-family:Roboto;mso-latinext-font-family:\nRoboto;color:black;mso-style-textfill-type:solid;mso-style-textfill-fill-color:\nblack;mso-style-textfill-fill-alpha:100%;font-weight:bold;language:es-419;\nmso-ansi-language:es-419;mso-ligatures:none\">Seguimiento de Actividades:</span><span lang=\"es-419\" style=\"font-size:12.0pt;font-family:Roboto;mso-default-font-family:\nRoboto;mso-ascii-font-family:Roboto;mso-latin-font-family:Roboto;mso-greek-font-family:\nRoboto;mso-cyrillic-font-family:Roboto;mso-armenian-font-family:Roboto;\nmso-hebrew-font-family:Roboto;mso-eudc-font-family:Roboto;mso-currency-font-family:\nRoboto;mso-latinext-font-family:Roboto;color:black;mso-style-textfill-type:\nsolid;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100%;\nlanguage:es-419;mso-ansi-language:es-419;mso-ligatures:none\">&nbsp;El sistema rastrea el progreso de las actividades individuales y proporciona alertas en caso de desviaciones. Los responsables pueden evaluar el estado de las tareas y tomar medidas correctivas según sea necesario.</span><span style=\"color: black; font-family: Roboto; font-size: 12pt;\">&nbsp;</span></p>\n\n<p class=\"MsoNormal\" style=\"mso-pagination:none;margin-left:28.3pt;margin-bottom:\n0pt;mso-level-number-format:bullet;mso-level-text:·;mso-level-size:10.0pt;\nmso-level-font-family:Symbol\"><span style=\"direction:ltr;unicode-bidi:embed;\nfont-family:Symbol;font-size:10.0pt;color:black\">·</span><span style=\"width:13.5pt\">&nbsp;</span><span lang=\"es-419\" style=\"font-size:12.0pt;\nfont-family:Roboto;mso-default-font-family:Roboto;mso-ascii-font-family:Roboto;\nmso-latin-font-family:Roboto;mso-greek-font-family:Roboto;mso-cyrillic-font-family:\nRoboto;mso-armenian-font-family:Roboto;mso-hebrew-font-family:Roboto;\nmso-eudc-font-family:Roboto;mso-currency-font-family:Roboto;mso-latinext-font-family:\nRoboto;color:black;mso-style-textfill-type:solid;mso-style-textfill-fill-color:\nblack;mso-style-textfill-fill-alpha:100%;font-weight:bold;language:es-419;\nmso-ansi-language:es-419;mso-ligatures:none\">Monitoreo Continuo:</span><span lang=\"es-419\" style=\"font-size:12.0pt;font-family:Roboto;mso-default-font-family:\nRoboto;mso-ascii-font-family:Roboto;mso-latin-font-family:Roboto;mso-greek-font-family:\nRoboto;mso-cyrillic-font-family:Roboto;mso-armenian-font-family:Roboto;\nmso-hebrew-font-family:Roboto;mso-eudc-font-family:Roboto;mso-currency-font-family:\nRoboto;mso-latinext-font-family:Roboto;color:black;mso-style-textfill-type:\nsolid;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100%;\nlanguage:es-419;mso-ansi-language:es-419;mso-ligatures:none\">&nbsp;ofrece paneles de control para visualizar métricas clave, como el avance general. Esto permite una toma de decisiones informada y proactiva.</span><span style=\"color: black; font-family: Roboto; font-size: 12pt;\">&nbsp;</span></p>\n\n<p class=\"MsoNormal\" style=\"mso-pagination:none;margin-left:28.3pt;margin-bottom:\n0pt;mso-level-number-format:bullet;mso-level-text:·;mso-level-size:10.0pt;\nmso-level-font-family:Symbol\"><span style=\"direction:ltr;unicode-bidi:embed;\nfont-family:Symbol;font-size:10.0pt;color:black\">·</span><span style=\"width:13.5pt\">&nbsp;</span><span lang=\"es-419\" style=\"font-size:12.0pt;\nfont-family:Roboto;mso-default-font-family:Roboto;mso-ascii-font-family:Roboto;\nmso-latin-font-family:Roboto;mso-greek-font-family:Roboto;mso-cyrillic-font-family:\nRoboto;mso-armenian-font-family:Roboto;mso-hebrew-font-family:Roboto;\nmso-eudc-font-family:Roboto;mso-currency-font-family:Roboto;mso-latinext-font-family:\nRoboto;color:black;mso-style-textfill-type:solid;mso-style-textfill-fill-color:\nblack;mso-style-textfill-fill-alpha:100%;font-weight:bold;language:es-419;\nmso-ansi-language:es-419;mso-ligatures:none\">Automatización de Flujos de Trabajo:</span><span lang=\"es-419\" style=\"font-size:12.0pt;font-family:Roboto;mso-default-font-family:\nRoboto;mso-ascii-font-family:Roboto;mso-latin-font-family:Roboto;mso-greek-font-family:\nRoboto;mso-cyrillic-font-family:Roboto;mso-armenian-font-family:Roboto;\nmso-hebrew-font-family:Roboto;mso-eudc-font-family:Roboto;mso-currency-font-family:\nRoboto;mso-latinext-font-family:Roboto;color:black;mso-style-textfill-type:\nsolid;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100%;\nlanguage:es-419;mso-ansi-language:es-419;mso-ligatures:none\">&nbsp;El software automatiza procesos repetitivos, como notificaciones, recordatorios y generación de informes. Esto ahorra tiempo y reduce errores humanos.</span><span style=\"color: black; font-family: Roboto; font-size: 12pt;\">&nbsp;</span></p>\n\n<p class=\"MsoNormal\" style=\"mso-pagination:none;margin-left:28.3pt;margin-bottom:\n0pt;mso-level-number-format:bullet;mso-level-text:·;mso-level-size:10.0pt;\nmso-level-font-family:Symbol\"><span style=\"direction:ltr;unicode-bidi:embed;\nfont-family:Symbol;font-size:10.0pt;color:black\">·</span><span style=\"width:13.5pt\">&nbsp;</span><span lang=\"es-419\" style=\"font-size:12.0pt;\nfont-family:Roboto;mso-default-font-family:Roboto;mso-ascii-font-family:Roboto;\nmso-latin-font-family:Roboto;mso-greek-font-family:Roboto;mso-cyrillic-font-family:\nRoboto;mso-armenian-font-family:Roboto;mso-hebrew-font-family:Roboto;\nmso-eudc-font-family:Roboto;mso-currency-font-family:Roboto;mso-latinext-font-family:\nRoboto;color:black;mso-style-textfill-type:solid;mso-style-textfill-fill-color:\nblack;mso-style-textfill-fill-alpha:100%;font-weight:bold;language:es-419;\nmso-ansi-language:es-419;mso-ligatures:none\">Aumento de la Efectividad:&nbsp;</span><span lang=\"es-419\" style=\"font-size:12.0pt;font-family:Roboto;mso-default-font-family:\nRoboto;mso-ascii-font-family:Roboto;mso-latin-font-family:Roboto;mso-greek-font-family:\nRoboto;mso-cyrillic-font-family:Roboto;mso-armenian-font-family:Roboto;\nmso-hebrew-font-family:Roboto;mso-eudc-font-family:Roboto;mso-currency-font-family:\nRoboto;mso-latinext-font-family:Roboto;color:black;mso-style-textfill-type:\nsolid;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100%;\nlanguage:es-419;mso-ansi-language:es-419;mso-ligatures:none\"><span style=\"font-weight: 700;\">SSMP&nbsp;</span>simplifica la colaboración, mejora la visibilidad y aumenta la productividad en todas las etapas del ciclo de vida del proyecto.</span><span lang=\"es-419\" style=\"font-family:Calibri;color:black;mso-style-textfill-type:\nsolid;mso-style-textfill-fill-color:black;mso-style-textfill-fill-alpha:100%;\nlanguage:es-419;mso-ligatures:none\"><o:p></o:p></span></p>\n\n<p class=\"MsoNormal\"><span lang=\"es-US\">&nbsp;<o:p></o:p></span></p>",
+            "Color": "#00cc63",
+            "Tbl_Profile": null,
+            "Cat_Tipo_Grupo": null,
+            "Tbl_Grupos_Profiles": [
+              {
+                "Id_Grupo": 8,
+                "Id_Perfil": 1,
+                "Fecha_Incorporacion": "2025-01-14T00:00:00",
+                "Estado": "ACTIVO",
+                "Tbl_Grupo": null,
+                "Tbl_Profile": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "filterData": [],
+            "orderData": null
+          },
+          "Tbl_Profile": {
+            "Id_Pais_Origen": null,
+            "Id_Institucion": null,
+            "Indice_H": null,
+            "ORCID": "",
+            "Security_Users": null,
+            "Cat_Paises": null,
+            "Tbl_Case": null,
+            "Tbl_Agenda": null,
+            "Tbl_Dependencias_Usuarios": [
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 1,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 2,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 3,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Dependencia": 4,
+                "Id_Cargo": null,
+                "Tbl_Profile": null,
+                "Cat_Dependencias": null,
+                "Cat_Cargos_Dependencias": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios_Profile": [
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 6,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 13,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              },
+              {
+                "Id_Perfil": 1,
+                "Id_Servicio": 14,
+                "Tbl_Profile": null,
+                "Tbl_Servicios": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Tbl_Servicios": null,
+            "Tbl_Grupos_Profiles": [
+              {
+                "Id_Grupo": 8,
+                "Id_Perfil": 1,
+                "Fecha_Incorporacion": "2025-01-14T00:00:00",
+                "Estado": "ACTIVO",
+                "Tbl_Grupo": null,
+                "Tbl_Profile": null,
+                "filterData": [],
+                "orderData": null
+              }
+            ],
+            "Cat_Dependencias": null,
+            "Tbl_Participantes": null,
+            "Id_Perfil": 1,
+            "Nombres": "WDev",
+            "Apellidos": "Core Solutions",
+            "FechaNac": "1900-01-01T00:00:00",
+            "IdUser": 1,
+            "Sexo": "Masculino",
+            "Foto": "\\media\\img\\5ec13569-c61c-412f-9cfa-e3094fb44d72.png",
+            "DNI": "1112dfg",
+            "Correo_institucional": "admin@admin.net",
+            "Estado": "ACTIVO",
+            "filterData": [],
+            "orderData": null
+          },
+          "filterData": [],
+          "orderData": null
+        }
+      ],
+      "Cat_Dependencias": null,
+      "Tbl_Participantes": null,
+      "Id_Perfil": 1,
+      "Nombres": "WDev",
+      "Apellidos": "Core Solutions",
+      "FechaNac": "1900-01-01T00:00:00",
+      "IdUser": 1,
+      "Sexo": "Masculino",
+      "Foto": "\\media\\img\\5ec13569-c61c-412f-9cfa-e3094fb44d72.png",
+      "DNI": "1112dfg",
+      "Correo_institucional": "admin@admin.net",
+      "Estado": "ACTIVO",
+      "filterData": [],
+      "orderData": null
+    }
+
+    // --- Estilo básico para el detalle (sin shadow DOM conflictivo)
+    const WDetailViewStyle = document.createElement('style');
+    WDetailViewStyle.textContent = `
+  .w-detail-container {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  }
+  .w-detail-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 24px;
+    color: #333;
+    text-align: center;
+  }
+  .w-group-container {
+    margin-bottom: 32px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 16px;
+  }
+  .w-group-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 16px 0 12px;
+    color: #444;
+    padding-left: 4px;
+    border-left: 4px solid #1e88e5;
+  }
+  .w-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .w-field {
+    display: flex;
+    flex-direction: column;
+  }
+  .w-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #555;
+    margin-bottom: 4px;
+  }
+  .w-value {
+    font-size: 1rem;
+    color: #333;
+    word-break: break-word;
+    min-height: 1.5em;
+  }
+  .w-value.empty { color: #999; font-style: italic; }
+  .w-value img {
+    max-width: 120px;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-top: 6px;
+    display: block;
+  }
+  .w-value pre {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 4px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+  .w-nested-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 0.9rem;
+  }
+  .w-nested-table th {
+    background: #f5f5f5;
+    text-align: left;
+    padding: 6px 10px;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+  }
+  .w-nested-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #eee;
+  }
+  .w-nested-table tr:last-child td {
+    border-bottom: none;
+  }
+  .w-operation-value {
+    background: #e3f2fd;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+`;
+
+    /**
+     * @typedef {Object} DetailViewConfig
+     * @property {Object} Entity - instancia con los datos reales
+     * @property {Object} ModelObject - instancia del modelo (con propiedades tipo ModelProperty)
+     * @property {Array<{Name: string, Propertys: string[]}>} [Groups]
+     * @property {string} [Title]
+     * @property {string} [ImageUrlPath]
+     */
+
+    class WDetailView extends HTMLElement {
+      /**
+       * @param {DetailViewConfig} config
+       */
+      constructor(config = {}) {
+        super();
+        this.config = config;
+        this.attachShadow({ mode: 'open' });
+        this.render();
+      }
+
+      connectedCallback() {
+        if (!this.shadowRoot?.hasChildNodes()) this.render();
+      }
+
+      render() {
+        const { Entity, ModelObject, Groups, Title, ImageUrlPath = '' } = this.config;
+
+        if (!ModelObject || !Entity) {
+          this.shadowRoot.innerHTML = `<div style="color:red;padding:20px;">⚠️ WDetailView: ModelObject y Entity son requeridos.</div>`;
+          return;
+        }
+
+        // --- Estilo
+        this.shadowRoot.innerHTML = '';
+        this.shadowRoot.appendChild(WDetailViewStyle.cloneNode(true));
+
+        // --- Contenedor principal
+        const container = WRender.Create({ class: 'w-detail-container' });
+        if (Title) {
+          container.appendChild(WRender.Create({ class: 'w-detail-title', textContent: Title }));
+        }
+
+        // --- Agrupar propiedades
+        const allProps = Object.keys(ModelObject).filter(prop => !this.isNotDrawable(ModelObject, prop));
+        const groupedProps = this.groupProperties(allProps, Groups);
+
+        // --- Renderizar cada grupo
+        for (const [groupName, props] of Object.entries(groupedProps)) {
+          const groupDiv = WRender.Create({ class: 'w-group-container' });
+          if (groupName !== 'default') {
+            const titleEl = WRender.Create({ class: 'w-group-title', textContent: groupName });
+            groupDiv.appendChild(titleEl);
+          }
+
+          const rows = this.createRows(props, ModelObject, Entity, ImageUrlPath);
+          groupDiv.append(...rows);
+          container.appendChild(groupDiv);
+        }
+
+        this.shadowRoot.appendChild(container);
+      }
+
+      /**
+       * @param {string[]} allProps
+       * @param {Array<{Name: string, Propertys: string[]}> | undefined} Groups
+       * @returns {Record<string, string[]>}
+       */
+      groupProperties(allProps, Groups) {
+        const grouped = { default: /** @type {string[]} */([]) };
+        const assigned = new Set();
+
+        if (Groups && Groups.length) {
+          Groups.forEach(group => {
+            grouped[group.Name] = (group.Propertys || []).filter(p => allProps.includes(p));
+            grouped[group.Name].forEach(p => assigned.add(p));
+          });
+        }
+
+        // No asignados → grupo "default"
+        allProps.forEach(p => {
+          if (!assigned.has(p)) {
+            grouped.default.push(p);
+          }
+        });
+
+        // Eliminar grupo vacío 'default' si no tiene props
+        if (grouped.default.length === 0) delete grouped.default;
+
+        return grouped;
+      }
+
+      /**
+       * @param {string[]} props
+       * @param {Object} ModelObject
+       * @param {Object} Entity
+       * @param {string} ImageUrlPath
+       * @returns {HTMLElement[]}
+       */
+      createRows(props, ModelObject, Entity, ImageUrlPath) {
+        const rows = [];
+        let currentRow = WRender.Create({ class: 'w-row' });
+
+        props.forEach((prop, idx) => {
+          const modelProp = ModelObject[prop];
+          if (!modelProp || !modelProp.type) return;
+
+          // Evaluar visibilidad/deshabilitado (como en WForm)
+          const { isHidden } = this.EvalHiddenDisabled(modelProp, Entity);
+          if (isHidden || modelProp.primary) return;
+
+          const fieldEl = this.renderField(prop, modelProp, Entity[prop], Entity, ImageUrlPath);
+          currentRow.appendChild(fieldEl);
+
+          // Un campo por fila si es largo (img, richtext, masterdetail)
+          const isFullWidth = ['IMG', 'IMAGES', 'FILE', 'FILES', 'RICHTEXT', 'MASTERDETAIL', 'MODEL'].includes(modelProp.type.toUpperCase());
+          if (isFullWidth || (idx + 1) % 2 === 0 || idx === props.length - 1) {
+            rows.push(currentRow);
+            currentRow = WRender.Create({ class: 'w-row' });
+          }
+        });
+
+        if (currentRow.children.length > 0) {
+          rows.push(currentRow);
+        }
+
+        return rows;
+      }
+
+      /**
+       * @param {string} propName
+       * @param {import('../WModules/CommonModel.js').ModelProperty} modelProp
+       * @param {any} value
+       * @param {Object} Entity
+       * @param {string} ImageUrlPath
+       * @returns {HTMLElement}
+       */
+      renderField(propName, modelProp, value, Entity, ImageUrlPath) {
+        const label = modelProp.label ?? WOrtograficValidation.es(propName);
+        const field = WRender.Create({ class: 'w-field' });
+        const labelEl = WRender.Create({ class: 'w-label', textContent: label });
+        const valueEl = WRender.Create({ class: 'w-value' });
+
+        let displayValue = this.formatValue(modelProp, value, Entity, ImageUrlPath);
+        if (displayValue == null || displayValue === '') {
+          valueEl.classList.add('empty');
+          valueEl.textContent = '—';
+        } else if (typeof displayValue === 'string') {
+          valueEl.textContent = displayValue;
+        } else {
+          valueEl.appendChild(displayValue);
+        }
+
+        field.append(labelEl, valueEl);
+        return field;
+      }
+
+      /**
+       * @param {import('../WModules/CommonModel.js').ModelProperty} modelProp
+       * @param {any} value
+       * @param {Object} Entity
+       * @param {string} ImageUrlPath
+       * @returns {string | HTMLElement}
+       */
+      formatValue(modelProp, value, Entity, ImageUrlPath) {
+        const type = modelProp.type.toUpperCase();
+
+        if (type === 'IMG' || type === 'IMAGE') {
+          if (!value) return '';
+          let src = value;
+          if (typeof value === 'string' && !value.startsWith('data:') && !value.startsWith('http')) {
+            src = ImageUrlPath + value;
+          }
+          const img = WRender.Create({ tagName: 'img', src });
+          return img;
+        }
+
+        if (type === 'DATE' || type === 'DATETIME') {
+          if (!value) return '';
+          const date = new Date(value);
+          return isNaN(date.getTime())
+            ? String(value)
+            : date.toLocaleDateString('es-ES', {
+              day: '2-digit',
+              month: '2-digit',
+              year: 'numeric',
+              ...(type === 'DATETIME' && { hour: '2-digit', minute: '2-digit' })
+            });
+        }
+
+        if (type === 'SELECT' || type === 'RADIO') {
+          if (Array.isArray(modelProp.Dataset)) {
+            return modelProp.Dataset[value] ?? value ?? '';
+          }
+          if (typeof modelProp.Dataset === 'function') {
+            const dataset = modelProp.Dataset(Entity);
+            return dataset[value] ?? value ?? '';
+          }
+          return value ?? '';
+        }
+
+        if (type === 'MASTERDETAIL') {
+          if (!Array.isArray(value) || value.length === 0) return '—';
+          if (!modelProp.ModelObject) return JSON.stringify(value, null, 2);
+
+          // Renderizar como tabla pequeña
+          try {
+            const subModel = modelProp.ModelObject();
+            const keys = Object.keys(subModel).filter(k => !this.isNotDrawable(subModel, k));
+            const visibleKeys = keys.filter(k => {
+              const mp = subModel[k];
+              const { isHidden } = this.EvalHiddenDisabled(mp, {});
+              return !isHidden && mp.type && !mp.primary;
+            }).slice(0, 3); // máximo 3 columnas
+
+            const table = WRender.Create({ tagName: 'table', class: 'w-nested-table' });
+            const thead = WRender.Create({ tagName: 'thead' });
+            const headerRow = WRender.Create({ tagName: 'tr' });
+            visibleKeys.forEach(k => {
+              const th = WRender.Create({ tagName: 'th', textContent: subModel[k].label ?? WOrtograficValidation.es(k) });
+              headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            const tbody = WRender.Create({ tagName: 'tbody' });
+            value.slice(0, 5).forEach(item => {
+              const row = WRender.Create({ tagName: 'tr' });
+              visibleKeys.forEach(k => {
+                const td = WRender.Create({ tagName: 'td' });
+                const cellModel = /** @type {import('../WModules/CommonModel.js').ModelProperty} */ (subModel[k]);
+                const cellValue = this.formatValue(cellModel, item[k], item, '');
+                if (typeof cellValue === 'string') {
+                  td.textContent = cellValue;
+                } else {
+                  td.appendChild(cellValue);
+                }
+                row.appendChild(td);
+              });
+              tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+
+            if (value.length > 5) {
+              const moreRow = WRender.Create({ tagName: 'tr' });
+              const moreCell = WRender.Create({ tagName: 'td', colSpan: visibleKeys.length, style: 'text-align:center;font-style:italic;' });
+              moreCell.textContent = `+ ${value.length - 5} más…`;
+              moreRow.appendChild(moreCell);
+              tbody.appendChild(moreRow);
+            }
+
+            return table;
+          } catch (e) {
+            console.warn('Error rendering masterdetail', e);
+            return `<${value.length} registros>`;
+          }
+        }
+
+        if (type === 'RICHTEXT') {
+          if (!value) return '';
+          const pre = WRender.Create({ tagName: 'pre' });
+          pre.textContent = value;
+          return pre;
+        }
+
+        if (type === 'OPERATION') {
+          if (typeof modelProp.action === 'function') {
+            try {
+              const result = modelProp.action(Entity, this);
+              const span = WRender.Create({ class: 'w-operation-value' });
+              span.textContent = String(result);
+              return span;
+            } catch (e) {
+              return `[ERROR: ${e.message}]`;
+            }
+          }
+          return String(value);
+        }
+
+        if (type === 'MODEL') {
+          if (!value || typeof value !== 'object') return value ?? '';
+          if (!modelProp.ModelObject) return JSON.stringify(value, null, 2);
+
+          try {
+            const subModel = modelProp.ModelObject();
+            const subView = new WDetailView({
+              Entity: value,
+              ModelObject: subModel,
+              Groups: [], // sin grupos anidados (solo campos planos)
+            });
+            return subView;
+          } catch (e) {
+            return JSON.stringify(value, null, 2);
+          }
+        }
+
+        // Default: texto plano
+        if (value == null) return '';
+        if (typeof value === 'object') return JSON.stringify(value, null, 2);
+        return String(value);
+      }
+
+      /**
+       * Copia de la lógica de WForm para evaluar hidden/disabled (sin side effects)
+       */
+      EvalHiddenDisabled(modelProperty, target) {
+        let isHidden = false;
+        if (typeof modelProperty.hidden === "function") {
+          isHidden = Boolean(modelProperty.hidden(target, this));
+        } else {
+          isHidden = Boolean(modelProperty.hidden);
+        }
+        let isDisabled = false;
+        if (typeof modelProperty.disabled === "function") {
+          isDisabled = Boolean(modelProperty.disabled(target, this));
+        } else {
+          isDisabled = Boolean(modelProperty.disabled);
+        }
+        return { isHidden, isDisabled };
+      }
+
+      /**
+       * @param {Object} Model
+       * @param {string} prop
+       */
+      isNotDrawable(Model, prop) {
+        if (Model[prop] == null) return true;
+        return (Model[prop]?.__proto__ == Object.prototype &&
+          (!Model[prop]?.type))
+          || Model[prop]?.__proto__ == Function.prototype
+          || Model[prop]?.constructor?.name === "AsyncFunction"
+          || prop === "FilterData" || prop === "OrderData";
+      }
+    }
+
+    customElements.define('w-detail-view', WDetailView);
+
+    // --- Export for module usage
+    export { WDetailView };
+
+    document.body.appendChild(new WDetailView({
+      Entity: {},
+      ModelObject: new Tbl_Profiles_Model_ModelComponent(),
+      Title: "Detalle del perfil",
+      Groups: [
+        { Name: "Datos personales", Propertys: ["Nombres", "Apellidos", "FechaNac", "Sexo", "DNI", "Foto"] },
+        { Name: "Grupos", Propertys: ["Tbl_Grupos_Profiles"] }
+      ]
+    }));
+
+
+    const model = new Tbl_Profiles_Model_ModelComponent();
+
+    const detail = new WDetailView({
+      Entity: profile,
+      ModelObject: model,
+      Title: "Perfil de usuario",
+      Groups: [
+        { Name: "Información personal", Propertys: ["Nombres", "Apellidos", "FechaNac", "Sexo", "DNI", "Foto"] },
+        { Name: "Institucional", Propertys: ["Correo_institucional", "Estado", "ORCID"] },
+        { Name: "Grupos", Propertys: ["Tbl_Grupos_Profiles"] }
+      ],
+      ImageUrlPath: "/api/uploads/"
+    });
+
+    document.body.appendChild(detail);
+
+
+  </script>
+</body>
+
+</html>

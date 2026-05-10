@@ -1,0 +1,227 @@
+.carousel {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+
+    @media (prefers-reduced-motion: no-preference) {
+        scroll-behavior: smooth;
+    }
+
+
+    & li {
+        scroll-snap-align: center;
+    }
+}
+
+
+
+
+
+.carousel {
+
+    scroll-marker-group: after;
+
+    &::scroll-marker-group {
+        grid-area: markers;
+        display: grid;
+        place-content: safe center;
+        grid: 30px / auto-flow 30px;
+        gap: 15px;
+        padding: 15px;
+        scroll-padding: 15px;
+        overflow: auto;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+
+    }
+
+
+
+    &>.content>li {
+        &::scroll-marker {
+            content: " ";
+            border: 1px solid #bbb;
+            border-radius: 50%;
+            outline-offset: 4px;
+            -webkit-tap-highlight-color: transparent;
+            scroll-snap-align: center;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            animation: scale-in-and-out linear both;
+            animation-timeline: view(x);
+            interactivity: auto
+        }
+
+        &::scroll-marker:is(:hover, :focus-visible) {
+            border-color: LinkText;
+        }
+
+        &::scroll-marker:target-current {
+            background: LinkText;
+            border-color: LinkText;
+        }
+
+        /**/     
+        @media (forced-colors: active) {
+            &::scroll-marker:target-current {
+                background: #888;
+                border-color: #888;
+            }
+        }
+
+        &::scroll-marker:not(:active):hover {
+            transform: scale(1.25)
+        }
+
+        &::scroll-marker:not(:active):focus {
+            outline: 2px solid #888;
+            outline-offset: 2px
+        }
+
+        :where(.carousel--vertical) &::scroll-marker {
+            animation-timeline: view(y)
+        }
+    }
+}
+
+
+@layer support.demo {
+
+    .scroll-layout {
+        display: grid;
+
+
+
+        grid-template-areas:
+            "left scroll right"
+            ". markers .";
+
+
+        grid-template-areas:
+            "scroll scroll scroll"
+            "left markers right";
+
+        grid-template-columns: auto 1fr auto;
+
+        height: 100%;
+
+        .carousel {
+            grid-area: scroll;
+            height: 100%;
+        }
+    }
+
+    .carousel {
+        max-inline-size: 80cqi;
+        overscroll-behavior-x: contain;
+        scroll-behavior: smooth;
+    }
+
+    .content {
+        display: grid;
+        grid: 70vmin / auto-flow 100vmin;
+        grid-auto-columns: 100%;
+        grid-auto-flow: column;
+        gap: 10px;
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        place-items: center;
+        anchor-name: --carousel;
+        container-type: inline-size;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        @media (prefers-reduced-motion: no-preference) {
+            scroll-behavior: smooth
+        }
+
+        &::scroll-button(right) {
+            position-area: inline-end center;
+            content: '>';
+        }
+
+        &::scroll-button(left) {
+            position-area: inline-start center;
+            content: '<';
+        }
+
+        &::scroll-button(*) {
+            background-color: #5c5c5c;
+            border-radius: 50%;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            position: absolute;
+            z-index: 1;
+            position-anchor: --carousel;
+            inline-size: 44px;
+            font-family: Material Symbols Outlined;
+            line-height: 1;
+            display: flex;
+            place-items: center;
+            place-content: center;
+            aspect-ratio: 1;
+            transition: transform .3s var(--ease-spring-3), opacity .5s var(--ease-3), background-color .3s var(--ease-3), outline-offset .25s var(--ease-3);
+            color: #fcfcfc;
+            font-weight: bold;
+            @media (forced-colors: active) {
+                background: #a10808;
+            } 
+        }      
+        >li {
+            list-style-type: none;
+            scroll-snap-align: center;
+            height: 100%;
+            width: 95%;
+            scroll-snap-align: start;
+            :where(.carousel--offscreen-inert) & {
+                animation: offscreen-inert linear both;
+                animation-timeline: view(x)
+            }
+
+            :where(.carousel--unsnapped-inert) & {
+                container-type: scroll-state; >* {
+                    @container not scroll-state(snapped) {
+                        interactivity: inert
+                    }
+                }
+            }
+
+        }
+    }
+
+    @keyframes scale-in-and-out {
+        entry 0% {
+            transform: scale(.25);
+        }
+
+        entry 100% {
+            transform: scale(1);
+        }
+
+        exit 0% {
+            transform: scale(1);
+        }
+
+        exit 100% {
+            transform: scale(.25);
+        }
+    }
+
+    @keyframes offscreen-inert {
+
+        entry 0%,
+        exit 100% {
+            interactivity: inert;
+        }
+
+        entry 100%,
+        exit 0% {
+            interactivity: auto;
+        }
+    }
+}

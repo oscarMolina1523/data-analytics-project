@@ -1,0 +1,112 @@
+{
+  "wconstant": {
+    "prefix": "wconstant",
+    "body": [
+      "/**@type {Object.<string,any>} */",
+      "const constant = null; "
+    ]
+  },
+  "jstype": {
+    "prefix": "jstype",
+    "body": [
+      "/**@type {Object.<string, any>} */"
+    ]
+  },
+  "jsdocfun": {
+    "prefix": "jsdocfun",
+    "body": [
+      "/**",
+      "* @param {Object} param ",
+      "* @returns {any}",
+      "*/"
+    ]
+  },
+  "jsdef": {
+    "prefix": "jsdef",
+    "body": [
+      "/**",
+      " * @typedef {Object} Config ",
+      "    * @property {Function} [action]",
+      "**/"
+    ]
+  },
+  "jsconstructor": {
+    "prefix": "jsconstructor",
+    "body": [
+      "/**",
+      " * @typedef {Object.<string,any>} ComponentsConfig ",
+      "\t* @property {Array} [EditObject] objeto",
+      "**/",
+      "/**",
+      "* @param {ComponentsConfig} Config ",
+      "*/"
+    ]
+  },
+  "jsarray": {
+    "prefix": "jsarray",
+    "body": [
+      "/**@type {Array<Object.<string,any>>} */"
+    ]
+  },
+  "jsparamfun": {
+    "prefix": "jsparamfun",
+    "body": [
+      "/**",
+      "* @param {Object.<string,any>} param ",
+      "*/",
+      ""
+    ]
+  },
+  "jsdocreturn": {
+    "prefix": "jsdocreturn",
+    "body": [
+      "/** @returns {any} */",
+      ""
+    ]
+  },
+  "jsclass": {
+    "prefix": "jsclass",
+    "body": [
+      "class ClassName {",
+      "    constructor() {",
+      "    }",
+      "}"
+    ]
+  },
+  "vnSceneChoices": {
+    "prefix": "vnSceneChoices",
+    "body": [
+      "vnEngine.defineScene(\"scenename\", [",
+      "    Flow.Choice([",
+      "        Flow.Action(\"action\", [            ",
+      "            Flow.Jump(\"jump\"),",
+      "        ], { typeMenu: \"TAB\", icon: undefined }),",
+      "    ])",
+      "]);"
+    ]
+  },
+  "vnAction": {
+    "prefix": "vnAction",
+    "body": [
+      "Flow.Action(\"action\", [   ",
+      "    Flow.Jump(\"jump\"),",
+      "], { typeMenu: \"TAB\", icon: undefined }),"
+    ]
+  },
+  "vnScene2": {
+    "prefix": "vnScene",
+    "body": [
+      "vnEngine.defineScene(\"scenename\", [",
+      "   $TM_SELECTED_TEXT",
+      "]);"
+    ]
+  },
+  "jsmodelproperty": {
+    "prefix": "jsmodelproperty",
+    "body": [
+      "/**@type {ModelProperty} */ property = { type: \"TEXT\"};",
+      "",
+      ""
+    ]
+  }
+}

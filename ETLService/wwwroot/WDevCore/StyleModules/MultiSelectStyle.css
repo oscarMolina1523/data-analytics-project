@@ -1,0 +1,261 @@
+w-multi-select{
+    width: 100%;
+    height: 40px;
+    display: block;
+    background-color: var(--primary-color);
+    position: relative;
+    
+    margin: 5px;
+}
+w-multi-select .selectLabel{
+    height: 37px;    
+    font-size: 12px;
+    padding-left: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 37px;
+    /* border-bottom: 1px solid #a1a1a1; */
+    cursor: pointer;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+w-multi-select .DisplaySelect {
+    border: solid 1px #a1a1a1;
+    border-radius: 0.2cm;
+    cursor: pointer;
+    position: relative;   
+}
+w-multi-select .DisplaySelectC {
+    border-radius: 0px 0px 5px 5px; 
+    position: absolute;
+    width: 100%;
+    overflow-x: hidden;
+    max-height: 300px;
+    min-height: 0px;
+    border: 1px solid #a1a1a1;
+    transition: all 0.5s;
+    background-color: var(--primary-color);
+    z-index: 10;        
+    display: block;
+    padding: 10px;
+    margin: auto; 
+    opacity: 0;
+    pointer-events: none;
+}
+w-multi-select .DisplaySelect:hover > .DisplaySelectC  {
+    position: absolute;
+    opacity: 1;
+    pointer-events: all;    
+    display: block;
+    box-shadow: 0 0 10px rgb(119, 119, 119);
+   
+}
+w-multi-select .SearchContainer{
+    width: calc(100% - 2px);
+    padding: 0px;
+    background-color: #e2e2e2; 
+    transition: all 0.5s;
+    z-index: 10;
+    border:  1px solid #a1a1a1;  
+    position: absolute;   
+
+    max-height: 0px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none; 
+    
+}
+w-multi-select .DisplaySelect:hover > .SearchContainer { 
+    max-height: 100px;
+    opacity: 1;
+    pointer-events: all;    
+}
+w-multi-select .DisplaySelectC td{
+    padding: 0px 5px;
+}
+
+w-multi-select .DisplaySelectC td{
+    padding: 15px 15px;
+}
+w-multi-select .DisplaySelectC label{
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    padding: 5px 15px;
+    line-height: 25px;
+    font-size: 15px;
+}
+w-multi-select .DisplaySelectC tr {
+    background-color: #e2e2e2;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: 4px;
+    display: flex;
+    width: 100%;
+    align-content: center;
+}
+w-multi-select .DisplaySelectC span::before{
+    content: "";
+    background: transparent;
+    border: 2px solid #757575 !important;
+    /* border-radius: 5px;
+    display: inline-block; */
+    height: 15px;
+    line-height: 15px;
+    margin-right: 5px;
+    text-align: center;
+    vertical-align: middle;
+    width: 15px;
+    position: relative;
+    margin: 5px;
+    float: right;
+    top: 0px;
+}
+w-multi-select  .DisplaySelectC input {
+    display: none;
+}
+w-multi-select  .DisplaySelectC input[type="checkbox"]:checked + span::before{
+	content: '';
+    font-size: 15px;
+    color: #757575;
+    background-color: #757575;    
+    box-shadow: inset 0 0 0 3px #e2e2e2;
+    transition: all ease 0.5s;
+}
+
+w-multi-select .SearchContainer input{
+    width: calc(100% - 24px);
+    padding: 10px;
+    margin: 1px;
+    background-color: var(--primary-color);
+    border:  1px solid #a1a1a1;
+    border-radius: 4px;
+    z-index: 10;    
+
+}w-multi-select .SearchContainer input:active, w-multi-select .SearchContainer input:focus{  
+    border-color:  rgb(97, 171, 240);
+    box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075)inset, 0 0 8px rgba(97, 171, 240, 0.6);
+    outline: 0 none;
+}
+
+/* scrolls-------------------------------------------------------------------*/
+w-multi-select .DisplaySelectC::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+    margin: 10px;
+}
+w-multi-select .DisplaySelectC::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+}
+w-multi-select .DisplaySelectC::-webkit-scrollbar-thumb:active {
+    background-color: var(--fifty-color);
+}
+w-multi-select .DisplaySelectC::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+w-multi-select .DisplaySelectC::-webkit-scrollbar-track {
+    background: #e1e1e1;
+    border-radius: 4px;
+}
+
+w-multi-select .DisplaySelectC::-webkit-scrollbar-track:hover,
+w-multi-select .DisplaySelectC::-webkit-scrollbar-track:active {
+    background: #d4d4d4;
+}
+
+
+
+/*MULTI SELECTGROUP*/
+
+w-multi-select .MultiGroupSelect {
+    position: absolute;
+    max-height: 38px;
+    overflow-x: hidden;
+    width: calc(100% - 2px);
+    transition: all 0.8s;
+    overflow-y: scroll; overflow-y: overlay;
+    z-index: 2;
+    background-color: var(--primary-color);
+    border-radius: 0.2cm;
+    border: 1px solid #a1a1a1;
+}
+w-multi-select .DisplaySelectGroup .LabelAutoselect span::before{
+    content: "";
+    background: transparent;
+    border: 2px solid #757575 !important;
+    /* border-radius: 5px;
+    display: inline-block; */
+    height: 15px;
+    line-height: 25px;
+    margin-right: 10px;
+    text-align: center;
+    vertical-align: middle;
+    width: 15px;
+    position: relative;
+    margin: 9px;
+    float: right;
+    top: 0px;
+}
+w-multi-select  .DisplaySelectGroup input[type="checkbox"] {
+    display: none;
+}
+w-multi-select  .DisplaySelectGroup .LabelAutoselect input[type="checkbox"]:checked + span::before{
+	content: '';
+    font-size: 15px;
+    color: #757575;
+    background-color: #757575;    
+    box-shadow: inset 0 0 0 3px #e2e2e2;
+    transition: all ease 0.5s;
+}
+
+w-multi-select .MultiGroupSelect:hover {     
+    max-height: 400px; 
+    overflow-y: scroll; overflow-y: overlay;  
+    box-shadow: 0 0 10px rgb(119, 119, 119);
+}
+w-multi-select .DisplaySelectGroup{
+    /* border: solid 1px #a1a1a1; */
+    border-radius: 0.2cm ;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    max-height: 38px;
+    overflow: hidden;
+    background-color: var(--primary-color); 
+    display: block;    
+    background-color: var(--primary-color);
+    background-clip: padding-box;
+    border-radius: .25rem;
+    
+}
+w-multi-select .TableSelectC{
+    width: 95%;
+    display: block;
+    margin: auto;
+}
+w-multi-select .MultiGroupSelect::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+}w-multi-select .MultiGroupSelect::-webkit-scrollbar-thumb {
+    background: #b3b3b3;
+    cursor: pointer;
+   
+}w-multi-select .MultiGroupSelect::-webkit-scrollbar-thumb:active {
+    background-color: var(--fifty-color);
+}w-multi-select .MultiGroupSelect::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;    
+}w-multi-select .MultiGroupSelect::-webkit-scrollbar-track {
+    background: var(--primary-color);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+w-multi-select .MultiGroupSelect::-webkit-scrollbar-track:hover,
+w-multi-select .MultiGroupSelect::-webkit-scrollbar-track:active {
+    background: #d4d4d4;
+}

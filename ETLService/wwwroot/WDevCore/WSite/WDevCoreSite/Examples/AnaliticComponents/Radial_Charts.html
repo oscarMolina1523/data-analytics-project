@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../css/site.css">
+    <script type="module" src="../../../Template/Layout.js"> </script>
+    <script type="module">
+        import { RadialChart } from "../../../../../WDevCore/WComponents/WChartJSComponents.js";
+        import { data } from "../data.js";
+        window.onload = () => {
+            layout.content.append(
+                new RadialChart({
+                    Title: "CHART 1",
+                    Dataset: data,
+                    AttNameEval: "homeTown"
+                })
+            )
+            layout.content.append(
+                new RadialChart({
+                    Title: "CHART 2",
+                    Dataset: data,
+                    percentCalc: true,
+                    AttNameEval: "homeTown"
+                })
+            )
+            layout.content.append(
+                new RadialChart({
+                    Title: "CHART 3",
+                    Dataset: data,
+                    percentCalc: true,
+                    AttNameEval: "homeTown",
+                    EvalValue: "value"
+                })
+            )
+        }
+    </script>
+</head>
+<body>
+    <w-layout id="layout"></w-layout>
+</body>
+
+</html>

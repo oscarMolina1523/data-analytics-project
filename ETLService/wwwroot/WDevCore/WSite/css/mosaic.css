@@ -1,0 +1,139 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,700");
+
+
+
+.sidebar {
+  flex: 1 1 20%;
+  min-width: 300px;
+  padding: 3em;
+}
+
+.logo {
+  text-transform: uppercase;
+}
+
+@media (min-width: 1500px) {
+  .logo {
+    margin-bottom: 0em;
+  }
+}
+
+.logo span {
+  font-weight: 700;
+}
+
+.nav-item {
+  color: #737373;
+  text-decoration: none;
+  font-size: 1.7rem;
+  display: inline-block;
+  margin-right: 2em;
+}
+
+@media (min-width: 1500px) {
+  .nav-item {
+    display: block;
+    margin: 7vh 0;
+  }
+}
+
+.nav-item.active {
+  color: #c4c4c4;
+}
+
+.portfolio {
+  position: relative;
+  
+  .grid {
+    position: absolute;
+    top: -50px;
+    justify-self: center;
+    display: grid;
+    height: 100%;
+    width: 500px;
+    min-height: auto;
+    grid-template-rows: repeat(5, 20%) 1fr;
+    grid-template-columns: 50% 50%;
+    gap: 20px;
+    .portfolio-item {
+      grid-row: span 2;
+      width: 250px;    
+      justify-self: center;     
+      background-color: #1b1c1e;
+      border: var(--container-corvid-border-width, var(--brw, 1px)) solid var(--container-corvid-border-color, rgba(var(--brd, var(--color_15, color_15)), var(--alpha-brd, 1)));
+      border-radius: var(--rd, 5px);    
+      box-shadow: 0 0 10px 0 #1f1e1e;     
+      box-sizing: border-box;
+      padding: 15px;
+      border: #242424 1px solid;
+      .header {
+        font-weight: 600;
+      }
+      .header-icon img {
+        height: 50px;
+        width: 50px;
+        display: block;
+        margin: auto;
+        margin-bottom: 10px;
+      } 
+      p {
+        text-align: justify;
+      }
+    }
+    .col2 {
+      grid-row: 2/4;
+    }
+  }
+}
+
+
+.portfolio-item.small {
+  grid-row: span 1;
+  grid-column: span 1;
+}
+
+.portfolio-item.medium {
+  grid-row: span 2;
+  grid-column: span 2;
+}
+
+.portfolio-item.large {
+  grid-row: span 3;
+  grid-column: span 3;
+}
+
+.portfolio-item.tall {
+  grid-row: span 3;
+  grid-column: span 2;
+}
+
+.portfolio-item.wide {
+  grid-row: span 2;
+  grid-column: span 3;
+}
+
+.portfolio-item:hover {
+  color: white;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.85);
+}
+
+.two {
+  background-image: url(//unsplash.it/800/600);
+}
+
+.two::before {
+  content: "";
+  display: block;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transition: all ease-in-out 300ms;
+  z-index: -1;
+}
+
+.two:hover::before {
+  opacity: 0.2;
+}

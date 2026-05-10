@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Renderizado Dinamico</title>
+	<!-- Estilos -->
+	<link rel="stylesheet" href="../../StyleModules/css/variables.css">
+	<link rel="stylesheet" href="../../css/docstyle.css">
+	<!-- Prism.js para resaltar sintaxis -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../../StyleModules/css/variables.css">
+	<link rel="stylesheet" href="../../../StyleModules/css/form.css">
+	<link rel="stylesheet" href="../../css/site.css">
+	<script type="module" src="../../Template/Layout.js"> </script>
+</head>
+
+<body>
+	<w-layout id="layout">
+		<div class="container">
+			<h1>Renderizado Dinamico</h1>
+		</div>
+		<div class="doc-container">
+			<div id="doc">
+				<h2>Instancia del formulario</h2>
+				<p class="explicacion">
+					Este código muestra cómo usar las funciones `html` y `WRender.Create` para renderizar elementos
+					dinámicos en una página web. A continuación, se presentan ejemplos detallados de cada parte del
+					código.
+				</p>
+
+				<!-- Contenedor para los ejemplos de código -->
+				<div id="example1"></div>
+			</div>
+			<div id="control"></div>
+		</div>
+	</w-layout>
+
+	<!-- Prism.js para resaltar sintaxis -->
+	<script type="module">
+		// Importación de módulos
+		import { html, WRender } from "../../../WModules/WComponentsTools.js";
+		import { css } from "../../../WModules/WStyledRender.js";
+
+		// Función para escapar caracteres especiales
+		function escapeHtml(unsafe) {
+			return unsafe
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;")
+				.replace(/'/g, "&#039;");
+		}
+
+		// Evento que se ejecuta cuando la página ha cargado
+		//window.addEventListener("load", () => {
+		// Ejemplo 1: Uso de la función `html` para crear elementos dinámicos
+		control.append(html`<h1>Hola Mundo!</h1>`);
+		control.append(html`<h2>Hola Mundo!</h2>`);
+
+		// Ejemplo 2: Creación de un input con evento onclick
+		control.append(html`<input type="date"  onchange="${(ev) => alert(ev.target.value)}">`);
+
+		// Ejemplo 3: Uso de WRender.Create para crear un botón con evento onclick
+		control.append(WRender.Create({
+			tagName: "button",
+			innerText: "Accept",
+			className: "BtnSuccess",
+			onclick: () => {
+				alert("Hola Mundo!")
+			}
+		}));
+
+		// Ejemplo 4: Uso de WRender.Create para crear un div con contenido HTML y evento onclick
+		control.append(WRender.Create({
+			tagName: "div",
+			innerHTML: "<h1>Hola Mundo!</h1>",
+			onclick: () => {
+				alert("Hola Mundo!")
+			}
+		}));
+
+		// Ejemplo 5: Creación de una tabla usando la función `html`
+		control.append(html`<table>
+				<thead><tr>
+					<th> header 1</th>
+					<th> header 2</th>
+					<th> header 3</th>
+				</tr></thead>
+				<tbody><tr>
+					<td> dato 1</td>
+					<td> dato 2</td>
+					<td> dato 3</td>
+				</tr></tbody>
+			</table>`);
+
+		// Mostrar ejemplos de código en los bloques <pre><code>
+		const examples = [
+			`control.append(html\`<h1>Hola Mundo!</h1>\`);`,
+			`control.append(html\`<h2>Hola Mundo!</h2>\`);`,
+			`control.append(html\`<input type="date" onclick="\${(ev) => alert(ev.target.value)}">\`);`,
+			`control.append(WRender.Create({
+	tagName: "button",
+	innerText: "Accept",
+	onclick: () => {
+		alert("Hola Mundo!")
+	}
+}));`,
+			`control.append(WRender.Create({
+	tagName: "div",
+	innerHTML: "<h1>Hola Mundo!</h1>",
+	onclick: () => {
+		alert("Hola Mundo!")
+	}
+}));`,
+			`control.append(html\`<table>
+	<thead><tr>
+		<th> header 1</th>
+		<th> header 2</th>
+		<th> header 3</th>
+	</tr></thead>
+	<tbody><tr>
+		<td> dato 1</td>
+		<td> dato 2</td>
+		<td> dato 3</td>
+	</tr></tbody>
+</table>\`);`
+		];
+
+		// Insertar ejemplos en los bloques <pre><code>
+		const exampleContainer = document.getElementById("example1");
+		examples.forEach((example, index) => {
+			const pre = document.createElement("pre");
+			const code = document.createElement("code");
+			code.className = "language-javascript";
+			code.innerHTML = escapeHtml(example);
+			pre.appendChild(code);
+			exampleContainer.appendChild(pre);
+		});
+		//	});
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+</body>
+
+</html>

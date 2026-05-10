@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Documentación de WForm y Example_ModelComponent</title>
+	<link rel="stylesheet" href="../../../StyleModules/css/variables.css">
+	<link rel="stylesheet" href="../../css/docstyle.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../StyleModules/css/form.css">
+	<link rel="stylesheet" href="../../css/site.css">
+    <script type="module" src="../../Template/Layout.js"> </script>
+	<script type="module">
+		import { WForm } from "../../../WComponents/WForm.js"
+		import { Example_ModelComponent, Examples, Paises, Paises_ModelComponent, Adress_ModelComponent } from "./ExampleModels.js"
+		import { DateTime } from "../../../WModules/Types/DateTime.js";
+		import { Layout } from "../../Template/Layout.js";
+
+		window.addEventListener("load", () => {
+			// Configuración del formulario WForm
+			//const layout = new Layout();
+			//document.body.append(layout)
+			const Config = {
+				Title: "FORMULARIO - Controles Básicos",  // Título del formulario
+				ModelObject: new Example_ModelComponent(),  // Objeto modelo que define los campos del formulario
+				limit: 1,  // Número de columnas en el formulario
+				Groups: [  // Grupos de controles para organizar el formulario
+					{
+						Name: "COMPLEX CONTROLS",  // Nombre del grupo
+						Propertys: ["Select", "Radio", "Password"],  // Propiedades que pertenecen a este grupo
+						WithAcordeon: false  // Si el grupo debe mostrarse como un acordeón
+					},
+					{
+						Name: "COMPONENTS",  // Nombre del grupo
+						Propertys: [  // Propiedades que pertenecen a este grupo
+							"Image", "Images", "WSelect",
+							"RICHTEXT", "Draw", "MaterDetail",
+							"Calendar", "WCHECKBOX", "MULTISELECT"
+						],
+						WithAcordeon: false  // Si el grupo debe mostrarse como un acordeón
+					}
+				]
+			}
+			
+			control.append(new WForm(Config));
+
+			// Mostrar la configuración del formulario en el elemento con id "example1"
+			example1.textContent = JSON.stringify(Config, null, 2);
+
+			// Crear una instancia del modelo Example_ModelComponent y asignarla a la configuración del formulario
+			Config.ModelObject = new Example_ModelComponent();
+			// Crear una instancia de WForm con la configuración y agregarla al elemento con id "control"
+			// Mostrar la instancia del modelo en el elemento con id "example2"
+			example2.textContent = JSON.stringify(new Example_ModelComponent(), null, 2);
+
+
+
+			DateF.append(new WForm({ ModelObject: { Date: { type: 'date', defaultValue: new Date().toISO() } } }));
+			DateTimeF.append(new WForm({ ModelObject: { DateTime: { type: 'datetime-local', defaultValue: new DateTime().toISO() } } }));
+			NumberF.append(new WForm({ ModelObject: { Number: { type: 'number', min: 1990, require: false } } }));
+			Time.append(new WForm({ ModelObject: { Time: { type: 'time' } } }));
+			TextArea.append(new WForm({ ModelObject: { TextArea: { type: 'textarea' } } }));
+			CheckBox.append(new WForm({ ModelObject: { CheckBox: { type: 'CHECKBOX' } } }))
+
+			Radio.append(new WForm({ ModelObject: { Radio: { type: 'radio', Dataset: Examples, require: false } } }))
+			Password.append(new WForm({ ModelObject: { Password: { type: 'Password', Dataset: Examples } } }));
+			Select.append(new WForm({ ModelObject: { Select: { type: 'select', Dataset: Examples } } }));
+			//Operation.append(new WForm({ ModelObject: { Operation: { type: 'Operation', action: () => { return new DateTime().getMonthFormatEs() } } } }));
+
+			WSelect.append(new WForm({ ModelObject: { WSelect: { type: 'WSelect', ModelObject: () => new Paises_ModelComponent(), Dataset: Paises } } }));
+			//WCHECKBOX.append(new WForm({ ModelObject: { WCHECKBOX: { type: 'WCHECKBOX', ModelObject: () => new Paises_ModelComponent(), Dataset: Paises } } }));
+			MULTISELECT.append(new WForm({ ModelObject: { MULTISELECT: { type: 'MULTISELECT', ModelObject: () => new Paises_ModelComponent(), Dataset: Paises } } }));
+
+			ImageF.append(new WForm({ ModelObject: { Image: { type: 'img' } } }));
+			Images.append(new WForm({ ModelObject: { Images: { type: 'images' } } }));
+			RICHTEXT.append(new WForm({ ModelObject: { RICHTEXT: { type: 'RICHTEXT' } } }));
+			Draw.append(new WForm({ ModelObject: { Draw: { type: 'Draw' } } }));
+			MaterDetail.append(new WForm({ ModelObject: { MaterDetail: { type: 'masterdetail', ModelObject: () => new Adress_ModelComponent() } } }));
+			Calendar.append(new WForm({ ModelObject: { Calendar: { type: 'Calendar' } } }));
+		});
+	</script>
+</head>
+
+<body>
+	<w-layout id="layout">
+		<div class="container-form">
+			<h1>WFORM COMPONENT</h1>
+		</div>
+		<div class="doc-container">
+			<div id="doc">
+				<h2>Instancia del formulario</h2>
+				<p class="explicacion">
+					El formulario <code>WForm</code> es un componente que permite crear formularios dinámicos basados en
+					un
+					modelo de datos.
+					El modelo de datos define los campos del formulario, sus tipos, validaciones y cómo deben mostrarse.
+					En este ejemplo, el formulario se configura con un título, un límite de columnas y grupos de
+					controles
+					que organizan los campos del formulario.
+					Explicaciones adicionales:
+
+				</p>
+				<h2>Crear nuevo formulario</h2>
+				<p class="explicacion">
+					crear un formulario es bastante simple, desde cualquier aplicacion en javascript ya sea dentro del
+					html
+					embebido o en un archivo js, se puede crear un formulario de la siguiente manera:
+					desde el modulo js solamente se debe crear una instancia de un nuevo WForm y agregarlo a un
+					contenedor.
+					el formulario debe contener una configuracion que se le pasa como parametro al constructor de WForm,
+					esta configuracion debe contener el modelo de datos que se va a utilizar para crear los campos del
+					formulario.
+
+				</p>
+				<pre><code class="language-javascript">
+//agregar nuevo formulario desde un modulo js ya sea referenciado con un script o embebido en el html.
+import { WForm } from "../../../WComponents/WForm.js"
+const Config = {
+	Title: "FORMULARIO - Controles Básicos",  // Título del formulario
+	ModelObject: "<Instancia o objeto de ModelComponent>",  // Objeto modelo que define los campos del formulario
+}
+
+container.append(new WForm(Config));
+			</code></pre>
+				<hr>
+				<h3>Configuración del Formulario (Config):</h3>
+				<ul>
+					<li>Title (OPCIONAL): Es el título que se mostrará en la parte superior del formulario.
+					</li>
+					<li>ModelObject: Es el objeto modelo que define los campos del formulario. En este caso, se utiliza
+						una
+						instancia de Example_ModelComponent.
+					</li>
+					<li>limit (OPCIONAL): Define el número de columnas en las que se organizarán los controles del
+						formulario.
+					</li>
+					<li>
+						Groups (OPCIONAL): Permite agrupar los controles del formulario en secciones. Cada grupo tiene
+						un
+						nombre y una
+						lista de propiedades (campos) que pertenecen a ese grupo.
+					</li>
+				</ul>
+				<pre><code class="language-json" id="example1"></code></pre>
+
+				<h2>Instancia del modelo</h2>
+				<p class="explicacion">
+					El modelo <code>Example_ModelComponent</code> define los campos que se mostrarán en el formulario.
+					Cada campo tiene un tipo específico (por ejemplo, fecha, número, texto, etc.) y puede tener
+					propiedades
+					adicionales como valores mínimos, máximos, o si es requerido.
+					Este modelo se utiliza para generar dinámicamente los controles del formulario.
+				</p>
+				<pre><code  class="language-json" id="example2"> id="example2"></code></pre>
+
+
+
+
+			</div>
+			<div id="control"></div>
+		</div>
+		<div class="container-form">
+			<h2>Explicación de los campos del modelo</h2>
+			<p class="explicacion">
+				A continuación se detallan los tipos de campos disponibles en el modelo
+				<code>Example_ModelComponent</code>, junto con ejemplos de cómo se definen en el modelo.
+			</p>
+
+
+			<h3>Tipos de campos</h3>
+
+		</div>
+		<div class="doc-container" id="ExamplesProps">
+			<div class="doc">
+				<strong>Date</strong>: Campo de tipo fecha.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ Date = { 
+	type: 'date', defaultValue: new DateTime().toISO() };
+					</code></pre>
+			</div>
+			<div class="control" id="DateF"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>DateTime</strong>: Campo de tipo fecha y hora.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ DateTime = { 
+	type: 'datetime-local', defaultValue: new DateTime().toISO() };
+					</code></pre>
+			</div>
+			<div class="control" id="DateTimeF"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>Number</strong>: Campo de tipo número con un valor mínimo.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ Number = { 
+	type: 'number', min: 1990, require: false };
+					</code></pre>
+			</div>
+			<div class="control" id="NumberF"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>Time</strong>: Campo de tipo hora.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ Time = { 
+	type: 'time' };
+					</code></pre>
+			</div>
+			<div class="control" id="Time"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>TextArea</strong>: Campo de tipo área de texto.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ TextArea = { 
+	type: 'textarea' };
+					</code></pre>
+			</div>
+			<div class="control" id="TextArea"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>CheckBox</strong>: Campo de tipo casilla de verificación.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ CheckBox = { 
+	type: 'CHECKBOX' };
+					</code></pre>
+			</div>
+			<div class="control" id="CheckBox"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>Radio</strong>: Campo de tipo botón de opción.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ Radio = { 
+	type: 'radio', Dataset: Examples, require: false };
+					</code></pre>
+			</div>
+			<div class="control" id="Radio"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>Password</strong>: Campo de tipo contraseña.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ Password = { 
+	type: 'Password', Dataset: Examples };
+					</code></pre>
+			</div>
+			<div class="control" id="Password"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>Select</strong>: Campo de tipo selección desplegable.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ Select = { 
+	type: 'select', Dataset: Examples };
+					</code></pre>
+			</div>
+			<div class="control" id="Select"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>WSelect</strong>: Campo de tipo selección personalizada.
+				<pre><code  class="language-javascript">
+const Paises = [{ Id: 1, Texto: "Nicaragua" }, { Id: 2, Texto: "Salvador" }]
+
+/**@type {ModelProperty}*/ WSelect = {
+	type: 'WSelect',
+	ModelObject: () => new Paises_ModelComponent(), Dataset: Paises
+};
+					</code></pre>
+			</div>
+			<div class="control" id="WSelect"></div>
+		</div>
+		<!-- <div class="doc-container">
+			<div class="doc">
+				<strong>WCHECKBOX</strong>: Campo de tipo casilla de verificación personalizada.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ WCHECKBOX = {
+	type: 'WCHECKBOX',
+	ModelObject: () => new Paises_ModelComponent(), Dataset: Paises
+};
+					</code></pre>
+			</div>
+			<div class="control" id="WCHECKBOX"></div>
+		</div> -->
+		<div class="doc-container">
+			<div class="doc">
+				<strong>MULTISELECT</strong>: Campo de tipo selección múltiple.
+				<pre><code  class="language-javascript">
+const Paises = [{ Id: 1, Texto: "Nicaragua" }, { Id: 2, Texto: "Salvador" }]
+
+
+/**@type {ModelProperty}*/ MULTISELECT = {
+	type: 'MULTISELECT',
+	ModelObject: () => new Paises_ModelComponent(), Dataset: Paises
+};
+					</code></pre>
+			</div>
+			<div class="control" id="MULTISELECT"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>Image</strong>: Campo de tipo imagen.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ Image = { 
+	type: 'img' };
+					</code></pre>
+			</div>
+			<div class="control" id="ImageF"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>Images</strong>: Campo de tipo múltiples imágenes.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ Images = { 
+	type: 'images' };
+					</code></pre>
+			</div>
+			<div class="control" id="Images"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>RICHTEXT</strong>: Campo de tipo editor de texto enriquecido.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ RICHTEXT = { 
+	type: 'RICHTEXT' };
+					</code></pre>
+			</div>
+			<div class="control" id="RICHTEXT"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>Draw</strong>: Campo de tipo dibujo.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ Draw = { 
+	type: 'Draw' };
+					</code></pre>
+			</div>
+			<div class="control" id="Draw"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>MaterDetail</strong>: Campo de tipo relación maestro-detalle.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ MaterDetail = { 
+	type: 'masterdetail', ModelObject: () => new Adress_ModelComponent() };
+					</code></pre>
+			</div>
+			<div class="control" id="MaterDetail"></div>
+		</div>
+		<div class="doc-container">
+			<div class="doc">
+				<strong>Calendar</strong>: Campo de tipo calendario.
+				<pre><code  class="language-javascript">
+/**@type {ModelProperty}*/ Calendar = { 
+	type: 'Calendar' };
+					</code></pre>
+			</div>
+			<div class="control" id="Calendar"></div>
+		</div>
+
+		<div class="container-form">
+			<h1>Documentación de FormConfig</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Propiedad</th>
+						<th>Tipo</th>
+						<th>Descripción</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>EditObject</code></td>
+						<td><code>Object</code></td>
+						<td>Objeto que se está editando. Si es <code>null</code>, se crea un objeto interno al que se le
+							agregan las propiedades.</td>
+					</tr>
+					<tr>
+						<td><code>Groups</code></td>
+						<td><code>Array&lt;{Name:string, WithAcordeon?: Boolean, Propertys:string[]}&gt;</code></td>
+						<td>Arreglo de objetos que contienen el nombre del grupo y las propiedades que contiene. Sirve
+							para
+							separar las propiedades en contenedores separados.</td>
+					</tr>
+					<tr>
+						<td><code>ParentModel</code></td>
+						<td><code>Object</code></td>
+						<td>Objeto que contiene al objeto modelo del padre del que se está editando.</td>
+					</tr>
+					<tr>
+						<td><code>ParentEntity</code></td>
+						<td><code>Object</code></td>
+						<td>Objeto que contiene al objeto padre del que se está editando.</td>
+					</tr>
+					<tr>
+						<td><code>UserActions</code></td>
+						<td><code>Array&lt;{ name:string, action: (EditingObject)=&gt; {}}&gt;</code></td>
+						<td>Acciones personalizadas que se pueden agregar al formulario. Se representan como botones
+							adicionales.</td>
+					</tr>
+					<tr>
+						<td><code>ModelObject</code></td>
+						<td><code>Object</code></td>
+						<td>Objeto que contiene las propiedades del modelo que se va a editar.</td>
+					</tr>
+					<tr>
+						<td><code>EntityModel</code></td>
+						<td><code>Object</code></td>
+						<td>Objeto que contiene el modelo de la entidad que se está editando.</td>
+					</tr>
+					<tr>
+						<td><code>AutoSave</code></td>
+						<td><code>Boolean</code></td>
+						<td>Indica si el formulario se guarda automáticamente y debe hacer una petición AJAX a los
+							métodos
+							<code>entity</code> del modelo (ejemplo: <code>Save</code> o <code>Update</code>).
+						</td>
+					</tr>
+					<tr>
+						<td><code>WSelectAddObject</code></td>
+						<td><code>Boolean</code></td>
+						<td>Indica si el formulario permitirá que un control <code>wselect</code> pueda agregar un
+							objeto
+							nuevo.</td>
+					</tr>
+					<tr>
+						<td><code>DataRequire</code></td>
+						<td><code>Boolean</code></td>
+						<td>Indica si los datos son requeridos.</td>
+					</tr>
+					<tr>
+						<td><code>Title</code></td>
+						<td><code>String</code></td>
+						<td>Título del formulario.</td>
+					</tr>
+					<tr>
+						<td><code>StyleForm</code></td>
+						<td><code>String</code></td>
+						<td>Estilo del formulario. Valores posibles: <code>columnX1</code>, <code>columnX3</code>,
+							<code>columnX3</code>.
+						</td>
+					</tr>
+					<tr>
+						<td><code>DivColumns</code></td>
+						<td><code>String</code></td>
+						<td>Columnas del formulario. Valores posibles: <code>columnX1</code>, <code>columnX3</code>,
+							<code>columnX3</code>.
+						</td>
+					</tr>
+					<tr>
+						<td><code>limit</code></td>
+						<td><code>Number</code></td>
+						<td>Límite de columnas que se mostrarán en el formulario.</td>
+					</tr>
+					<tr>
+						<td><code>Options</code></td>
+						<td><code>Boolean</code></td>
+						<td>Indica si se muestran las opciones de guardar.</td>
+					</tr>
+					<tr>
+						<td><code>ObjectOptions</code></td>
+						<td><code>import('../WModules/CommonModel.js').ObjectOptions</code></td>
+						<td>Opciones del objeto.</td>
+					</tr>
+					<tr>
+						<td><code>ImageUrlPath</code></td>
+						<td><code>String</code></td>
+						<td>Ruta base de las imágenes. Esto es útil en caso de que las propiedades marcadas como
+							imágenes no
+							posean <code>http</code> o <code>https</code> cuando no son <code>base64</code>.</td>
+					</tr>
+					<tr>
+						<td><code>SaveFunction</code></td>
+						<td><code>Function</code></td>
+						<td>Función que se ejecuta al guardar el formulario. Es independiente del <code>AutoSave</code>
+							y se
+							ejecuta después, recuperando el <code>response</code>.</td>
+					</tr>
+					<tr>
+						<td><code>ValidateFunction</code></td>
+						<td><code>Function</code></td>
+						<td>Función de validación del formulario. Debe retornar un objeto con la propiedad
+							<code>validate</code> y un mensaje de error.
+						</td>
+					</tr>
+					<tr>
+						<td><code>ProxyAction</code></td>
+						<td><code>Function</code></td>
+						<td>Función que se ejecuta al cambiar un valor en el formulario.</td>
+					</tr>
+					<tr>
+						<td><code>CustomStyle</code></td>
+						<td><code>HTMLStyleElement</code></td>
+						<td>Estilo personalizado que se agregará al formulario. Dado que este componente posee un
+							<code>shadowRoot</code>, se pueden agregar estilos personalizados.
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="container-form">
+			<h1>ModelProperty</h1>
+			<p class="explicacion">
+				El tipo <code>ModelProperty</code> define las propiedades que puede tener un campo en el modelo. A
+				continuación se presenta una tabla con la documentación de cada propiedad.
+			</p>
+			<table>
+				<thead>
+					<tr>
+						<th>Propiedad</th>
+						<th>Tipo</th>
+						<th>Descripción</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><code>type</code></td>
+						<td><code>String</code></td>
+						<td>
+							Tipo del campo. Puede ser: <code>RADIO</code>, <code>DRAW</code>, <code>PASSWORD</code>,
+							<code>CHECKBOX</code>, <code>TEXT</code>, <code>IMG</code>, <code>NUMBER</code>,
+							<code>DATE</code>, <code>EMAIL</code>, <code>FILE</code>, <code>TEL</code>,
+							<code>TEXTAREA</code>, <code>MODEL</code>, <code>MASTERDETAIL</code>, <code>SELECT</code>,
+							<code>WSELECT</code>, <code>imagecapture</code>, <code>CALENDAR</code>,
+							<code>OPERATION</code>
+
+							(requiere un <code>action</code> para funcionar y toma el valor que retorne el action),
+							<code>MONEY (se trata como number)</code>, <code>PERCENTAGE (se trata como number)</code>,
+						</td>
+					</tr>
+					<tr>
+						<td><code>hidden</code></td>
+						<td><code>Boolean|Function</code></td>
+						<td>Deshabilita la propiedad y la oculta.</td>
+					</tr>
+					<tr>
+						<td><code>Options</code></td>
+						<td><code>Object</code></td>
+						<td>Opciones adicionales para el campo.</td>
+					</tr>
+					<tr>
+						<td><code>hiddenInTable</code></td>
+						<td><code>Boolean</code></td>
+						<td>Oculta el campo en la tabla.</td>
+					</tr>
+					<tr>
+						<td><code>require</code></td>
+						<td><code>Boolean|Function</code></td>
+						<td>Indica si el campo es requerido (en wform por defecto es true).</td>
+					</tr>
+					<tr>
+						<td><code>primary</code></td>
+						<td><code>Boolean</code></td>
+						<td>Indica si el campo es una clave primaria.</td>
+					</tr>
+					<tr>
+						<td><code>disabled</code></td>
+						<td><code>Boolean|Function</code></td>
+						<td>Deshabilita el campo (en wform por defecto es false).</td>
+					</tr>
+					<tr>
+						<td><code>label</code></td>
+						<td><code>String</code></td>
+						<td>Etiqueta que se mostrará para el campo.</td>
+					</tr>
+					<tr>
+						<td><code>ForeignKeyColumn</code></td>
+						<td><code>String</code></td>
+						<td>Nombre de la columna de la llave foránea que enlaza el <code>ModelObject</code> de esta
+							propiedad con la propiedad padre.</td>
+					</tr>
+					<tr>
+						<td><code>fileType</code></td>
+						<td><code>Array</code></td>
+						<td>Tipos de archivo permitidos para campos de tipo <code>FILE</code> ejemplo ".png, .pdf...".
+						</td>
+					</tr>
+					<tr>
+						<td><code>ControlAction</code></td>
+						<td><code> { 
+						name: string, 
+						action: (EditingObject, form, control, propertyName) => {}
+					}[]</code></td>
+						<td>Botones adicionales que se agregan al control, en forma de opciones al final de cada
+							control.
+						</td>
+					</tr>
+					<tr>
+						<td><code>pattern</code></td>
+						<td><code>String</code></td>
+						<td>Expresión regular para validar el campo.</td>
+					</tr>
+					<tr>
+						<td><code>defaultValue</code></td>
+						<td><code>any</code></td>
+						<td>Valor predeterminado del campo.</td>
+					</tr>
+					<tr>
+						<td><code>placeholder</code></td>
+						<td><code>String</code></td>
+						<td>Texto de marcador de posición para el campo.</td>
+					</tr>
+					<tr>
+						<td><code>hiddenFilter</code></td>
+						<td><code>Boolean</code></td>
+						<td>Oculta el campo en los filtros.</td>
+					</tr>
+					<tr>
+						<td><code>fullDetail</code></td>
+						<td><code>Boolean</code></td>
+						<td>Oculta el detalle del objeto en multiselect (por ahora).</td>
+					</tr>
+					<tr>
+						<td><code>min</code></td>
+						<td><code>String | Number</code></td>
+						<td>Valor mínimo para campos de tipo <code>number</code> y <code>date</code>.</td>
+					</tr>
+					<tr>
+						<td><code>max</code></td>
+						<td><code>String | Number</code></td>
+						<td>Valor máximo para campos de tipo <code>number</code> y <code>date</code>.</td>
+					</tr>
+					<tr>
+						<td><code>fieldRequire</code></td>
+						<td><code>String</code></td>
+						<td>Cambia el estado de una propiedad a requerido.</td>
+					</tr>
+					<tr>
+						<td><code>ModelObject</code></td>
+						<td><code>Object | EntityClass | ModelFunction</code></td>
+						<td>Objeto modelo asociado al campo.</td>
+					</tr>
+					<tr>
+						<td><code>EntityModel</code></td>
+						<td><code>EntityClass | ModelFunction</code></td>
+						<td>Modelo de entidad asociado al campo.</td>
+					</tr>
+					<tr>
+						<td><code>Dataset</code></td>
+						<td><code>Array</code></td>
+						<td>Conjunto de datos para campos de tipo <code>SELECT</code>, <code>RADIO</code>,
+							<code>MASTERDETAIL</code>, <code>MULTISELECT</code>, <code>WSELECT</code>,
+							<code>WCHECKBOX</code>.
+						</td>
+					</tr>
+					<tr>
+						<td><code>action</code></td>
+						<td><code>Function</code></td>
+						<td>Función que se ejecuta cuando hay un cambio en el valor del campo.</td>
+					</tr>
+					<tr>
+						<td><code>CalendarFunction</code></td>
+						<td><code>Function</code></td>
+						<td>Función que devuelve datos para campos de tipo <code>CALENDAR</code>.</td>
+					</tr>
+					<tr>
+						<td><code>SelfChargeDataset</code></td>
+						<td><code>String</code></td>
+						<td>Permite llenar un <code>WSELECT</code> con datos de la entidad padre, útil para relaciones
+							recursivas en <code>masterdetail</code>.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</w-layout>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+</body>
+
+</html>

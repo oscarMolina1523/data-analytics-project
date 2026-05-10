@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="../../css/docstyle.css">
+	<link rel="stylesheet" href="../../css/site.css">
+    <script type="module" src="../../Template/Layout.js"> </script>
+</head>
+
+<body>
+	<w-layout id="layout">
+	<div id="header">
+		<h1>Reporte</h1>
+	</div>
+	</w-layout>
+	<script type="module">
+		import { WReportComponent, PageType } from "../../../WComponents/WReportComponent.js";
+		import { data, ModelObject } from "./ExampleData.js";
+		const datas = [
+			{
+				"squadName": "Super Hero Squad",
+				"homeTown": "Metro City",
+				"formed": 2016,
+				"secretBase": "Super tower",
+				"active": true,
+				"members": [
+					{
+						"name": "Molecule Man",
+						"age": 29,
+						"secretIdentity": "Dan Jukes",
+						"powers": [
+							"Radiation resistance",
+							"Turning tiny",
+							"Radiation blast"
+						]
+					},
+					{
+						"name": "Madame Uppercut",
+						"age": 39,
+						"secretIdentity": "Jane Wilson",
+						"powers": [
+							"Million tonne punch",
+							"Damage resistance",
+							"Superhuman reflexes"
+						]
+					},
+					{
+						"name": "Eternal Flame",
+						"age": 1000000,
+						"secretIdentity": "Unknown",
+						"powers": [
+							"Immortality",
+							"Heat Immunity",
+							"Inferno",
+							"Teleportation",
+							"Interdimensional travel"
+						]
+					}
+				]
+			}, {
+				"squadName": "Super Hero Squad",
+				"homeTown": "Metro City",
+				"formed": 2016,
+				"secretBase": "Super tower",
+				"active": true,
+				"members": [
+					{
+						"name": "Molecule Man",
+						"age": 29,
+						"secretIdentity": "Dan Jukes",
+						"powers": [
+							"Radiation resistance",
+							"Turning tiny",
+							"Radiation blast",
+							[{
+								name: 20
+							}]
+						]
+					},
+					{
+						"name": "Madame Uppercut",
+						"age": 39,
+						"secretIdentity": "Jane Wilson",
+						"powers": [
+							"Million tonne punch",
+							"Damage resistance",
+							"Superhuman reflexes"
+						]
+					},
+					{
+						"name": "Eternal Flame",
+						"age": 1000000,
+						"secretIdentity": "Unknown",
+						"powers": [
+							"Immortality",
+							"Heat Immunity",
+							"Inferno",
+							"Teleportation",
+							"Interdimensional travel"
+						]
+					}
+				]
+			}
+		]
+		layout.content.append(
+			new WReportComponent({
+				Dataset: data,
+				GroupParams: ["Sucursal", "Producto"],
+				EvalParams: ["SubTotal",
+					"Descuento",
+					"Iva",
+					"Total"],
+				//Header: header,
+				exportPdf: true,
+				print: true,
+				//exportPdfApi: true,
+				exportXls: true,
+				PageType: PageType.A4_HORIZONTAL,
+				ModelObject: new ModelObject()
+			})
+		)
+	</script>
+</body>
+
+</html>

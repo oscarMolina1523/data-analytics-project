@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="../../css/docstyle.css">	
+	<link rel="stylesheet" href="../../css/site.css">
+    <script type="module" src="../../Template/Layout.js"> </script>
+	<script type="module">
+		import { WRichText } from "../../../WComponents/FormComponents/WRichText.js"
+		import { Layout } from "../../Template/Layout.js";
+		window.onload = () => {
+			const layout = new Layout();
+			document.body.append(layout)
+			const ritchh = new WRichText();
+			ritchh.id = "ritch"
+			layout.content.append(ritchh)
+		}
+	</script>
+</head>
+<body id="body">
+	
+</body>
+</html>
