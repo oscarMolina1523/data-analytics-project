@@ -15,28 +15,28 @@ builder.Services.AddRazorPages();
 
 
 builder.Services.AddControllers().AddJsonOptions(JsonOptions =>
-		JsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null);
+        JsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null);
 
 #region CONFIGURACIONES PARA API
 builder.Services.AddControllers()
-	.AddJsonOptions(JsonOptions => JsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null)// retorna los nombres reales de las propiedades
-	.AddJsonOptions(options => options.JsonSerializerOptions.WriteIndented = false)// Desactiva la indentación
-	.AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+    .AddJsonOptions(JsonOptions => JsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null)// retorna los nombres reales de las propiedades
+    .AddJsonOptions(options => options.JsonSerializerOptions.WriteIndented = false)// Desactiva la indentación
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services.AddResponseCompression(options =>
 {
-	options.EnableForHttps = true; // Activa la compresión también para HTTPS
-	options.Providers.Add<GzipCompressionProvider>(); // Usar Gzip
-	options.Providers.Add<BrotliCompressionProvider>(); // Usar Brotli (más eficiente)
+    options.EnableForHttps = true; // Activa la compresión también para HTTPS
+    options.Providers.Add<GzipCompressionProvider>(); // Usar Gzip
+    options.Providers.Add<BrotliCompressionProvider>(); // Usar Brotli (más eficiente)
 });
 builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 {
-	options.Level = System.IO.Compression.CompressionLevel.Fastest; // Puedes ajustar la compresión
+    options.Level = System.IO.Compression.CompressionLevel.Fastest; // Puedes ajustar la compresión
 });
 
 builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
 {
-	options.Level = System.IO.Compression.CompressionLevel.Fastest; // Nivel de compresión para Brotli
+    options.Level = System.IO.Compression.CompressionLevel.Fastest; // Nivel de compresión para Brotli
 });
 
 #endregion
