@@ -8,15 +8,15 @@ namespace BusinessLogic.Connection
 		public WDataMapper? BDDestino { get; set; }
 		public BDConnection()
 		{
-			BDOrigen = SqlADOConexion.BuildDataMapper(".", "sa", "zaxscd", "BDOrigen");
-			BDDestino = SqlADOConexion.BuildDataMapper(".", "sa", "zaxscd", "BDDestino");
+			BDOrigen = SqlADOConexion.BuildDataMapper(".", "sa", "123456789", "BDOrigen");
+			BDDestino = SqlADOConexion.BuildDataMapper(".", "sa", "123456789", "BDDestino");
 			BDDestino?.GDatos.TestConnection();
 			BDOrigen?.GDatos.TestConnection();
 		}
 
 		public bool InitMainConnection(bool isDebug = false)
 		{
-			return SqlADOConexion.IniciarConexion("sa", "zaxscd", "localhost", "DW_Bienestar_Psicoemocional");
+			return SqlADOConexion.IniciarConexion("sa", "123456789", ".", "DW_Bienestar_Psicoemocional");
 		}
 	}
 }
