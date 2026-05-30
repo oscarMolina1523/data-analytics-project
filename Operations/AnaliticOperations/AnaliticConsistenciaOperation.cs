@@ -1,36 +1,25 @@
-// Independiente:
-// Frecuencia_Semanal_Real
-
-// Dependiente:
-// Mejora_IMC_Pct
-
-// Control:
-// Tipo_Actividad
-
-//Prueba
-//Pearson
 using APPCORE;
 using Operations.AnaliticOperations.Model;
 using Operations.Utility;
 
 namespace Operations.AnaliticOperations
 {
-    public class AnaliticFrecuenciaEvolucionOperation
+    public class AnaliticConsistenciaOperation
     {
         static readonly Dictionary<string, ModelProperty> ModelObject =
             new()
             {
-                ["Frecuencia_Semanal_Real"] = new ModelProperty { Type = "NUMBER" },
-                ["Mejora_Peso_Pct"] = new ModelProperty { Type = "NUMBER" },
-                ["Mejora_IMC_Pct"] = new ModelProperty { Type = "NUMBER" },
-                ["Mejora_Masa_Muscular_Pct"] = new ModelProperty { Type = "NUMBER" }
+                ["Cumplimiento_Pct"] = new ModelProperty { Type = "NUMBER" },
+                ["Variacion_Metrica_Semanal"] = new ModelProperty { Type = "NUMBER" },
+                ["Sesiones_Programadas"] = new ModelProperty { Type = "NUMBER" },
+                ["Sesiones_Completadas"] = new ModelProperty { Type = "NUMBER" }
             };
 
         public static async Task<object?> GetByPeriodo(DataAnaliticRequest request)
         {
             var bdData =
-                new V_Analisis_Frecuencia_Evolucion()
-                .Where<V_Analisis_Frecuencia_Evolucion>(
+                new V_Analisis_Consistencia_Premium()
+                .Where<V_Analisis_Consistencia_Premium>(
                     FilterData.GreaterEqual("Fecha", request.Desde),
                     FilterData.LessEqual("Fecha", request.Hasta)
                 );
@@ -40,7 +29,7 @@ namespace Operations.AnaliticOperations
                 groupParams: request.GroupParams,
                 evalParams: request.EvalParams,
                 modelObject: ModelObject,
-                title: "Frecuencia vs Evolución Física",
+                title: "Consistencia Premium",
                 isFinalGroupedData: true
             );
         }

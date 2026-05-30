@@ -16,7 +16,7 @@ namespace BusinessLogic.Connection
 
 		public bool InitMainConnection(bool isDebug = false)
 		{
-			return SqlADOConexion.IniciarConexion("sa", "123456789", ".", "DW_Bienestar_Psicoemocional");
+			return SqlADOConexion.IniciarConexion("sa", "123456789", ".", "GYM_db");
 		}
 	}
 }
