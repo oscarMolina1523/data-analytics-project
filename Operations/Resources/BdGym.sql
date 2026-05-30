@@ -317,3 +317,12 @@ ON u.Id_Usuario=m.Id_Usuario
 INNER JOIN Dim_Tiempo t
 ON t.Id_Tiempo=m.Id_Tiempo;
 
+//Tabla de etls cambios
+CREATE TABLE Etl_Config
+(
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Update_At DATETIME,
+    BeginDate DATETIME,
+    EndDate DATETIME
+);
+

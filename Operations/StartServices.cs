@@ -1,7 +1,5 @@
-﻿using APPCORE;
-using BusinessLogic.Connection;
+﻿using BusinessLogic.Connection;
 using Operations.SyntheticDataGenerator;
-using Operations.SyntheticDataGenerator.Model;
 
 namespace Operations;
 
@@ -18,7 +16,7 @@ public class StartServices
             
             DateOLAPOperation.UpdateLastUpdateDate(DateTime.Now);*/
           
-            await SyntheticDataGeneratorOperation.Start();
+            await GymSyntheticDataGeneratorOperation.Start();
             Console.Write("############### END");
             return true;
         }
