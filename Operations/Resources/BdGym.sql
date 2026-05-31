@@ -326,3 +326,15 @@ CREATE TABLE Etl_Config
     EndDate DATETIME
 );
 
+-- para eliminar todos los registros de la base de datos
+-- DELETE FROM Fact_Metricas_Fisicas;
+-- DELETE FROM Fact_Gamificacion_Usuario;
+-- DELETE FROM Fact_Adherencia_Usuario;
+-- DELETE FROM Fact_Consistencia_Rutina;
+-- DELETE FROM Fact_Moderacion_Social;
+
+-- DELETE FROM Dim_Usuario;
+-- DELETE FROM Dim_Actividad;
+-- DELETE FROM Dim_Tiempo;
+-- DELETE FROM Etl_Config;
+
