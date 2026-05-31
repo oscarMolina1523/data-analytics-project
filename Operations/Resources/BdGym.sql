@@ -162,144 +162,246 @@ CREATE TABLE Fact_Moderacion_Social (
 
 //Hipotesis H1
 //Frecuencia vs Evolucion Fisica
-CREATE VIEW v_Analisis_H1_Frecuencia_Evolucion
+CREATE OR ALTER VIEW v_Analisis_H1_Frecuencia_Evolucion
 AS
 SELECT
+
+    f.Id_Registro_Metrica,
+
     u.Id_Usuario,
-    a.Tipo_Actividad,
+    f.Id_Actividad,
+
+    u.Genero,
+    u.Nivel_Fitness_Inicial,
+    u.Tipo_Suscripcion,
 
     f.Frecuencia_Semanal_Real,
 
+    f.Peso_Inicial,
+    f.Peso_Actual,
+
+    f.IMC_Inicial,
+    f.IMC_Actual,
+
+    f.Masa_Muscular_Inicial,
+    f.Masa_Muscular_Actual,
+
     (
         ((f.Peso_Inicial - f.Peso_Actual)
-            / NULLIF(f.Peso_Inicial,0))
+        / NULLIF(f.Peso_Inicial,0))
         *100
     ) AS Mejora_Peso_Pct,
 
     (
         ((f.IMC_Inicial - f.IMC_Actual)
-            / NULLIF(f.IMC_Inicial,0))
+        / NULLIF(f.IMC_Inicial,0))
         *100
     ) AS Mejora_IMC_Pct,
 
     (
         ((f.Masa_Muscular_Actual -
           f.Masa_Muscular_Inicial)
-          / NULLIF(f.Masa_Muscular_Inicial,0))
+        / NULLIF(f.Masa_Muscular_Inicial,0))
         *100
     ) AS Mejora_Masa_Muscular_Pct,
 
+    a.Tipo_Actividad,
+
+    CASE
+        WHEN f.Frecuencia_Semanal_Real <= 2 THEN 'Baja'
+        WHEN f.Frecuencia_Semanal_Real <= 4 THEN 'Media'
+        ELSE 'Alta'
+    END AS Rango_Frecuencia,
+
+    t.Fecha,
+    t.Dia,
+    t.Mes,
+    t.Nombre_Mes,
+    t.Trimestre,
     t.Anio,
-    t.Mes
+    t.Semana_Anio
 
 FROM Fact_Metricas_Fisicas f
 INNER JOIN Dim_Usuario u
-ON u.Id_Usuario=f.Id_Usuario
+ON u.Id_Usuario = f.Id_Usuario
+
 INNER JOIN Dim_Actividad a
-ON a.Id_Actividad=f.Id_Actividad
+ON a.Id_Actividad = f.Id_Actividad
+
 INNER JOIN Dim_Tiempo t
-ON t.Id_Tiempo=f.Id_Tiempo;
+ON t.Id_Tiempo = f.Id_Tiempo;
 
 //Hipotesis H2
 //Gamificacion y Renovacion
-CREATE VIEW v_Analisis_H2_Gamificacion_Renovacion
+CREATE OR ALTER VIEW v_Analisis_H2_Gamificacion_Renovacion
 AS
 SELECT
 
+    g.Id_Gamificacion,
+
     u.Id_Usuario,
 
-    (
-        CAST(g.Retos_Completados AS FLOAT)
-        /
-        NULLIF(g.Retos_Totales_Asignados,0)
-    ) *100
-    AS Pct_Cumplimiento_Retos,
+    u.Tipo_Suscripcion,
+    u.Antiguedad_Meses,
 
     g.Score_Gamificacion_Mensual,
 
+    g.Retos_Completados,
+    g.Retos_Totales_Asignados,
+
     g.Puntos_Ganados,
+
+    (
+        CAST(g.Retos_Completados AS FLOAT)
+        / NULLIF(g.Retos_Totales_Asignados, 0)
+    ) * 100 AS Pct_Cumplimiento_Retos,
 
     g.Flag_Renovacion_Suscripcion,
 
-    u.Antiguedad_Meses,
+    CASE
+        WHEN (
+            CAST(g.Retos_Completados AS FLOAT)
+            / NULLIF(g.Retos_Totales_Asignados, 0)
+        ) * 100 < 40
+        THEN 'Baja'
 
+        WHEN (
+            CAST(g.Retos_Completados AS FLOAT)
+            / NULLIF(g.Retos_Totales_Asignados, 0)
+        ) * 100 < 70
+        THEN 'Media'
+
+        ELSE 'Alta'
+    END AS Nivel_Gamificacion,
+
+    t.Fecha,
+    t.Dia,
+    t.Mes,
+    t.Nombre_Mes,
+    t.Trimestre,
     t.Anio,
-    t.Mes
+    t.Semana_Anio
 
 FROM Fact_Gamificacion_Usuario g
 INNER JOIN Dim_Usuario u
-ON u.Id_Usuario=g.Id_Usuario
+    ON u.Id_Usuario = g.Id_Usuario
 INNER JOIN Dim_Tiempo t
-ON t.Id_Tiempo=g.Id_Tiempo;
+    ON t.Id_Tiempo = g.Id_Tiempo;
 
 
 //Hipotesis H3
 //Churn Predictor 
-CREATE VIEW v_Analisis_H3_Churn
+CREATE OR ALTER VIEW v_Analisis_H3_Churn
 AS
 SELECT
 
-    u.Id_Usuario,
-
-    a.Dias_Inactividad_Consecutiva,
-
-    a.Lag_Periodo,
-
-    a.Flag_Abandono_Confirmado,
-
-    CASE
-        WHEN a.Dias_Inactividad_Consecutiva <= 5
-            THEN 'Bajo'
-        WHEN a.Dias_Inactividad_Consecutiva <= 14
-            THEN 'Medio'
-        ELSE 'Alto'
-    END AS Nivel_Riesgo,
-
-    t.Anio,
-    t.Mes
-
-FROM Fact_Adherencia_Usuario a
-INNER JOIN Dim_Usuario u
-ON u.Id_Usuario=a.Id_Usuario
-INNER JOIN Dim_Tiempo t
-ON t.Id_Tiempo=a.Id_Tiempo;
-
-//Hipotesis H4
-//Premium vs Consistencia
-CREATE VIEW v_Analisis_H4_Consistencia
-AS
-SELECT
+    a.Id_Adherencia,
 
     u.Id_Usuario,
 
     u.Tipo_Suscripcion,
 
-    u.Objetivo_Salud,
+    a.Dias_Inactividad_Consecutiva,
 
-    c.Cumplimiento_Pct,
+    a.Flag_Abandono_Confirmado,
 
-    c.Variacion_Metrica_Semanal,
+    a.Lag_Periodo,
 
+    CASE
+        WHEN a.Dias_Inactividad_Consecutiva <= 5
+            THEN 'Bajo'
+
+        WHEN a.Dias_Inactividad_Consecutiva <= 14
+            THEN 'Medio'
+
+        ELSE 'Alto'
+    END AS Nivel_Riesgo,
+
+    CASE
+        WHEN a.Dias_Inactividad_Consecutiva <= 5
+            THEN 0.15
+
+        WHEN a.Dias_Inactividad_Consecutiva <= 14
+            THEN 0.50
+
+        ELSE 0.85
+    END AS Probabilidad_Churn,
+
+    t.Fecha,
+    t.Dia,
+    t.Mes,
+    t.Nombre_Mes,
+    t.Trimestre,
     t.Anio,
-    t.Mes
+    t.Semana_Anio
 
-FROM Fact_Consistencia_Rutina c
+FROM Fact_Adherencia_Usuario a
+
 INNER JOIN Dim_Usuario u
-ON u.Id_Usuario=c.Id_Usuario
-INNER JOIN Dim_Tiempo t
-ON t.Id_Tiempo=c.Id_Tiempo;
+    ON u.Id_Usuario = a.Id_Usuario
 
-//Hipotesis H5
-//Factor Protector Social
-CREATE VIEW v_Analisis_H5_Social
+INNER JOIN Dim_Tiempo t
+    ON t.Id_Tiempo = a.Id_Tiempo;
+
+//Hipotesis H4
+//Premium vs Consistencia
+
+CREATE OR ALTER VIEW v_Analisis_H4_Consistencia
 AS
 SELECT
 
+    c.Id_Consistencia,
+
     u.Id_Usuario,
 
-    m.Volumen_Carga_Semanal,
+    u.Tipo_Suscripcion,
+    u.Objetivo_Salud,
 
+    c.Sesiones_Programadas,
+    c.Sesiones_Completadas,
+
+    c.Cumplimiento_Pct,
+    c.Variacion_Metrica_Semanal,
+
+    CASE
+        WHEN c.Cumplimiento_Pct >= 90 THEN 'Alta'
+        WHEN c.Cumplimiento_Pct >= 70 THEN 'Media'
+        ELSE 'Baja'
+    END AS Nivel_Consistencia,
+
+    t.Fecha,
+    t.Dia,
+    t.Mes,
+    t.Nombre_Mes,
+    t.Trimestre,
+    t.Anio,
+    t.Semana_Anio
+
+FROM Fact_Consistencia_Rutina c
+
+INNER JOIN Dim_Usuario u
+    ON u.Id_Usuario = c.Id_Usuario
+
+INNER JOIN Dim_Tiempo t
+    ON t.Id_Tiempo = c.Id_Tiempo;
+
+//Hipotesis H5
+//Factor Protector Social
+
+CREATE OR ALTER VIEW v_Analisis_H5_Social
+AS
+SELECT
+
+    m.Id_Social_Factor,
+
+    u.Id_Usuario,
+    u.Genero,
+
+    m.Volumen_Carga_Semanal,
     m.Densidad_Interaccion_Recibida,
+
+    m.Likes_Recibidos,
+    m.Comentarios_Recibidos,
 
     m.Score_Percepcion_Esfuerzo_Borg,
 
@@ -308,14 +410,35 @@ SELECT
         m.Comentarios_Recibidos
     ) AS Total_Interacciones,
 
+    CASE
+        WHEN (
+            m.Likes_Recibidos +
+            m.Comentarios_Recibidos
+        ) >= 100 THEN 'Alta'
+
+        WHEN (
+            m.Likes_Recibidos +
+            m.Comentarios_Recibidos
+        ) >= 50 THEN 'Media'
+
+        ELSE 'Baja'
+    END AS Nivel_Interaccion,
+
+    t.Fecha,
+    t.Dia,
+    t.Mes,
+    t.Nombre_Mes,
+    t.Trimestre,
     t.Anio,
-    t.Mes
+    t.Semana_Anio
 
 FROM Fact_Moderacion_Social m
+
 INNER JOIN Dim_Usuario u
-ON u.Id_Usuario=m.Id_Usuario
+    ON u.Id_Usuario = m.Id_Usuario
+
 INNER JOIN Dim_Tiempo t
-ON t.Id_Tiempo=m.Id_Tiempo;
+    ON t.Id_Tiempo = m.Id_Tiempo;
 
 //Tabla de etls cambios
 CREATE TABLE Etl_Config

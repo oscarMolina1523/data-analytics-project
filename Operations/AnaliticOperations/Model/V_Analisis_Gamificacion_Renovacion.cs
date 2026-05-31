@@ -36,5 +36,11 @@ namespace Operations.AnaliticOperations.Model
         public int? Mes { get; set; }
         public string? Nombre_Mes { get; set; }
         public DateTime? Fecha { get; set; }
+
+        public int? Dia { get; set; }
+
+        public int? Trimestre { get; set; }
+
+        public int? Semana_Anio { get; set; }
     }
 }

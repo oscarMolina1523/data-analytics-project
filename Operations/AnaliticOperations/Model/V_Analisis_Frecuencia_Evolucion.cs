@@ -4,7 +4,7 @@ using APPCORE;
 //Mayor frecuencia de entrenamiento correlaciona con mejor condición física final.
 namespace Operations.AnaliticOperations.Model
 {
-    public class V_Analisis_Frecuencia_Evolucion : EntityClass
+    public class V_Analisis_H1_Frecuencia_Evolucion : EntityClass
     {
         [PrimaryKey(Identity = false)]
         public long? Id_Registro_Metrica { get; set; }
@@ -42,5 +42,9 @@ namespace Operations.AnaliticOperations.Model
         public int? Mes { get; set; }
         public string? Nombre_Mes { get; set; }
         public DateTime? Fecha { get; set; }
+        public int? Dia { get; set; }
+
+        public int? Trimestre { get; set; }
+        public int? Semana_Anio { get; set; }
     }
 }

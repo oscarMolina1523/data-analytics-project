@@ -8,11 +8,16 @@ namespace Operations.SyntheticDataGenerator;
 public class GymSyntheticDataGeneratorOperation
 {
     private readonly Random _random = new(42);
+    private readonly DateTime _fechaInicio =
+    new DateTime(2020, 1, 1);
+
+    private readonly DateTime _fechaFin =
+        new DateTime(2025, 12, 31);
 
     public static async Task Start()
     {
         Console.WriteLine("Inicio Generador de data sintetica");
-        var startDate = new DateTime(2024, 1, 1);
+        var startDate = new DateTime(2020, 1, 1);
         var endDate = new DateTime(2025, 12, 31);
 
         var existe = new Etl_Config().Find<Etl_Config>(
@@ -71,13 +76,13 @@ public class GymSyntheticDataGeneratorOperation
     {
         Console.WriteLine("Verificando Dim_Tiempo...");
 
-        var fecha = new DateTime(2024, 1, 1);
+        var fecha = _fechaInicio;
 
         int id = 1;
 
         int creados = 0;
 
-        while (fecha <= new DateTime(2025, 12, 31))
+        while (fecha <= _fechaFin)
         {
             var existe = new Dim_Tiempo
             {
@@ -220,6 +225,18 @@ public class GymSyntheticDataGeneratorOperation
         Console.WriteLine($"Usuarios creados: {creados}");
     }
 
+    private int ObtenerIdTiempoAleatorio()
+    {
+        int totalDias =
+            (_fechaFin - _fechaInicio).Days;
+
+        DateTime fecha =
+            _fechaInicio.AddDays(
+                _random.Next(totalDias + 1)
+            );
+
+        return (fecha - _fechaInicio).Days + 1;
+    }
     // =========================================================
     // H1
     // =========================================================
@@ -250,47 +267,49 @@ public class GymSyntheticDataGeneratorOperation
 
         foreach (var usuario in usuarios)
         {
-            foreach (var mes in Enumerable.Range(1, 24))
+            for (int i = 0; i < 24; i++)
             {
-                int frecuencia = _random.Next(1, 7);
-
-                decimal pesoInicial = _random.Next(60, 110);
-
-                decimal mejora = frecuencia * (decimal)_random.NextDouble();
-
-                decimal pesoActual = pesoInicial - mejora;
-
-                decimal imcInicial = _random.Next(22, 35);
-
-                decimal imcActual = imcInicial - (mejora / 2);
-
-                decimal masaInicial = _random.Next(20, 40);
-
-                decimal masaActual = masaInicial + mejora;
-
-                new Fact_Metricas_Fisicas
+                int idTiempo = ObtenerIdTiempoAleatorio();
                 {
-                    Id_Usuario = usuario.Id_Usuario,
-                    Id_Tiempo = mes,
-                    Id_Actividad = actividades[_random.Next(actividades.Count)].Id_Actividad,
+                    int frecuencia = _random.Next(1, 7);
 
-                    Frecuencia_Semanal_Real = frecuencia,
+                    decimal pesoInicial = _random.Next(60, 110);
 
-                    Peso_Inicial = pesoInicial,
-                    Peso_Actual = pesoActual,
+                    decimal mejora = frecuencia * (decimal)_random.NextDouble();
 
-                    IMC_Inicial = imcInicial,
-                    IMC_Actual = imcActual,
+                    decimal pesoActual = pesoInicial - mejora;
 
-                    Masa_Muscular_Inicial = masaInicial,
-                    Masa_Muscular_Actual = masaActual
-                }.Save();
+                    decimal imcInicial = _random.Next(22, 35);
+
+                    decimal imcActual = imcInicial - (mejora / 2);
+
+                    decimal masaInicial = _random.Next(20, 40);
+
+                    decimal masaActual = masaInicial + mejora;
+
+                    new Fact_Metricas_Fisicas
+                    {
+                        Id_Usuario = usuario.Id_Usuario,
+                        Id_Tiempo = idTiempo,
+                        Id_Actividad = actividades[_random.Next(actividades.Count)].Id_Actividad,
+
+                        Frecuencia_Semanal_Real = frecuencia,
+
+                        Peso_Inicial = pesoInicial,
+                        Peso_Actual = pesoActual,
+
+                        IMC_Inicial = imcInicial,
+                        IMC_Actual = imcActual,
+
+                        Masa_Muscular_Inicial = masaInicial,
+                        Masa_Muscular_Actual = masaActual
+                    }.Save();
+                }
             }
-        }
 
+        }
         Console.WriteLine("Fact_Metricas_Fisicas generada.");
     }
-
     // =========================================================
     // H2
     // =========================================================
@@ -311,8 +330,9 @@ public class GymSyntheticDataGeneratorOperation
 
         foreach (var usuario in usuarios)
         {
-            for (int mes = 1; mes <= 24; mes++)
+            for (int i = 0; i < 24; i++)
             {
+                int idTiempo = ObtenerIdTiempoAleatorio();
                 int retosAsignados = _random.Next(5, 15);
 
                 int retosCompletados =
@@ -328,7 +348,7 @@ public class GymSyntheticDataGeneratorOperation
                 new Fact_Gamificacion_Usuario
                 {
                     Id_Usuario = usuario.Id_Usuario,
-                    Id_Tiempo = mes,
+                    Id_Tiempo = idTiempo,
 
                     Score_Gamificacion_Mensual =
                         (int)(cumplimiento * 100),
@@ -369,8 +389,9 @@ public class GymSyntheticDataGeneratorOperation
 
         foreach (var usuario in usuarios)
         {
-            for (int mes = 1; mes <= 24; mes++)
+            for (int i = 0; i < 24; i++)
             {
+                int idTiempo = ObtenerIdTiempoAleatorio();
                 int diasInactivo = _random.Next(0, 30);
 
                 bool abandono =
@@ -380,7 +401,7 @@ public class GymSyntheticDataGeneratorOperation
                 new Fact_Adherencia_Usuario
                 {
                     Id_Usuario = usuario.Id_Usuario,
-                    Id_Tiempo = mes,
+                    Id_Tiempo = idTiempo,
 
                     Dias_Inactividad_Consecutiva =
                         diasInactivo,
@@ -388,7 +409,7 @@ public class GymSyntheticDataGeneratorOperation
                     Flag_Abandono_Confirmado =
                         abandono,
 
-                    Lag_Periodo = mes
+                    Lag_Periodo = i + 1
                 }.Save();
             }
         }
@@ -416,8 +437,9 @@ public class GymSyntheticDataGeneratorOperation
 
         foreach (var usuario in usuarios)
         {
-            for (int mes = 1; mes <= 24; mes++)
+            for (int i = 0; i < 24; i++)
             {
+                int idTiempo = ObtenerIdTiempoAleatorio();
                 int programadas = _random.Next(12, 24);
 
                 int completadas =
@@ -432,7 +454,7 @@ public class GymSyntheticDataGeneratorOperation
                 new Fact_Consistencia_Rutina
                 {
                     Id_Usuario = usuario.Id_Usuario,
-                    Id_Tiempo = mes,
+                    Id_Tiempo = idTiempo,
 
                     Sesiones_Programadas = programadas,
                     Sesiones_Completadas = completadas,
@@ -469,8 +491,9 @@ public class GymSyntheticDataGeneratorOperation
 
         foreach (var usuario in usuarios)
         {
-            for (int mes = 1; mes <= 24; mes++)
+            for (int i = 0; i < 24; i++)
             {
+                int idTiempo = ObtenerIdTiempoAleatorio();
                 int likes = _random.Next(0, 100);
 
                 int comentarios = _random.Next(0, 40);
@@ -490,7 +513,7 @@ public class GymSyntheticDataGeneratorOperation
                 new Fact_Moderacion_Social
                 {
                     Id_Usuario = usuario.Id_Usuario,
-                    Id_Tiempo = mes,
+                    Id_Tiempo = idTiempo,
 
                     Likes_Recibidos = likes,
                     Comentarios_Recibidos = comentarios,

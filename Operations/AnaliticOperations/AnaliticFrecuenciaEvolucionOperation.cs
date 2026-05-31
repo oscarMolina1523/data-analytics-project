@@ -29,8 +29,8 @@ namespace Operations.AnaliticOperations
         public static async Task<object?> GetByPeriodo(DataAnaliticRequest request)
         {
             var bdData =
-                new V_Analisis_Frecuencia_Evolucion()
-                .Where<V_Analisis_Frecuencia_Evolucion>(
+                new V_Analisis_H1_Frecuencia_Evolucion()
+                .Where<V_Analisis_H1_Frecuencia_Evolucion>(
                     FilterData.GreaterEqual("Fecha", request.Desde),
                     FilterData.LessEqual("Fecha", request.Hasta)
                 );
