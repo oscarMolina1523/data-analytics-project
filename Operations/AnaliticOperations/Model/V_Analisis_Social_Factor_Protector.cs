@@ -5,7 +5,7 @@ using APPCORE;
 
 namespace Operations.AnaliticOperations.Model
 {
-    public class V_Analisis_Social_Factor_Protector : EntityClass
+    public class V_Analisis_H5_Social : EntityClass
     {
         [PrimaryKey(Identity = false)]
         public long? Id_Social_Factor { get; set; }

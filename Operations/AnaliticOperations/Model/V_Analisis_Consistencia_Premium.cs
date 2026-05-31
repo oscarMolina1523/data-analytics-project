@@ -5,7 +5,7 @@ using APPCORE;
 
 namespace Operations.AnaliticOperations.Model
 {
-    public class V_Analisis_Consistencia_Premium : EntityClass
+    public class V_Analisis_H4_Consistencia : EntityClass
     {
         [PrimaryKey(Identity = false)]
         public long? Id_Consistencia { get; set; }

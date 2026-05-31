@@ -5,7 +5,7 @@ using APPCORE;
 
 namespace Operations.AnaliticOperations.Model
 {
-    public class V_Analisis_Churn_Predictor : EntityClass
+    public class V_Analisis_H3_Churn : EntityClass
     {
         [PrimaryKey(Identity = false)]
         public long? Id_Adherencia { get; set; }

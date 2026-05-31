@@ -16,8 +16,8 @@ namespace Operations.AnaliticOperations
         public static async Task<object?> GetByPeriodo(DataAnaliticRequest request)
         {
             var bdData =
-                new V_Analisis_Churn_Predictor()
-                .Where<V_Analisis_Churn_Predictor>(
+                new V_Analisis_H3_Churn()
+                .Where<V_Analisis_H3_Churn>(
                     FilterData.GreaterEqual("Fecha", request.Desde),
                     FilterData.LessEqual("Fecha", request.Hasta)
                 );

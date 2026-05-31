@@ -18,8 +18,8 @@ namespace Operations.AnaliticOperations
         public static async Task<object?> GetByPeriodo(DataAnaliticRequest request)
         {
             var bdData =
-                new V_Analisis_Gamificacion_Renovacion()
-                .Where<V_Analisis_Gamificacion_Renovacion>(
+                new V_Analisis_H2_Gamificacion_Renovacion()
+                .Where<V_Analisis_H2_Gamificacion_Renovacion>(
                     FilterData.GreaterEqual("Fecha", request.Desde),
                     FilterData.LessEqual("Fecha", request.Hasta)
                 );

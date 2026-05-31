@@ -5,7 +5,7 @@ using APPCORE;
 
 namespace Operations.AnaliticOperations.Model
 {
-    public class V_Analisis_Gamificacion_Renovacion : EntityClass
+    public class V_Analisis_H2_Gamificacion_Renovacion : EntityClass
     {
         [PrimaryKey(Identity = false)]
         public long? Id_Gamificacion { get; set; }

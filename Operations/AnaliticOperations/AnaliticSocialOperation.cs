@@ -18,8 +18,8 @@ namespace Operations.AnaliticOperations
         public static async Task<object?> GetByPeriodo(DataAnaliticRequest request)
         {
             var bdData =
-                new V_Analisis_Social_Factor_Protector()
-                .Where<V_Analisis_Social_Factor_Protector>(
+                new V_Analisis_H5_Social()
+                .Where<V_Analisis_H5_Social>(
                     FilterData.GreaterEqual("Fecha", request.Desde),
                     FilterData.LessEqual("Fecha", request.Hasta)
                 );
