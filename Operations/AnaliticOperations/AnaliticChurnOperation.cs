@@ -1,6 +1,8 @@
 using APPCORE;
 using Operations.AnaliticOperations.Model;
 using Operations.Utility;
+using Operations.EstadisticModule;
+using static Operations.EstadisticModule.EstadisticConfig;
 
 namespace Operations.AnaliticOperations
 {
@@ -22,7 +24,9 @@ namespace Operations.AnaliticOperations
                     FilterData.LessEqual("Fecha", request.Hasta)
                 );
 
-            return DataGroupingHelper.GroupData(
+            var resultadoHipotesis = await EjecutarH3_ChurnAsync(bdData);
+
+            var result = DataGroupingHelper.GroupData(
                 data: bdData,
                 groupParams: request.GroupParams,
                 evalParams: request.EvalParams,
@@ -30,6 +34,25 @@ namespace Operations.AnaliticOperations
                 title: "Predicción de Churn",
                 isFinalGroupedData: true
             );
+
+            result.hipotesisTestResults = [ resultadoHipotesis ];
+
+            return result;
+        }
+
+        public static async Task<HipotesisTestResult> EjecutarH3_ChurnAsync(List<V_Analisis_H3_Churn> datos)
+        {
+            var config =
+                new HipotesisTestConfig<V_Analisis_H3_Churn>()
+                    .ConVariableIndependiente("Nivel_Riesgo")
+                    .ConVariableDependiente("Flag_Abandono_Confirmado")
+                    .ConControl("Tipo_Suscripcion")
+                    .ConSignificancia(0.05)
+                    .ConMinEfectoRelevante(0.10)
+                    .UsarPrueba("ChiSquare");
+
+            return await HipotesisTestService
+                .EjecutarPruebaAsync(datos, config);
         }
     }
 }

@@ -1,6 +1,8 @@
 using APPCORE;
 using Operations.AnaliticOperations.Model;
 using Operations.Utility;
+using Operations.EstadisticModule;
+using static Operations.EstadisticModule.EstadisticConfig;
 
 namespace Operations.AnaliticOperations
 {
@@ -23,15 +25,32 @@ namespace Operations.AnaliticOperations
                     FilterData.GreaterEqual("Fecha", request.Desde),
                     FilterData.LessEqual("Fecha", request.Hasta)
                 );
+            var resultadoHipotesis = await EjecutarH4_ConsistenciaAsync(bdData);
 
-            return DataGroupingHelper.GroupData(
-                data: bdData,
-                groupParams: request.GroupParams,
-                evalParams: request.EvalParams,
-                modelObject: ModelObject,
-                title: "Consistencia Premium",
-                isFinalGroupedData: true
-            );
+            var result = DataGroupingHelper.GroupData(
+                        data: bdData,
+                        groupParams: request.GroupParams,
+                        evalParams: request.EvalParams,
+                        modelObject: ModelObject,
+                        title: "Consistencia Premium",
+                        isFinalGroupedData: true
+                    );
+
+            result.hipotesisTestResults = [resultadoHipotesis];
+
+            return result;
+        }
+
+        public static async Task<HipotesisTestResult> EjecutarH4_ConsistenciaAsync(List<V_Analisis_H4_Consistencia> datos)
+        {
+            var config = new HipotesisTestConfig<V_Analisis_H4_Consistencia>()
+                .ConVariableIndependiente("Es_Premium")
+                .ConVariableDependiente("Cumplimiento_Pct")
+                .ConControl("Objetivo_Salud")
+                .ConSignificancia(0.05)
+                .UsarPrueba("ANOVA");
+
+            return await HipotesisTestService.EjecutarPruebaAsync(datos, config);
         }
     }
 }

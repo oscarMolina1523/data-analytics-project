@@ -14,6 +14,7 @@ namespace Operations.AnaliticOperations.Model
 
         // Usuario
         public string? Tipo_Suscripcion { get; set; }
+        public int? Es_Premium { get; set; }
         public string? Objetivo_Salud { get; set; }
 
         // Variables H4

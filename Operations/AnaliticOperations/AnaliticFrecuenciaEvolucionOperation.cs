@@ -12,6 +12,8 @@
 using APPCORE;
 using Operations.AnaliticOperations.Model;
 using Operations.Utility;
+using Operations.EstadisticModule;
+using static Operations.EstadisticModule.EstadisticConfig;
 
 namespace Operations.AnaliticOperations
 {
@@ -35,14 +37,45 @@ namespace Operations.AnaliticOperations
                     FilterData.LessEqual("Fecha", request.Hasta)
                 );
 
-            return DataGroupingHelper.GroupData(
-                data: bdData,
-                groupParams: request.GroupParams,
-                evalParams: request.EvalParams,
-                modelObject: ModelObject,
-                title: "Frecuencia vs Evolución Física",
-                isFinalGroupedData: true
-            );
+            var resultadoHipotesis = await EjecutarH1_FrecuenciaEvolucionAsync( bdData.ToList() );
+
+            var result =
+                DataGroupingHelper.GroupData(
+                    data: bdData,
+                    groupParams: request.GroupParams,
+                    evalParams: request.EvalParams,
+                    modelObject: ModelObject,
+                    title: "Frecuencia vs Evolución Física",
+                    isFinalGroupedData: true
+                );
+
+            result.hipotesisTestResults =
+            [
+                resultadoHipotesis
+            ];
+
+            return result;
+        }
+
+        public static async Task<HipotesisTestResult> EjecutarH1_FrecuenciaEvolucionAsync(List<V_Analisis_H1_Frecuencia_Evolucion> datos)
+        {
+            var config =
+                new HipotesisTestConfig<V_Analisis_H1_Frecuencia_Evolucion>()
+
+                .ConVariableIndependiente("Frecuencia_Semanal_Real")
+
+                .ConVariableDependiente("Mejora_IMC_Pct")
+
+                .ConControl("Tipo_Actividad")
+
+                .ConSignificancia(0.05)
+
+                .ConMinEfectoRelevante(0.10)
+
+                .UsarPrueba("Pearson");
+
+            return await HipotesisTestService
+                .EjecutarPruebaAsync(datos, config);
         }
     }
 }
