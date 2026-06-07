@@ -50,6 +50,37 @@
             color:#2563eb;
         }
 
+
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+}
+
+th {
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-weight: 600;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+    padding: 12px 10px;
+}
+
+td {
+    border: 1px solid #e2e8f0;
+    padding: 10px;
+    color: #334155;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+canvas {
+    max-height: 450px; /* Evita que el gráfico rompa la proporción vertical */
+    width: 100% !important;
+}
     </style>
 
 </head>
@@ -73,10 +104,10 @@
         <br>
 
         <label>Agrupar por</label>
-        <select id="groupParam"></select>
+        <select id="groupParam" multiple size="8"></select>
 
         <label>Métrica</label>
-        <select id="evalParam"></select>
+        <select id="evalParam" multiple size="8"></select>
 
         <button id="btnConsultar">
             Consultar
