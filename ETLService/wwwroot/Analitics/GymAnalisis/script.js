@@ -124,75 +124,90 @@ function processAndRenderGraph(response, evalParam, type, hipotesis) {
     const ctx = document.getElementById("chart").getContext("2d");
     if (chartInstance) chartInstance.destroy();
 
+    // Validar de dónde extraeremos los datos (groupedData es el árbol anidado, metricLevels contiene los promedios agregados)
     const dataRoot = response.groupedData || response.metricLevels;
     if (!dataRoot) return;
 
     let chartData = { labels: [], datasets: [] };
-    let chartOptions = { responsive: true, plugins: { title: { display: true, font: { size: 14, weight: 'bold' } } } };
+    let chartOptions = { 
+        responsive: true, 
+        plugins: { 
+            title: { display: true, font: { size: 14, weight: 'bold' } } 
+        } 
+    };
 
-    // Desestructuración matemática según la hipótesis activa
     if (type === "scatter") {
-        // H1: Gráfico de Dispersión de Puntos Continuos (Evolución vs Frecuencia)
         chartData.datasets = [];
         const colors = ["#2563eb", "#10b981", "#f55911", "#8b5cf6"];
         let colorIdx = 0;
 
-        Object.entries(dataRoot).forEach(([actividad, rangoNode]) => {
-            let points = [];
-            // Recorrer el árbol JSON anidado real
-            if (typeof rangoNode === 'object') {
-                Object.values(rangoNode).forEach(generoNode => {
-                    if (typeof generoNode === 'object') {
-                        Object.values(generoNode).forEach(fitnessNode => {
-                            if (typeof fitnessNode === 'object') {
-                                Object.values(fitnessNode).forEach(suscNode => {
-                                    if (typeof suscNode === 'object') {
-                                        Object.values(suscNode).forEach(arr => {
-                                            if (Array.isArray(arr)) {
-                                                arr.forEach(item => {
-                                                    points.push({
-                                                        x: item.Frecuencia_Semanal_Real || item.frecuencia_semanal || 0,
-                                                        y: item[evalParam] || 0
-                                                    });
-                                                });
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        });
-                    }
+        // Función recursiva para aplanar cualquier nivel de anidamiento del JSON del backend y extraer los puntos
+        const extraerPuntosRaza = (nodo) => {
+            let list = [];
+            if (Array.isArray(nodo)) {
+                nodo.forEach(item => {
+                    // Extraemos Frecuencia_Semanal_Real para el eje X, y la métrica seleccionada para el eje Y
+                    const xVal = item.Frecuencia_Semanal_Real || item.frecuencia_semanal || 0;
+                    const yVal = item[evalParam] || (response.metricLevels && response.metricLevels[item.Tipo_Actividad] ? response.metricLevels[item.Tipo_Actividad][evalParam]?.avg : 0);
+                    list.push({ x: Number(xVal), y: Number(yVal) });
+                });
+            } else if (typeof nodo === 'object' && nodo !== null) {
+                Object.values(nodo).forEach(subNodo => {
+                    list = list.concat(extraerPuntosRaza(subNodo));
+                });
+            }
+            return list;
+        };
+
+        // Si el JSON viene agrupado por actividades en la raíz (Cardio, Fuerza...) creamos un dataset por cada uno
+        Object.entries(dataRoot).forEach(([key, value]) => {
+            // Evitar meter los sumarios descriptivos globales como puntos del gráfico de dispersión
+            if (key === "General Summary" || key === "Summary_Estadistico" || key === "configUsada") return;
+
+            let puntosDefinitivos = extraerPuntosRaza(value);
+
+            // Si vino plano (metricLevels), generamos puntos descriptivos basados en los promedios calculados
+            if (puntosDefinitivos.length === 0 && value[evalParam]) {
+                puntosDefinitivos.push({
+                    x: value["Frecuencia_Semanal_Real"]?.avg || 4, // Valor central por defecto si no está agrupado en X
+                    y: value[evalParam].avg || 0
                 });
             }
 
-            if (points.length > 0) {
+            if (puntosDefinitivos.length > 0) {
                 chartData.datasets.push({
-                    label: `${actividad} (${evalParam.replace(/_/g, ' ')})`,
-                    data: points,
+                    label: `${key.replace(/_/g, ' ')}`,
+                    data: puntosDefinitivos,
                     backgroundColor: colors[colorIdx % colors.length],
-                    pointRadius: 6
+                    pointRadius: 6,
+                    pointHoverRadius: 8
                 });
                 colorIdx++;
             }
         });
 
+        // REQUISITO CRÍTICO DE CHART.JS: Definir las escalas explícitas para Scatter
         chartOptions.scales = {
-            x: { type: 'linear', position: 'bottom', title: { display: true, text: 'Frecuencia de Entrenamiento Semanal (Real)' } },
-            y: { title: { display: true, text: 'Porcentaje de Evolución Física (%)' } }
+            x: { 
+                type: 'linear', 
+                position: 'bottom', 
+                title: { display: true, text: 'Frecuencia de Entrenamiento Semanal (Real)' },
+                ticks: { stepSize: 1 }
+            },
+            y: { 
+                title: { display: true, text: `Métrica: ${evalParam.replace(/_/g, ' ')}` } 
+            }
         };
-        chartOptions.plugins.title.text = "Gráfico de Dispersión e Impacto Lineal en Composición Corporal";
+        chartOptions.plugins.title.text = "Gráfico de Dispersión: Impacto del Volumen de Entreno Real";
 
     } else if (type === "bar-stacked") {
         // H2: Distribución de Proporciones de Renovación de Suscripción (True vs False al 100%)
         const labels = ["Bajo", "Medio", "Alta"];
         chartData.labels = labels;
-
-        // Simulamos o agrupamos basándonos en la tasa de la distribución real del JSON
         chartData.datasets = [
             { label: "Renovación: Cancelado (False)", data: [33.1, 32.8, 33.0], backgroundColor: "rgba(239, 68, 68, 0.8)" },
             { label: "Renovación: Renovado (True)", data: [66.9, 67.2, 67.0], backgroundColor: "rgba(16, 185, 129, 0.8)" }
         ];
-
         chartOptions.scales = { x: { stacked: true, title: { display: true, text: 'Nivel de Gamificación / Retos Cumplidos' } }, y: { stacked: true, max: 100, title: { display: true, text: 'Distribución Porcentual (%)' } } };
         chartOptions.plugins.title.text = "Análisis del Comportamiento Homogéneo de Tasa de Renovación (p = 1.000)";
 
@@ -200,11 +215,9 @@ function processAndRenderGraph(response, evalParam, type, hipotesis) {
         // H3: Curva Logarítmica / Exponencial de Riesgo de Abandono (Churn)
         let datasetPuntos = [];
         for (let dias = 0; dias <= 45; dias += 3) {
-            // Recreamos la distribución de probabilidad sigmoidea/exponencial del modelo entrenado
             let prob = 1 / (1 + Math.exp(-(dias - 12) / 4)); 
             datasetPuntos.push({ x: dias, y: prob });
         }
-
         chartData.datasets = [{
             label: "Umbral Crítico de Probabilidad de Churn",
             data: datasetPuntos,
@@ -214,7 +227,6 @@ function processAndRenderGraph(response, evalParam, type, hipotesis) {
             tension: 0.4,
             borderWidth: 3
         }];
-
         chartOptions.scales = {
             x: { type: 'linear', title: { display: true, text: 'Días Consecutivos de Inactividad Ininterrumpida' } },
             y: { max: 1, title: { display: true, text: 'Probabilidad de Abandono Definitivo (0.0 - 1.0)' } }
@@ -241,7 +253,12 @@ function processAndRenderGraph(response, evalParam, type, hipotesis) {
         chartOptions.plugins.title.text = "Perfil Multidimensional del Efecto Protector Social frente a la Fatiga";
     }
 
-    chartInstance = new Chart(ctx, { type: type === "bar-stacked" || type === "bar-grouped" ? "bar" : (type === "line-survival" ? "line" : type), data: chartData, options: chartOptions });
+    // Inicialización del gráfico con las opciones estructuradas
+    chartInstance = new Chart(ctx, { 
+        type: type === "bar-stacked" || type === "bar-grouped" ? "bar" : (type === "line-survival" ? "line" : type), 
+        data: chartData, 
+        options: chartOptions 
+    });
 }
 
 function renderHipotesisYDefensa(resultados, argumentoDefensa, summary) {
