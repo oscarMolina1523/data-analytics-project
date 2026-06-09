@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Analítico Fitness</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script type="module" src="./script.js"></script>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            margin:20px;
+            background:#f5f5f5;
+        }
+
+        .panel{
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            margin-bottom:20px;
+        }
+
+        select,input,button{
+            padding:8px;
+            margin:5px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        td,th{
+            border:1px solid #ddd;
+            padding:8px;
+        }
+
+        canvas{
+            background:white;
+            padding:20px;
+        }
+
+        #loading{
+            padding:20px;
+            font-weight:bold;
+            color:#2563eb;
+        }
+
+
+        table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+}
+
+th {
+    background-color: #f8fafc;
+    color: #1e293b;
+    font-weight: 600;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+    padding: 12px 10px;
+}
+
+td {
+    border: 1px solid #e2e8f0;
+    padding: 10px;
+    color: #334155;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+canvas {
+    max-height: 450px; /* Evita que el gráfico rompa la proporción vertical */
+    width: 100% !important;
+}
+    </style>
+
+</head>
+
+<body>
+
+    <h1>Dashboard Analítico Fitness</h1>
+
+    <div class="panel">
+
+        <label>Hipótesis</label>
+
+        <select id="hipotesis"></select>
+
+        <label>Desde</label>
+        <input type="date" id="desde">
+
+        <label>Hasta</label>
+        <input type="date" id="hasta">
+
+        <br>
+
+        <label>Agrupar por</label>
+        <select id="groupParam" multiple size="8"></select>
+
+        <label>Métrica</label>
+        <select id="evalParam" multiple size="8"></select>
+
+        <button id="btnConsultar">
+            Consultar
+        </button>
+
+        <div id="loading" style="display:none">
+            Consultando...
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <h2>Gráfico</h2>
+
+        <canvas id="chart"></canvas>
+
+    </div>
+
+    <div class="panel">
+
+        <h2>Resultados</h2>
+
+        <div id="tableContainer"></div>
+
+    </div>
+
+    <div class="panel">
+
+        <h2>Prueba Estadística</h2>
+
+        <div id="hipotesisContainer"></div>
+
+    </div>
+
+</body>
+</html>
