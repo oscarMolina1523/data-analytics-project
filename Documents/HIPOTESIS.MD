@@ -12,9 +12,9 @@
 
 | IDENTIFICACIÓN | Hipótesis | Clave de variables | Enfoque Analítico | Tema CPAD010 |
 | :--- | :--- | :--- | :--- | :--- |
-| **H1** | Mayor frecuencia de entrenamiento correlaciona con mejor condición física final. | `frecuencia_semanal`, `metrica_fisica_evol`, `tipo_actividad` | Correlación de Pearson / ANOVA | Tema 4: Modelado de datos |
-| **H2** | El cumplimiento de metas en "Retos Gamificados" predice la probabilidad de renovación de suscripción. | `score_gamificacion`, `puntos_reto`, `renewal_flag` | Regresión Logística / Scoring | Tema 4: Modelado predictivo |
-| **H3** | La inactividad prolongada en el periodo N predice el abandono en el periodo N+1. | `dias_inactividad`, `churn_flag`, `lag_temporal` | Análisis de Supervivencia / Regresión | Tema 2: Estrategias analíticas |
+| **H1** | Mayor frecuencia de entrenamiento correlaciona con mejor condición física final. | `frecuencia_semanal`, `metrica_fisica_evol`, `tipo_actividad` |  ANOVA | Tema 4: Modelado de datos |
+| **H2** | El cumplimiento de metas en "Retos Gamificados" predice la probabilidad de renovación de suscripción. | `score_gamificacion`, `puntos_reto`, `renewal_flag` | Regresión Logística | Tema 4: Modelado predictivo |
+| **H3** | La inactividad prolongada en el periodo N predice el abandono en el periodo N+1. | `dias_inactividad`, `churn_flag`, `lag_temporal` | Análisis de Supervivencia  | Tema 2: Estrategias analíticas |
 | **H4** | El tipo de suscripción Premium reduce la probabilidad de inconsistencia en rutinas. | `tipo_suscripcion`, `cumplimiento_pct`, `variacion_metrica` | Prueba de proporciones / Odds Ratio | Tema 4: Modelado de datos |
 | **H5** | La densidad de interacción social (Likes/Comentarios) actúa como factor protector ante la fatiga del entrenamiento. | `densidad_interaccion`, `volumen_carga`, `percepcion_esfuerzo` | Análisis de Covarianza (ANCOVA) | Tema 5: Visualización |
 
